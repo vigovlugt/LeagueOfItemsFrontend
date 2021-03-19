@@ -1,4 +1,4 @@
-import classNames from "classNames";
+import classNames from "classnames";
 import Link from "next/link";
 import ListItem from "./icons/ListIcon";
 import GridIcon from "./icons/GridIcon";
