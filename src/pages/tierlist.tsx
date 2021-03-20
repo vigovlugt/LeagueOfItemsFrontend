@@ -1,19 +1,20 @@
 import ItemApi from "../api/ItemApi";
 import { useMemo } from "react";
 import { useTable, useSortBy } from "react-table";
-import Item from "../models/Item";
+import ItemStats from "../models/ItemStats";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { winrate, winrateClass } from "../utils/format";
 
 export default function Tierlist({ items }) {
   const router = useRouter();
 
-  const data = useMemo(() => items.map((i) => new Item(i)), []);
+  const data = useMemo(() => items.map((i) => new ItemStats(i)), []);
 
   const columns = useMemo(
     () => [
       {
-        Header: "Item",
+        Header: "ItemStats",
         accessor: "name",
         Cell: ({ row }) => (
           <div className="flex items-center">
@@ -28,8 +29,25 @@ export default function Tierlist({ items }) {
       },
       {
         Header: "Overall winrate",
-        accessor: (original) => original.getWinrate() + "%",
+        Cell: ({
+          row: {
+            original: { wins, matches },
+          },
+        }) => (
+          <span className={`${winrateClass(wins, matches)}`}>
+            {winrate(wins, matches)}
+          </span>
+        ),
+        accessor: "wins",
+        sortType: (rowA, rowB) =>
+          rowA.original.wins / rowA.original.matches -
+          rowB.original.wins / rowB.original.matches,
         id: "winrate",
+      },
+      {
+        Header: "Champions",
+        accessor: (original) => original.championStats.length,
+        id: "champions",
       },
       {
         Header: "Matches",

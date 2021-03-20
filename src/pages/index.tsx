@@ -1,11 +1,11 @@
 import ItemGridCell from "../components/ItemGridCell";
 import ItemApi from "../api/ItemApi";
 import { useMemo } from "react";
-import Item from "../models/Item";
+import ItemStats from "../models/ItemStats";
 
 export default function Index({ items }) {
   const { mythic, legendary } = useMemo(() => {
-    items = items.map((i) => new Item(i));
+    items = items.map((i) => new ItemStats(i));
 
     const mythic = items.filter((i) => i.isMythic());
     const legendary = items.filter((i) => !i.isMythic());

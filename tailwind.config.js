@@ -1,16 +1,27 @@
+const colors = require('tailwindcss/colors')
+
 module.exports = {
-  purge: [
-    './src/**/*.{js,jsx,ts,tsx,vue}'
-  ],
+  purge: ["./src/**/*.{js,jsx,ts,tsx,vue}"],
   theme: {
     fontFamily: {
-      'header': ['Montserrat', 'sans-serif'],
-      'body': ['Open Sans'],
+      header: ["Montserrat", "sans-serif"],
+      body: ["Open Sans"],
     },
-    extend: {},
-  },
-  variants: {
-    extend: {},
-  },
-  plugins: [],
-}
+    extend: {
+      colors: {
+        winrate: {
+          shinggo: "#ff4e50",
+          meh: "#fcb1b2",
+          okay: colors.gray[900], //"#000",
+          good: "#7ea4f4",
+          great: "#3273fa",
+          volxd: "#ff9b00",
+        },
+      },
+    },
+    variants: {
+      extend: {},
+    },
+    plugins: [],
+  }
+};
