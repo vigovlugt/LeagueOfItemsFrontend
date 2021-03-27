@@ -3,6 +3,28 @@ import ChampionIcon from "../../components/ChampionIcon";
 import ItemApi from "../../api/ItemApi";
 import ItemStats from "../../models/ItemStats";
 import { winrate, winrateClass } from "../../utils/format";
+import ItemStatsByOrder from "../../components/itempage/ItemStatsByOrder";
+
+function ChampionCard({ championId, wins, matches }) {
+  return (
+    <div
+      className="px-3 py-3 bg-white rounded text-center shadow"
+      key={championId}
+    >
+      {/*<h3 className="font-header mb-1">{championId}</h3>*/}
+      <ChampionIcon id={championId} />
+      <p
+        className={`text-center font-bold text-lg ${winrateClass(
+          wins,
+          matches
+        )}`}
+      >
+        {winrate(wins, matches)}
+      </p>
+      <p className="text-center font-bold text-lg">{matches}</p>
+    </div>
+  );
+}
 
 export default function ItemPage({ item }) {
   item = new ItemStats(item);
@@ -26,7 +48,6 @@ export default function ItemPage({ item }) {
           </p>
           <div className="grid grid-cols-2 gap-3 mb-4">
             <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow">
-              Winrate:{" "}
               <span
                 className={`text-gray-900 ${winrateClass(
                   item.wins,
@@ -34,48 +55,46 @@ export default function ItemPage({ item }) {
                 )}`}
               >
                 {winrate(item.wins, item.matches)}
-              </span>
+              </span>{" "}
+              Winrate
             </div>
             <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow">
-              Matches: <span className="text-gray-900">{item.matches}</span>
+              <span className="text-gray-900">{item.matches}</span> Matches
             </div>
             <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow">
-              Champions:{" "}
-              <span className="text-gray-900">{item.championStats.length}</span>
+              <span className="text-gray-900">{item.championStats.length}</span>{" "}
+              Champions
             </div>
           </div>
         </div>
       </div>
 
+      {/* Highest winrate champions */}
       <div>
-        <div className="flex">
-          <div className="flex flex-col w-full">
-            <h2 className="text-2xl font-header font-medium mb-1">
-              Highest winrate champions
-            </h2>
-            <div className="flex space-x-2 w-full overflow-x-auto pb-2">
-              {item.championStats
-                .sort((a, b) => b.wins / b.matches - a.wins / a.matches)
-                .map(({ championId, wins, matches }) => (
-                  <div
-                    className="px-3 py-3 bg-white rounded text-center shadow"
-                    key={championId}
-                  >
-                    {/*<h3 className="font-header mb-1">{championId}</h3>*/}
-                    <ChampionIcon id={championId} />
-                    <p
-                      className={`text-center font-bold text-lg ${winrateClass(
-                        wins,
-                        matches
-                      )}`}
-                    >
-                      {winrate(wins, matches)}
-                    </p>
-                    <p className="text-center font-bold text-lg">{matches}</p>
-                  </div>
-                ))}
-            </div>
-          </div>
+        <h2 className="text-2xl font-header font-medium mb-1">
+          Highest winrate champions
+        </h2>
+        <div className="flex space-x-2 w-full overflow-x-auto pb-2">
+          {item.championStats
+            .sort((a, b) => b.wins / b.matches - a.wins / a.matches)
+            .map((championStats) => (
+              <ChampionCard {...championStats} />
+            ))}
+        </div>
+      </div>
+
+      {/* Winrate by order */}
+      <div className="mt-4">
+        <h2 className="text-2xl font-header font-medium mb-1">
+          Stats by order
+        </h2>
+        <div
+          className="grid grid-cols-5 grid-flow-col gap-2"
+          style={{ gridTemplateRows: "auto auto" }}
+        >
+          {item.orderStats.map((stats) => (
+            <ItemStatsByOrder orderStats={stats} />
+          ))}
         </div>
       </div>
     </div>
@@ -101,4 +120,4 @@ export async function getStaticProps({ params }) {
   };
 }
 
-ItemPage.pageName = "ItemStats";
+ItemPage.pageName = "Item stats";

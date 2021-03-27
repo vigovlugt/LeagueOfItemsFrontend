@@ -1,6 +1,7 @@
 import ItemApi from "../api/ItemApi";
 import { useMemo } from "react";
 import { useTable, useSortBy } from "react-table";
+import Table from "../components/Table";
 import ItemStats from "../models/ItemStats";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -14,7 +15,7 @@ export default function Tierlist({ items }) {
   const columns = useMemo(
     () => [
       {
-        Header: "ItemStats",
+        Header: "Item",
         accessor: "name",
         Cell: ({ row }) => (
           <div className="flex items-center">
@@ -73,62 +74,11 @@ export default function Tierlist({ items }) {
     useSortBy
   );
 
-  const goToItem = (id) => router.push(`/items/${id}`);
+  const goToItem = (row) => router.push(`/items/${row.original.id}`);
 
   return (
     <div className="rounded-lg overflow-hidden shadow-lg">
-      <table
-        {...table.getTableProps()}
-        className="min-w-full divide-y divide-gray-200 font-semibold"
-      >
-        <thead className="bg-gray-50">
-          {table.headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  {column.render("Header")}
-                  <span>
-                    {column.isSorted
-                      ? column.isSortedDesc
-                        ? " ▼"
-                        : " ▲"
-                      : "\u00A0\u00A0"}
-                  </span>
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody
-          {...table.getTableBodyProps()}
-          className="bg-white divide-y divide-gray-200"
-        >
-          {table.rows.map((row) => {
-            table.prepareRow(row);
-            return (
-              <tr
-                {...row.getRowProps()}
-                onClick={() => goToItem(row.original.id)}
-                className="cursor-pointer"
-              >
-                {row.cells.map((cell) => {
-                  return (
-                    <td
-                      {...cell.getCellProps()}
-                      className="px-6 py-4 whitespace-nowrap w-[1%]"
-                    >
-                      {cell.render("Cell")}
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <Table table={table} onClick={goToItem} />
     </div>
   );
 }

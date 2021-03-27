@@ -1,8 +1,16 @@
 export function winrate(wins, matches) {
+  if (matches === 0) {
+    return "-%";
+  }
+
   return parseFloat(((wins / matches) * 100).toFixed(2)) + "%";
 }
 
 export function winrateClass(wins, matches) {
+  if (matches === 0) {
+    return "text-winrate-okay";
+  }
+
   const winrate = wins / matches;
 
   if (winrate < 0.45) {

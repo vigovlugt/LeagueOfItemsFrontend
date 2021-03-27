@@ -2,23 +2,24 @@ import classNames from "classnames";
 import Link from "next/link";
 import ListItem from "./icons/ListIcon";
 import GridIcon from "./icons/GridIcon";
+import { useRouter } from "next/router";
 
 const MENU_ITEMS = [
   {
     name: "Items",
-    active: true,
     href: "/",
     icon: GridIcon,
   },
   {
     name: "Tierlist",
-    active: false,
     href: "/tierlist",
     icon: ListItem,
   },
 ];
 
 export default function SideNavigation() {
+  const router = useRouter();
+
   return (
     <nav className="h-screen w-80 p-4 z-10 border-r border-gray-200 flex flex-col flex-none">
       <h2 className="text-[1.65rem] font-header font-medium mb-8">
@@ -28,7 +29,7 @@ export default function SideNavigation() {
 
       <div className="m-1">
         {MENU_ITEMS.map((i) => (
-          <MenuItem {...i} key={i.name} />
+          <MenuItem active={router.pathname === i.href} {...i} key={i.name} />
         ))}
       </div>
     </nav>
@@ -49,10 +50,12 @@ function MenuItem({ name, active, href, icon }) {
           }
         )}
       >
-        <span className={classNames({
+        <span
+          className={classNames({
             "text-gray-400": !active,
-            "text-gray-600": active
-        })}>
+            "text-gray-600": active,
+          })}
+        >
           <Icon />
         </span>
         <span className="ml-3">{name}</span>

@@ -1,4 +1,5 @@
 import ChampionStats from "./ChampionStats";
+import OrderStats from "./OrderStats";
 
 export default class ItemStats {
   public id: number;
@@ -7,16 +8,27 @@ export default class ItemStats {
   public plaintext: string;
   public wins: number;
   public matches: number;
-  public championStats: ChampionStats;
+  public championStats: ChampionStats[];
+  public orderStats: ChampionStats[][];
 
-  constructor({ id, name, description, plaintext, wins, matches, championStats }) {
+  constructor({
+    id,
+    name,
+    description,
+    plaintext,
+    wins,
+    matches,
+    championStats,
+    orderStats,
+  }) {
     this.id = id;
     this.name = name;
     this.description = description;
     this.plaintext = plaintext;
     this.wins = wins;
     this.matches = matches;
-    this.championStats = championStats;
+    this.championStats = championStats.map((s) => new ChampionStats(s));
+    this.orderStats = orderStats.map((stats) => new OrderStats(stats));
   }
 
   isMythic() {

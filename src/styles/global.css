@@ -1,2 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap');
-/*@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');*/
+
+::-webkit-scrollbar {
+    width: 12px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track{
+
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: #6B7280;
+}
