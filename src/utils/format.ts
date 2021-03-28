@@ -27,3 +27,7 @@ export function winrateClass(wins, matches) {
 
   return "text-winrate-volxd";
 }
+
+export function removeTags(str) {
+  return str.replace(/<[^>]*>/g,"");
+}

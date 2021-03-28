@@ -3,17 +3,30 @@ import Link from "next/link";
 import ListItem from "./icons/ListIcon";
 import GridIcon from "./icons/GridIcon";
 import { useRouter } from "next/router";
+import RuneIcon from "./icons/RuneIcon";
+import SwordIcon from "./icons/SwordIcon";
+import TableIcon from "./icons/TableIcon";
 
 const MENU_ITEMS = [
   {
     name: "Items",
     href: "/",
-    icon: GridIcon,
+    icon: SwordIcon,
   },
   {
-    name: "Tierlist",
+    name: "Item Tierlist",
     href: "/tierlist",
     icon: ListItem,
+  },
+  {
+    name: "Runes",
+    href: "/runes",
+    icon: RuneIcon,
+  },
+  {
+    name: "Rune Tierlist",
+    href: "/runes/tierlist",
+    icon: TableIcon,
   },
 ];
 

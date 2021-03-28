@@ -1,5 +1,3 @@
-import ItemStats from "../models/ItemStats";
-
 export default class ItemApi {
   static async getAllItems() {
     const res = await fetch(process.env.API_URL + "/api/items");
