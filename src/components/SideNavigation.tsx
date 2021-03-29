@@ -57,8 +57,8 @@ function MenuItem({ name, active, href, icon }) {
   const Icon = icon;
 
   return (
-    <Link href={href}>
-      <div
+    <Link href={href} passHref>
+      <a
         className={classNames(
           "py-2 px-3 rounded-lg text-gray-700 text-lg font-semibold mb-1 cursor-pointer flex items-center",
           {
@@ -76,7 +76,7 @@ function MenuItem({ name, active, href, icon }) {
           <Icon />
         </span>
         <span className="ml-3">{name}</span>
-      </div>
+      </a>
     </Link>
   );
 }
