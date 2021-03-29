@@ -2,10 +2,10 @@ import "tailwindcss/tailwind.css";
 import "../styles/global.css";
 import SideNavigation from "../components/SideNavigation";
 import NavBar from "../components/NavBar";
-import Head from "next/head";
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
-import RuneApi from "../api/RuneApi";
+import { pageview } from "../lib/ga";
+import { Head } from "next/document";
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
@@ -23,6 +23,16 @@ export default function App({ Component, pageProps }) {
     return () =>
       router.events.off("routeChangeComplete", handleRouteChangeComplete);
   }, []);
+
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      pageview(url);
+    };
+    router.events.on("routeChangeComplete", handleRouteChange);
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router.events]);
 
   const pageName =
     typeof Component.pageName === "function"
