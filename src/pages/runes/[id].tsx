@@ -1,14 +1,20 @@
 import Image from "next/image";
-import {removeTags, winrate, winrateClass} from "../../utils/format";
+import { removeTags, winrate, winrateClass } from "../../utils/format";
 import RuneApi from "../../api/RuneApi";
 import RuneStats from "../../models/RuneStats";
 import ChampionCard from "../../components/ChampionCard";
+import { NextSeo } from "next-seo";
 
 export default function RunePage({ rune }) {
   rune = new RuneStats(rune);
 
   return (
     <div className="flex flex-col">
+      <NextSeo
+        title={rune.name}
+        description={`See ${rune.name}'s best champions and winrate statistics. Data from U.GG.`}
+      />
+
       <div className="flex mb-4">
         <div className="w-[256px] h-[256px] mr-4">
           <Image

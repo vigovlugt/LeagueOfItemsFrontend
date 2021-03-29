@@ -6,6 +6,7 @@ import ItemStats from "../models/ItemStats";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { winrate, winrateClass } from "../utils/format";
+import { NextSeo } from "next-seo";
 
 export default function Tierlist({ items }) {
   const router = useRouter();
@@ -78,6 +79,11 @@ export default function Tierlist({ items }) {
 
   return (
     <div className="rounded-lg overflow-hidden shadow-lg">
+      <NextSeo
+        title="Item tierlist"
+        description="Item tierlist with all League of Legends items."
+      />
+
       <Table table={table} onClick={goToItem} />
     </div>
   );

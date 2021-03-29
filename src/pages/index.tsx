@@ -3,6 +3,7 @@ import ItemApi from "../api/ItemApi";
 import { useMemo } from "react";
 import ItemStats from "../models/ItemStats";
 import RuneIcon from "../components/icons/RuneIcon";
+import {NextSeo} from "next-seo";
 
 export default function Index({ items }) {
   const { mythic, legendary } = useMemo(() => {
@@ -16,6 +17,10 @@ export default function Index({ items }) {
 
   return (
     <div>
+      <NextSeo
+        title="Items"
+      />
+
       <h2 className="font-header text-4xl mb-2">Mythic</h2>
       <div className="flex flex-wrap">
         {mythic.map((i) => (

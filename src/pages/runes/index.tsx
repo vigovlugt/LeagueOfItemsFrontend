@@ -1,8 +1,9 @@
 import RuneApi from "../../api/RuneApi";
 import RuneGridCell from "../../components/runes/RuneGridCell";
-import {useMemo} from "react";
+import { useMemo } from "react";
 import ItemStats from "../../models/ItemStats";
 import RuneStats from "../../models/RuneStats";
+import { NextSeo } from "next-seo";
 
 export default function RuneIndex({ runes }) {
   const { keystones, normalRunes } = useMemo(() => {
@@ -16,6 +17,11 @@ export default function RuneIndex({ runes }) {
 
   return (
     <div>
+      <NextSeo
+        title="Runes"
+        description="See all League of Legends runes and what champions they are best used on."
+      />
+
       <h2 className="font-header text-4xl mb-2">Keystones</h2>
       <div className="flex flex-wrap">
         {keystones.map((i) => (

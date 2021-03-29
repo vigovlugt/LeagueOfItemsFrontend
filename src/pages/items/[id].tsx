@@ -4,12 +4,18 @@ import ItemStats from "../../models/ItemStats";
 import { winrate, winrateClass } from "../../utils/format";
 import ItemStatsByOrder from "../../components/items/ItemStatsByOrder";
 import ChampionCard from "../../components/ChampionCard";
+import { NextSeo } from "next-seo";
 
 export default function ItemPage({ item }) {
   item = new ItemStats(item);
 
   return (
     <div className="flex flex-col">
+      <NextSeo
+        title={item.name}
+        description={`See ${item.name}'s best champions and winrate statistics. Data from U.GG.`}
+      />
+
       <div className="flex mb-4">
         <div className="w-[256px] h-[256px] mr-4">
           <Image

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { winrate, winrateClass } from "../../utils/format";
 import RuneApi from "../../api/RuneApi";
+import {NextSeo} from "next-seo";
 
 export default function RuneTierlist({ runes }) {
   const router = useRouter();
@@ -101,6 +102,11 @@ export default function RuneTierlist({ runes }) {
 
   return (
     <div>
+      <NextSeo
+        title="Rune tierlist"
+        description="Rune tierlist with all League of Legends items."
+      />
+
       <h2 className="font-header text-4xl mb-2">Keystones</h2>
       <div className="rounded-lg overflow-hidden shadow-lg mb-8">
         <Table table={keystoneTable} onClick={goToRune} />

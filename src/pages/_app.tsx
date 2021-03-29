@@ -6,6 +6,7 @@ import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { pageview } from "../lib/ga";
 import Head from "next/head";
+import {DefaultSeo, NextSeo} from "next-seo";
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
@@ -41,9 +42,11 @@ export default function App({ Component, pageProps }) {
 
   return (
     <div className="flex flex-row font-sans w-screen">
-      <Head>
-        <title>League of Items</title>
-      </Head>
+      <DefaultSeo
+        title="League of Items"
+        titleTemplate="League of Items - %s"
+        description="League of Items analyses U.GG data to provide you with an overview of all League of Legends Items and Runes."
+      />
 
       <SideNavigation />
       <div
