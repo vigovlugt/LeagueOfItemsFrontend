@@ -5,7 +5,7 @@ import NavBar from "../components/NavBar";
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { pageview } from "../lib/ga";
-import { Head } from "next/document";
+import Head from "next/head";
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();

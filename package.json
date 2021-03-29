@@ -7,7 +7,7 @@
     "dev": "next dev",
     "build": "yarn build-static-data && next build",
     "start": "next start",
-    "build-static-data": "tsc src/scripts/buildStaticData.ts && node src/scripts/buildStaticData.js && rm src/scripts/buildStaticData.js"
+    "build-static-data": "ts-node src/scripts/buildStaticData.ts"
   },
   "dependencies": {
     "classnames": "^2.2.6",
@@ -26,6 +26,7 @@
     "node-fetch": "^2.6.1",
     "postcss": "^8.2.8",
     "tailwindcss": "^2.0.3",
+    "ts-node": "^9.1.1",
     "typescript": "^4.2.3"
   }
 }
