@@ -9,6 +9,7 @@ global.fetch = fetch;
 require("dotenv").config({ path: "./.env.local" });
 
 async function main() {
+  storeBuildInfo();
   await Promise.all([storeItemData(), storeRuneData()]);
 }
 
@@ -31,6 +32,15 @@ async function storeRuneData() {
   fs.writeFileSync(
     path.join(__dirname, "../temp/runes.json"),
     JSON.stringify(simpleRunes)
+  );
+}
+
+function storeBuildInfo() {
+  const buildDate = new Date().toISOString();
+
+  fs.writeFileSync(
+    path.join(__dirname, "../temp/buildInfo.json"),
+    JSON.stringify({ buildDate })
   );
 }
 

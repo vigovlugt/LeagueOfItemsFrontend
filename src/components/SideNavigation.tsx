@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import RuneIcon from "./icons/RuneIcon";
 import SwordIcon from "./icons/SwordIcon";
 import TableIcon from "./icons/TableIcon";
+import SearchBar from "./layout/SearchBar";
+import SideNavFooter from "./layout/SideNavFooter";
 
 const MENU_ITEMS = [
   {
@@ -45,6 +47,8 @@ export default function SideNavigation() {
           <MenuItem active={router.pathname === i.href} {...i} key={i.name} />
         ))}
       </div>
+
+      <SideNavFooter />
     </nav>
   );
 }

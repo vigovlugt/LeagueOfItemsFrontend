@@ -10,7 +10,6 @@ export default function NavBar({ title }) {
       </div>
 
       <SearchBar />
-      <div className="w-px" />
     </nav>
   );
 }

@@ -5,12 +5,13 @@
   "license": "MIT",
   "scripts": {
     "dev": "next dev",
-    "build": "npm run build-static-data && next build",
+    "build": "yarn build-static-data && next build",
     "start": "next start",
     "build-static-data": "tsc src/scripts/buildStaticData.ts && node src/scripts/buildStaticData.js && rm src/scripts/buildStaticData.js"
   },
   "dependencies": {
     "classnames": "^2.2.6",
+    "date-fns": "^2.19.0",
     "next": "^10.0.9",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
