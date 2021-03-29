@@ -9,7 +9,7 @@ lerna-debug.log*
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
-# Runtime data
+# Runtime temp
 pids
 *.pid
 *.seed
@@ -103,3 +103,5 @@ dist
 # TernJS port file
 .tern-port
 .vercel
+
+src/temp/

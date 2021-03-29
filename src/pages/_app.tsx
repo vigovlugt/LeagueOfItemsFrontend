@@ -5,8 +5,9 @@ import NavBar from "../components/NavBar";
 import Head from "next/head";
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
+import RuneApi from "../api/RuneApi";
 
-function App({ Component, pageProps }) {
+export default function App({ Component, pageProps }) {
   const router = useRouter();
 
   const pageContainer = useRef();
@@ -47,5 +48,3 @@ function App({ Component, pageProps }) {
     </div>
   );
 }
-
-export default App;

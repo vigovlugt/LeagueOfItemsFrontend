@@ -71,8 +71,8 @@ export default function ItemPage({ item }) {
           className="grid grid-cols-5 grid-flow-col gap-2"
           style={{ gridTemplateRows: "auto auto" }}
         >
-          {item.orderStats.map((stats, i) => (
-            <ItemStatsByOrder key={i} orderStats={stats} />
+          {item.orderStats.map((stats) => (
+            <ItemStatsByOrder key={Math.random()} orderStats={stats} />
           ))}
         </div>
       </div>

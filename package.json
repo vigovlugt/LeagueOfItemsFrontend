@@ -5,8 +5,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "build": "npm run build-static-data && next build",
+    "start": "next start",
+    "build-static-data": "tsc src/scripts/buildStaticData.ts && node src/scripts/buildStaticData.js && rm src/scripts/buildStaticData.js"
   },
   "dependencies": {
     "classnames": "^2.2.6",
@@ -20,6 +21,8 @@
     "@types/node": "^14.14.35",
     "@types/react": "^17.0.3",
     "autoprefixer": "^10.2.5",
+    "dotenv": "^8.2.0",
+    "node-fetch": "^2.6.1",
     "postcss": "^8.2.8",
     "tailwindcss": "^2.0.3",
     "typescript": "^4.2.3"

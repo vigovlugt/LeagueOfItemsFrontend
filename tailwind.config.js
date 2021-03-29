@@ -10,7 +10,7 @@ module.exports = {
     extend: {
       colors: {
         winrate: {
-          shinggo: "#ff4e50",
+          shiggo: "#ff4e50",
           meh: "#fcb1b2",
           okay: colors.gray[900], //"#000",
           good: "#7ea4f4",
