@@ -21,7 +21,8 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.tsx",
+    "../../../../../../AppData/Local/JetBrains/WebStorm2020.3/javascript/typings/node/12.20.7/node_modules/@types/node/globals.d.ts"
   ],
   "exclude": [
     "node_modules"

@@ -1,15 +1,20 @@
-export default class ItemApi {
-  static async getAllItems() {
-    const res = await fetch(process.env.API_URL + "/api/items");
-    const items = await res.json();
+import * as path from "path";
+import * as fs from "fs";
 
-    return items;
+export default class ItemApi {
+  static getDataset() {
+    const filePath = path.join(process.cwd(), "./data/dataset.json");
+
+    const json = JSON.parse(fs.readFileSync(filePath).toString());
+
+    return json;
+  }
+
+  static async getAllItems() {
+    return this.getDataset().items;
   }
 
   static async getItem(id) {
-    const res = await fetch(`${process.env.API_URL}/api/items/${id}`);
-    const item = await res.json();
-
-    return item;
+    return this.getDataset().items.find(i => i.id == id);
   }
 }

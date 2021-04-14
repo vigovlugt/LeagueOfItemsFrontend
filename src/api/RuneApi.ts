@@ -1,15 +1,20 @@
-export default class RuneApi {
-  static async getAllRunes() {
-    const res = await fetch(process.env.API_URL + "/api/runes");
-    const runes = await res.json();
+import path from "path";
+import fs from "fs";
 
-    return runes;
+export default class RuneApi {
+  static getDataset() {
+    const filePath = path.join(process.cwd(), "./data/dataset.json");
+
+    const json = JSON.parse(fs.readFileSync(filePath).toString());
+
+    return json;
+  }
+
+  static async getAllRunes() {
+    return this.getDataset().runes;
   }
 
   static async getRune(id) {
-    const res = await fetch(`${process.env.API_URL}/api/runes/${id}`);
-    const rune = await res.json();
-
-    return rune;
+    return this.getDataset().runes.find(r => r.id == id);
   }
 }
