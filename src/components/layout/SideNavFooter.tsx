@@ -4,11 +4,13 @@ import dataset from "../../../data/dataset.json";
 
 export default function SideNavFooter() {
   return (
-    <div className="p-2 mt-auto border-t border-gray-200 text-gray-600">
-      Last update{" "}
-      {formatDistance(new Date(dataset.date), new Date(), {
-        addSuffix: true,
-      })}
+    <div className="p-2 pb-0 mt-auto border-t border-gray-200 text-gray-600 flex flex-col">
+      <span className="pb-1">Patch{" "}
+        {dataset.version}</span>
+      <span>Last update{" "}
+        {formatDistance(new Date(dataset.date), new Date(), {
+          addSuffix: true,
+        })}</span>
     </div>
   );
 }
