@@ -1,11 +1,8 @@
-import { useRef, useState } from "react";
-import Link from "next/link";
+import {useEffect, useState} from "react";
 import classNames from "classnames";
-
-import runes from "../../temp/runes.json";
-import items from "../../temp/items.json";
+import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
 
 export default function SearchBar() {
   const router = useRouter();
@@ -13,13 +10,27 @@ export default function SearchBar() {
   const [query, setQuery] = useState("");
   const [isFocussed, setIsFocussed] = useState(false);
 
+  const [results, setResults] = useState([]);
+
+  const [dataset, setDataset] = useState({items: [], runes: []});
+  const [hasFetchedDataset, setHasFetchedDataset] = useState(false);
+
+  const onFocus = () => {
+    setIsFocussed(true);
+
+    if (!hasFetchedDataset) {
+      fetchDataset();
+      setHasFetchedDataset(true);
+    }
+  }
+
   const submit = (e) => {
     e.preventDefault();
     if (!results.length) {
       return;
     }
 
-    const { type, id } = results[0];
+    const {type, id} = results[0];
     const typeUrl = type == "ITEM" ? "items" : "runes";
 
     router.push(`/${typeUrl}/${id}`);
@@ -38,15 +49,25 @@ export default function SearchBar() {
     return name.includes(searchQuery) || firstLetters.includes(searchQuery);
   };
 
-  const itemResults = query
-    ? items.filter(filterFunction).map((i) => ({ ...i, type: "ITEM" }))
-    : [];
+  const fetchDataset = async () => {
+    const res = await fetch("/data/dataset.json");
+    const dataset = await res.json();
 
-  const runeResults = query
-    ? runes.filter(filterFunction).map((r) => ({ ...r, type: "RUNE" }))
-    : [];
+    setDataset(dataset);
+  }
 
-  const results = [...itemResults, ...runeResults];
+  useEffect(() => {
+    const itemResults = query
+      ? dataset.items.filter(filterFunction).map((i) => ({id: i.id, name: i.name, type: "ITEM"}))
+      : [];
+
+    const runeResults = query
+      ? dataset.runes.filter(filterFunction).map((r) => ({id: r.id, name: r.name, type: "RUNE"}))
+      : [];
+
+    setResults([...itemResults, ...runeResults]);
+  }, [query, dataset])
+
 
   return (
     <form className="relative" onSubmit={submit}>
@@ -61,7 +82,7 @@ export default function SearchBar() {
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         onBlur={() => setTimeout(() => setIsFocussed(false), 100)}
-        onFocus={() => setIsFocussed(true)}
+        onFocus={onFocus}
       />
       <button type="submit" className="absolute right-0 top-0 mt-3 mr-4">
         <svg
@@ -70,13 +91,14 @@ export default function SearchBar() {
           width="512px"
           height="512px"
         >
-          <path d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
+          <path
+            d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z"/>
         </svg>
       </button>
       {results.length > 0 && isFocussed && (
         <div className="absolute bg-white rounded-md border border-gray-300 py-2 w-full z-10 rounded-t-none">
           {results.slice(0, 5).map((result, i) => (
-            <SearchResult {...result} key={i} onClick={() => setQuery("")} />
+            <SearchResult {...result} key={i} onClick={() => setQuery("")}/>
           ))}
         </div>
       )}
@@ -84,7 +106,7 @@ export default function SearchBar() {
   );
 }
 
-function SearchResult({ name, id, type, onClick }) {
+function SearchResult({name, id, type, onClick}) {
   const typeUrl = type == "ITEM" ? "items" : "runes";
 
   return (
@@ -93,7 +115,7 @@ function SearchResult({ name, id, type, onClick }) {
         className="cursor-pointer px-3 hover:bg-gray-100 py-2 flex items-center justify-start"
         onClick={onClick}
       >
-        <Image src={`/images/${typeUrl}/${id}.png`} height={32} width={32} />{" "}
+        <Image src={`/images/${typeUrl}/${id}.png`} height={32} width={32}/>{" "}
         <span className="ml-2 font-bold">{name}</span>
       </a>
     </Link>
