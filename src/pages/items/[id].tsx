@@ -16,8 +16,8 @@ export default function ItemPage({ item }) {
         description={`See ${item.name}'s best champions and winrate statistics. Data from U.GG.`}
       />
 
-      <div className="flex mb-4">
-        <div className="w-[256px] h-[256px] mr-4">
+      <div className="flex mb-4 w-full">
+        <div className="w-[256px] h-[256px] mr-4 flex-shrink-0">
           <Image
             className="cursor-pointer"
             src={`/images/items/${item.id}.png`}
@@ -26,12 +26,12 @@ export default function ItemPage({ item }) {
             quality={100}
           />
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col w-full">
           <h2 className="text-5xl font-header font-medium">{item.name}</h2>
           <p className="text-lg font-header mb-4 text-gray-600">
             {item.plaintext}
           </p>
-          <div className="grid grid-cols-2 gap-3 mb-4">
+          <div className="grid grid-cols-2 gap-3 mb-4 w-1/2">
             <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow">
               <span
                 className={`text-gray-900 ${winrateClass(

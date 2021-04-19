@@ -1,11 +1,11 @@
 import Image from "next/image";
-import { removeTags, winrate, winrateClass } from "../../utils/format";
+import {removeTags, winrate, winrateClass} from "../../utils/format";
 import RuneApi from "../../api/RuneApi";
 import RuneStats from "../../models/RuneStats";
 import ChampionCard from "../../components/ChampionCard";
-import { NextSeo } from "next-seo";
+import {NextSeo} from "next-seo";
 
-export default function RunePage({ rune }) {
+export default function RunePage({rune}) {
   rune = new RuneStats(rune);
 
   return (
@@ -15,8 +15,8 @@ export default function RunePage({ rune }) {
         description={`See ${rune.name}'s best champions and winrate statistics. Data from U.GG.`}
       />
 
-      <div className="flex mb-4">
-        <div className="w-[256px] h-[256px] mr-4">
+      <div className="flex mb-4 w-full">
+        <div className="w-[256px] h-[256px] mr-4 flex-shrink-0">
           <Image
             className="cursor-pointer"
             src={`/images/runes/${rune.id}.png`}
@@ -25,12 +25,12 @@ export default function RunePage({ rune }) {
             quality={100}
           />
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col w-full">
           <h2 className="text-5xl font-header font-medium">{rune.name}</h2>
           <p className="text-lg font-header mb-4 text-gray-600">
             {removeTags(rune.shortDescription)}
           </p>
-          <div className="grid grid-cols-2 gap-3 mb-4">
+          <div className="grid grid-cols-2 gap-3 mb-4 w-1/2">
             <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow">
               <span
                 className={`text-gray-900 ${winrateClass(
@@ -74,12 +74,12 @@ export async function getStaticPaths() {
   const runes = await RuneApi.getAllRunes();
 
   return {
-    paths: runes.map((r) => ({ params: { id: r.id.toString() } })),
+    paths: runes.map((r) => ({params: {id: r.id.toString()}})),
     fallback: false,
   };
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({params}) {
   const rune = await RuneApi.getRune(params.id);
 
   return {
@@ -89,4 +89,4 @@ export async function getStaticProps({ params }) {
   };
 }
 
-RunePage.pageName = ({ rune }) => rune.name;
+RunePage.pageName = ({rune}) => rune.name;
