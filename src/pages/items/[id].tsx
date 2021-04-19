@@ -97,7 +97,6 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const item = await ItemApi.getItem(params.id);
-  console.log(item);
 
   return {
     props: {

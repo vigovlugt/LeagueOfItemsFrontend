@@ -52,7 +52,6 @@ export default function SearchBar() {
   const fetchDataset = async () => {
     const res = await fetch("/data/dataset.json");
     const dataset = await res.json();
-
     setDataset(dataset);
   }
 
