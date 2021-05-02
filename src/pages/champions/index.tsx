@@ -1,6 +1,3 @@
-import RuneApi from "../../api/RuneApi";
-import RuneGridCell from "../../components/runes/RuneGridCell";
-import RuneStats from "../../models/runes/RuneStats";
 import {NextSeo} from "next-seo";
 import ChampionApi from "../../api/ChampionApi";
 import ChampionGridCell from "../../components/champions/ChampionGridCell";
