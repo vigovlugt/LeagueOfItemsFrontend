@@ -1,15 +1,6 @@
-import path from "path";
-import fs from "fs";
+import Api from "./Api";
 
-export default class RuneApi {
-  static getDataset() {
-    const filePath = path.join(process.cwd(), "./data/dataset.json");
-
-    const json = JSON.parse(fs.readFileSync(filePath).toString());
-
-    return json;
-  }
-
+export default class RuneApi extends Api {
   static async getAllRunes() {
     return this.getDataset().runes;
   }

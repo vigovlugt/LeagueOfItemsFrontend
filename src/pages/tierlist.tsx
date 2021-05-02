@@ -2,7 +2,7 @@ import ItemApi from "../api/ItemApi";
 import { useMemo } from "react";
 import { useTable, useSortBy } from "react-table";
 import Table from "../components/Table";
-import ItemStats from "../models/ItemStats";
+import ItemStats from "../models/items/ItemStats";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { winrate, winrateClass } from "../utils/format";

@@ -8,6 +8,7 @@ import SwordIcon from "./icons/SwordIcon";
 import TableIcon from "./icons/TableIcon";
 import SearchBar from "./layout/SearchBar";
 import SideNavFooter from "./layout/SideNavFooter";
+import ChampionIcon from "./icons/ChampionIcon";
 
 const MENU_ITEMS = [
   {
@@ -28,7 +29,17 @@ const MENU_ITEMS = [
   {
     name: "Rune Tierlist",
     href: "/runes/tierlist",
-    icon: TableIcon,
+    icon: ListItem,
+  },
+  {
+    name: "Champions",
+    href: "/champions",
+    icon: ChampionIcon,
+  },
+  {
+    name: "Champion Tierlist",
+    href: "/champions/tierlist",
+    icon: ListItem,
   },
 ];
 

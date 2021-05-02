@@ -1,12 +1,12 @@
 import Image from "next/image";
 import ItemApi from "../../api/ItemApi";
-import ItemStats from "../../models/ItemStats";
-import { winrate, winrateClass } from "../../utils/format";
+import ItemStats from "../../models/items/ItemStats";
+import {winrate, winrateClass} from "../../utils/format";
 import ItemStatsByOrder from "../../components/items/ItemStatsByOrder";
-import ChampionCard from "../../components/ChampionCard";
-import { NextSeo } from "next-seo";
+import Card from "../../components/Card";
+import {NextSeo} from "next-seo";
 
-export default function ItemPage({ item }) {
+export default function ItemPage({item}) {
   item = new ItemStats(item);
 
   return (
@@ -63,7 +63,7 @@ export default function ItemPage({ item }) {
           {item.championStats
             .sort((a, b) => b.wins / b.matches - a.wins / a.matches)
             .map((championStats, i) => (
-              <ChampionCard key={i} {...championStats} />
+              <Card key={i} type={"champion"} {...championStats} id={championStats.championId}/>
             ))}
         </div>
       </div>
@@ -75,10 +75,10 @@ export default function ItemPage({ item }) {
         </h2>
         <div
           className="grid grid-cols-5 grid-flow-col gap-2"
-          style={{ gridTemplateRows: "auto auto" }}
+          style={{gridTemplateRows: "auto auto"}}
         >
           {item.orderStats.map((stats) => (
-            <ItemStatsByOrder key={Math.random()} orderStats={stats} />
+            <ItemStatsByOrder key={Math.random()} orderStats={stats}/>
           ))}
         </div>
       </div>
@@ -90,12 +90,12 @@ export async function getStaticPaths() {
   const items = await ItemApi.getAllItems();
 
   return {
-    paths: items.map((i) => ({ params: { id: "" + i.id } })),
+    paths: items.map((i) => ({params: {id: "" + i.id}})),
     fallback: false,
   };
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({params}) {
   const item = await ItemApi.getItem(params.id);
 
   return {
@@ -105,4 +105,4 @@ export async function getStaticProps({ params }) {
   };
 }
 
-ItemPage.pageName = ({ item }) => item.name;
+ItemPage.pageName = ({item}) => item.name;

@@ -1,8 +1,8 @@
-import ChampionStats from "./ChampionStats";
+import ItemChampionStats from "./ItemChampionStats";
 
-export default class OrderStats {
+export default class ItemOrderStats {
   public order: number;
-  public championStats: ChampionStats[];
+  public championStats: ItemChampionStats[];
 
   public wins: number;
   public matches: number;
@@ -11,6 +11,6 @@ export default class OrderStats {
     this.order = order;
     this.wins = wins;
     this.matches = matches;
-    this.championStats = championStats.map((s) => new ChampionStats(s));
+    this.championStats = championStats.map((s) => new ItemChampionStats(s));
   }
 }

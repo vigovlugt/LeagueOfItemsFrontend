@@ -1,8 +1,8 @@
 import RuneApi from "../../api/RuneApi";
 import RuneGridCell from "../../components/runes/RuneGridCell";
 import { useMemo } from "react";
-import ItemStats from "../../models/ItemStats";
-import RuneStats from "../../models/RuneStats";
+import ItemStats from "../../models/items/ItemStats";
+import RuneStats from "../../models/runes/RuneStats";
 import { NextSeo } from "next-seo";
 
 export default function RuneIndex({ runes }) {

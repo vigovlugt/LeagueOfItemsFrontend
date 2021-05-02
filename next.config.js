@@ -16,7 +16,8 @@ module.exports = {
 
             return JSON.stringify({
               items: dataset.items.map(({id, name}) => ({id, name})),
-              runes: dataset.runes.map(({id, name}) => ({id, name}))
+              runes: dataset.runes.map(({id, name}) => ({id, name})),
+              champions: dataset.champions.map(({id, name}) => ({id, name})),
             })
           }
         },
