@@ -1,7 +1,7 @@
 import ItemGridCell from "../components/items/ItemGridCell";
 import ItemApi from "../api/ItemApi";
 import { useMemo } from "react";
-import ItemStats from "../models/ItemStats";
+import ItemStats from "../models/items/ItemStats";
 import RuneIcon from "../components/icons/RuneIcon";
 import {NextSeo} from "next-seo";
 

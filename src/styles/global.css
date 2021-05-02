@@ -5,11 +5,15 @@
     height: 8px;
 }
 
-::-webkit-scrollbar-track{
+::-webkit-scrollbar-track {
 
 }
 
 ::-webkit-scrollbar-thumb {
     border-radius: 8px;
     background-color: #6B7280;
+}
+
+.champion-image {
+    transform: scale(1.17);
 }

@@ -1,7 +1,7 @@
-import ItemStats from "./ItemStats";
-import RuneStats from "./RuneStats";
+import ItemStats from "./items/ItemStats";
+import RuneStats from "./runes/RuneStats";
 
-export default class ItemRuneDataset {
+export default class Dataset {
   public items: ItemStats[];
   public runes: RuneStats[];
   public date: string;

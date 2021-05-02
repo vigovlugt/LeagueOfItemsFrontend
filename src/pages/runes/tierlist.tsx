@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useTable, useSortBy } from "react-table";
 import Table from "../../components/Table";
-import RuneStats from "../../models/RuneStats";
+import RuneStats from "../../models/runes/RuneStats";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { winrate, winrateClass } from "../../utils/format";

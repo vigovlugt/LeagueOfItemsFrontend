@@ -1,4 +1,4 @@
-import ChampionStats from "./ChampionStats";
+import RuneChampionStats from "./RuneChampionStats";
 
 export default class RuneStats {
   public id: number;
@@ -9,19 +9,19 @@ export default class RuneStats {
 
   public wins: number;
   public matches: number;
-  public championStats: ChampionStats[];
-  public orderStats: ChampionStats[][];
+
+  public championStats: RuneChampionStats[];
 
   constructor({
-    id,
-    name,
-    tier,
-    shortDescription,
-    longDescription,
-    wins,
-    matches,
-    championStats,
-  }) {
+                id,
+                name,
+                tier,
+                shortDescription,
+                longDescription,
+                wins,
+                matches,
+                championStats,
+              }) {
     this.id = id;
     this.name = name;
     this.tier = tier;
@@ -31,7 +31,7 @@ export default class RuneStats {
 
     this.wins = wins;
     this.matches = matches;
-    this.championStats = (championStats || []).map((s) => new ChampionStats(s));
+    this.championStats = championStats.map((s) => new RuneChampionStats(s));
   }
 
   isKeystone() {

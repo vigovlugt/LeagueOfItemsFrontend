@@ -12,7 +12,7 @@ export default function SearchBar() {
 
   const [results, setResults] = useState([]);
 
-  const [dataset, setDataset] = useState({items: [], runes: []});
+  const [dataset, setDataset] = useState({items: [], runes: [], champions: []});
   const [hasFetchedDataset, setHasFetchedDataset] = useState(false);
 
   const onFocus = () => {
@@ -31,15 +31,14 @@ export default function SearchBar() {
     }
 
     const {type, id} = results[0];
-    const typeUrl = type == "ITEM" ? "items" : "runes";
 
-    router.push(`/${typeUrl}/${id}`);
+    router.push(`/${type}s/${id}`);
     setQuery("");
   };
 
   const filterFunction = (i) => {
-    const name = i.name.toLowerCase();
-    const searchQuery = query.toLowerCase();
+    const name = i.name.toLowerCase().replaceAll("'", "");
+    const searchQuery = query.toLowerCase().replaceAll("'", "");
 
     const firstLetters = name
       .split(" ")
@@ -57,14 +56,18 @@ export default function SearchBar() {
 
   useEffect(() => {
     const itemResults = query
-      ? dataset.items.filter(filterFunction).map((i) => ({id: i.id, name: i.name, type: "ITEM"}))
+      ? dataset.items.filter(filterFunction).map((i) => ({id: i.id, name: i.name, type: "item"}))
       : [];
 
     const runeResults = query
-      ? dataset.runes.filter(filterFunction).map((r) => ({id: r.id, name: r.name, type: "RUNE"}))
+      ? dataset.runes.filter(filterFunction).map((r) => ({id: r.id, name: r.name, type: "runes"}))
       : [];
 
-    setResults([...itemResults, ...runeResults]);
+    const championResults = query
+      ? dataset.champions.filter(filterFunction).map((r) => ({id: r.id, name: r.name, type: "champion"}))
+      : [];
+
+    setResults([...itemResults, ...runeResults, ...championResults]);
   }, [query, dataset])
 
 
@@ -106,15 +109,13 @@ export default function SearchBar() {
 }
 
 function SearchResult({name, id, type, onClick}) {
-  const typeUrl = type == "ITEM" ? "items" : "runes";
-
   return (
-    <Link href={`/${typeUrl}/${id}`} passHref>
+    <Link href={`/${type}s/${id}`} passHref>
       <a
         className="cursor-pointer px-3 hover:bg-gray-100 py-2 flex items-center justify-start"
         onClick={onClick}
       >
-        <Image src={`/images/${typeUrl}/${id}.png`} height={32} width={32}/>{" "}
+        <Image src={`/images/${type}s/${id}.png`} height={32} width={32}/>{" "}
         <span className="ml-2 font-bold">{name}</span>
       </a>
     </Link>

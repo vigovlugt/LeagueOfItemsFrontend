@@ -1,8 +1,8 @@
 import Image from "next/image";
 import {removeTags, winrate, winrateClass} from "../../utils/format";
 import RuneApi from "../../api/RuneApi";
-import RuneStats from "../../models/RuneStats";
-import ChampionCard from "../../components/ChampionCard";
+import RuneStats from "../../models/runes/RuneStats";
+import Card from "../../components/Card";
 import {NextSeo} from "next-seo";
 
 export default function RunePage({rune}) {
@@ -62,7 +62,7 @@ export default function RunePage({rune}) {
           {rune.championStats
             .sort((a, b) => b.wins / b.matches - a.wins / a.matches)
             .map((championStats, i) => (
-              <ChampionCard key={i} {...championStats} />
+              <Card key={i} type={"champion"} {...championStats} id={championStats.championId}/>
             ))}
         </div>
       </div>
