@@ -3,15 +3,15 @@ import Link from "next/link";
 
 export default function RuneGridCell({ id, size = "md" }) {
   return (
-    <Link href={`/runes/${id}`}>
-      <div className="mr-[6px]">
+    <Link href={`/runes/${id}`} passHref>
+      <a className="block mr-[6px]">
         <Image
           className="cursor-pointer"
           src={`/images/runes/${id}.png`}
           width={size == "md" ? 128 : 64}
           height={size == "md" ? 128 : 64}
         />
-      </div>
+      </a>
     </Link>
   );
 }

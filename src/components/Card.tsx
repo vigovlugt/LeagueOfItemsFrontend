@@ -5,9 +5,9 @@ import Link from "next/link";
 
 export default function Card({type, id, wins, matches}) {
   return (
-    <Link href={`/${type}s/${id}`}>
-      <div
-        className="px-3 py-3 bg-white rounded text-center shadow cursor-pointer"
+    <Link href={`/${type}s/${id}`} passHref>
+      <a
+        className="block px-3 py-3 bg-white rounded text-center shadow cursor-pointer"
       >
         {/*<h3 className="font-header mb-1">{championId}</h3>*/}
         {type === "champion" ? <ChampionIcon id={id}/> : <div
@@ -27,7 +27,7 @@ export default function Card({type, id, wins, matches}) {
           {winrate(wins, matches)}
         </p>
         <p className="text-center font-bold text-lg">{matches}</p>
-      </div>
+      </a>
     </Link>
   );
 }
