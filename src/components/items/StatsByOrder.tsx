@@ -4,13 +4,18 @@ import { useMemo } from "react";
 import { useTable, useSortBy } from "react-table";
 import Table from "../Table";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 const nameByOrder = ["First", "Second", "Third", "Fourth", "Last"];
 
-export default function ItemStatsByOrder({ orderStats }) {
+export default function StatsByOrder({ orderStats, type = "champion" }) {
   const router = useRouter();
 
-  const data = useMemo(() => orderStats.championStats, []);
+  const data = useMemo(
+    () =>
+      type === "champion" ? orderStats.championStats : orderStats.itemStats,
+    []
+  );
 
   const columns = useMemo(
     () => [
@@ -19,7 +24,15 @@ export default function ItemStatsByOrder({ orderStats }) {
         accessor: "name",
         Cell: ({ row }) => (
           <div className="flex items-center">
-            <ChampionIcon id={row.original.championId} size="sm" />
+            {type === "champion" ? (
+              <ChampionIcon id={row.original.championId} size="sm" />
+            ) : (
+              <Image
+                height={32}
+                width={32}
+                src={`/images/items/${row.original.itemId}.png`}
+              />
+            )}
           </div>
         ),
         disableSortBy: true,
@@ -65,7 +78,10 @@ export default function ItemStatsByOrder({ orderStats }) {
     useSortBy
   );
 
-  const goToChampion = (row) => router.push(`/champions/${row.original.championId}`);
+  const goToChampion = (row) =>
+    router.push(`/champions/${row.original.championId}`);
+  const goToItem = (row) => router.push(`/items/${row.original.itemId}`);
+  const goTo = type === "champion" ? goToChampion : goToItem;
 
   return (
     <>
@@ -90,7 +106,7 @@ export default function ItemStatsByOrder({ orderStats }) {
       {/* Champion stats */}
       <div>
         <div className="rounded-lg overflow-hidden shadow bg-white">
-          <Table table={table} onClick={goToChampion} size="sm" />
+          <Table table={table} onClick={goTo} size="sm" />
         </div>
       </div>
     </>

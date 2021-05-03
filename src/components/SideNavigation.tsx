@@ -48,10 +48,14 @@ export default function SideNavigation() {
 
   return (
     <nav className="h-screen w-80 p-4 z-10 border-r border-gray-200 flex flex-col flex-none">
-      <h2 className="text-[1.65rem] font-header font-medium mb-8">
-        LEAGUE OF
-        <span className="block text-5xl">ITEMS</span>
-      </h2>
+      <Link href={"/"} passHref>
+        <a>
+          <h2 className="text-[1.65rem] font-header font-medium mb-8">
+            LEAGUE OF
+            <span className="block text-5xl">ITEMS</span>
+          </h2>
+        </a>
+      </Link>
 
       <div className="m-1">
         {MENU_ITEMS.map((i) => (
