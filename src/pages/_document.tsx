@@ -24,6 +24,10 @@ export default class Document extends NextDocument {
           `,
             }}
           />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap"
+            rel="stylesheet"
+          />
         </Head>
         <body>
           <Main />
