@@ -38,11 +38,11 @@ export default function App({ Component, pageProps }) {
 
       <SideNavigation />
       <div
-        className="bg-gray-100 flex flex-col h-screen "
+        className="bg-gray-100 flex flex-col h-screen"
         style={{ width: "calc(100% - 320px)" }}
       >
         <NavBar title={pageName} />
-        <div ref={pageContainer} className="p-8 text-gray-900 overflow-y-auto">
+        <div ref={pageContainer} className="p-8 text-gray-900 overflow-y-auto h-full">
           <Component {...pageProps} />
         </div>
       </div>

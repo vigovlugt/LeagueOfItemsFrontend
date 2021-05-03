@@ -7,7 +7,7 @@ export default function ChampionGridCell({ id }) {
       <div className="mr-[6px]">
         <Image
           className="cursor-pointer champion-image"
-          src={`/images/champions/${id}.png`}
+          src={`/images/champions/tiles/${id}.jpg`}
           width={128}
           height={128}
         />

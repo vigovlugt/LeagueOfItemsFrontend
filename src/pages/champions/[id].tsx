@@ -9,31 +9,29 @@ export default function ChampionPage({champion}) {
   champion = new ChampionStats(champion);
 
   return (
-    <div className="flex">
+    <div className="flex flex-col">
       <NextSeo
         title={champion.name}
         description={`See ${champion.name}'s best items, runes and winrate statistics. Data from U.GG.`}
       />
 
-      <div className="mr-4 flex-shrink-0">
-        <Image
-          className="cursor-pointer champion-image"
-          src={`/images/champions/splashes/${champion.id}.jpg`}
-          width={540}
-          height={1080}
-          quality={100}
-        />
-      </div>
-
-      <div className="flex flex-col">
-        <div className="flex mb-4 w-full">
-          <div className="flex flex-col w-full">
-            <h2 className="text-5xl font-header font-medium">{champion.name}</h2>
-            <p className="text-lg font-header mb-4 text-gray-600">
-              {champion.blurb}
-            </p>
-            <div className="grid grid-cols-2 gap-3 mb-4 w-1/2">
-              <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow">
+      <div className="flex mb-4 w-full">
+        <div className="w-[256px] h-[256px] mr-4 flex-shrink-0">
+          <Image
+            className="cursor-pointer"
+            src={`/images/champions/tiles/${champion.id}.jpg`}
+            width={256}
+            height={256}
+            quality={100}
+          />
+        </div>
+        <div className="flex flex-col w-full">
+          <h2 className="text-5xl font-header font-medium">{champion.name}</h2>
+          <p className="text-lg font-header mb-4 text-gray-600">
+            {champion.blurb}
+          </p>
+          <div className="grid grid-cols-2 gap-3 mb-4 w-1/2">
+            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow">
               <span
                 className={`text-gray-900 ${winrateClass(
                   champion.wins,
@@ -42,49 +40,48 @@ export default function ChampionPage({champion}) {
               >
                 {winrate(champion.wins, champion.matches)}
               </span>{" "}
-                Winrate
-              </div>
-              <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow">
-                <span className="text-gray-900">{champion.matches}</span> Matches
-              </div>
-              <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow">
-                <span className="text-gray-900">{champion.itemStats.length}</span>{" "}
-                Items
-              </div>
-              <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow">
-                <span className="text-gray-900">{champion.runeStats.length}</span>{" "}
-                Runes
-              </div>
+              Winrate
+            </div>
+            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow">
+              <span className="text-gray-900">{champion.matches}</span> Matches
+            </div>
+            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow">
+              <span className="text-gray-900">{champion.itemStats.length}</span>{" "}
+              Items
+            </div>
+            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow">
+              <span className="text-gray-900">{champion.runeStats.length}</span>{" "}
+              Runes
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Highest winrate items */}
-        <div className="mb-4">
-          <h2 className="text-2xl font-header font-medium mb-1">
-            Highest winrate items
-          </h2>
-          <div className="flex space-x-2 w-full overflow-x-auto pb-2">
-            {champion.itemStats
-              .sort((a, b) => b.wins / b.matches - a.wins / a.matches)
-              .map((itemStats, i) => (
-                <Card key={i} type={"item"} {...itemStats} id={itemStats.itemId}/>
-              ))}
-          </div>
+      {/* Highest winrate items */}
+      <div className="mb-4">
+        <h2 className="text-2xl font-header font-medium mb-1">
+          Highest winrate items
+        </h2>
+        <div className="flex space-x-2 w-full overflow-x-auto pb-2">
+          {champion.itemStats
+            .sort((a, b) => b.wins / b.matches - a.wins / a.matches)
+            .map((itemStats, i) => (
+              <Card key={i} type={"item"} {...itemStats} id={itemStats.itemId}/>
+            ))}
         </div>
+      </div>
 
-        {/* Highest winrate runes */}
-        <div>
-          <h2 className="text-2xl font-header font-medium mb-1">
-            Highest winrate runes
-          </h2>
-          <div className="flex space-x-2 w-full overflow-x-auto pb-2">
-            {champion.runeStats
-              .sort((a, b) => b.wins / b.matches - a.wins / a.matches)
-              .map((runeStats, i) => (
-                <Card key={i} type={"rune"} {...runeStats} id={runeStats.runeId}/>
-              ))}
-          </div>
+      {/* Highest winrate runes */}
+      <div>
+        <h2 className="text-2xl font-header font-medium mb-1">
+          Highest winrate runes
+        </h2>
+        <div className="flex space-x-2 w-full overflow-x-auto pb-2">
+          {champion.runeStats
+            .sort((a, b) => b.wins / b.matches - a.wins / a.matches)
+            .map((runeStats, i) => (
+              <Card key={i} type={"rune"} {...runeStats} id={runeStats.runeId}/>
+            ))}
         </div>
       </div>
 
@@ -109,7 +106,6 @@ export default function ChampionPage({champion}) {
 
 export async function getStaticPaths() {
   const champions = await ChampionApi.getAllChampions();
-  console.log(champions);
 
   return {
     paths: champions.map((i) => ({params: {id: "" + i.id}})),
@@ -119,7 +115,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({params}) {
   const champion = await ChampionApi.getChampion(params.id);
-  console.log(champion);
+
   return {
     props: {
       champion,
