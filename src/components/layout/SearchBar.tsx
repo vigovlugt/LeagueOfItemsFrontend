@@ -80,7 +80,7 @@ export default function SearchBar() {
             "rounded-b-none": results.length > 0 && isFocussed,
           }
         )}
-        placeholder="Search items and runes"
+        placeholder="Search items, runes and champions"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         onBlur={() => setTimeout(() => setIsFocussed(false), 100)}

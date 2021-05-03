@@ -1,26 +1,9 @@
 const fetch = require("node-fetch");
-const fs = require("fs");
-const sharp = require("sharp");
-const {join} = require("path");
 
-const versionUrl = "https://ddragon.leagueoflegends.com/api/versions.json"
-const champions = (version) => `http://ddragon.leagueoflegends.com/cdn/${version}/data/en_US/champion.json`;
+const sharp = require("sharp");
+
 const wikiaUrl = (file) => `https://leagueoflegends.fandom.com/wikia.php?controller=Lightbox&method=getMediaDetail&fileTitle=${file}&format=json`;
 const splashArtsPath = "../../public/images/champions/splashes/";
-
-const getVersion = async () => {
-  const res = await fetch(versionUrl);
-  const json = await res.json();
-
-  return json[0];
-}
-
-const getChampions = async (version) => {
-  const res = await fetch(champions(version));
-  const json = await res.json();
-
-  return Object.values(json.data);
-}
 
 const transformName = (name) => name;
 
@@ -50,12 +33,6 @@ const getImageUrl = async (name) => {
   return json.imageUrl.replace("/scale-to-width-down/1000", "/scale-to-height-down/1080");
 }
 
-const getImage = async (url) => {
-  const res = await fetch(url);
-
-  return await res.buffer();
-}
-
 const cropImage = async (image) => {
   const img = sharp(image);
 
@@ -76,9 +53,7 @@ const cropImage = async (image) => {
   return null;
 }
 
-const saveBuffer = (id, buffer) => {
-  fs.writeFileSync(join(__dirname, splashArtsPath, `${id}.jpg`), buffer);
-}
+
 
 const saveSplashForChampion = async (champion) => {
   const imageUrl = await getImageUrl(transformName(champion.name));
