@@ -9,6 +9,7 @@ const __dirname = path.dirname(__filename);
 
 const versionUrl = "https://ddragon.leagueoflegends.com/api/versions.json"
 const champions = (version) => `http://ddragon.leagueoflegends.com/cdn/${version}/data/en_US/champion.json`;
+const runes = (version) => `http://ddragon.leagueoflegends.com/cdn/${version}/data/en_US/runesReforged.json`;
 
 export const getImage = async (url) => {
   const res = await fetch(url);
@@ -28,6 +29,13 @@ export const getChampions = async (version) => {
   const json = await res.json();
 
   return Object.values(json.data);
+}
+
+export const getRunes = async (version) => {
+  const res = await fetch(runes(version));
+  const json = await res.json();
+
+  return Object.values(json.map(x => x.slots.map(x => x.runes)).flat().flat());
 }
 
 export const saveBuffer = (file, buffer) => {
