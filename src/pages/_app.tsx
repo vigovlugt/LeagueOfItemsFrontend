@@ -1,10 +1,10 @@
-import "tailwindcss/tailwind.css";
-import "../styles/global.css";
 import SideNavigation from "../components/SideNavigation";
 import NavBar from "../components/NavBar";
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { DefaultSeo } from "next-seo";
+
+import "../styles/global.css";
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
