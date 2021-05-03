@@ -6,7 +6,7 @@ export default function ChampionGridCell({ id }) {
     <Link href={`/champions/${id}`}>
       <div className="mr-[6px]">
         <Image
-          className="cursor-pointer champion-image"
+          className="cursor-pointer"
           src={`/images/champions/tiles/${id}.jpg`}
           width={128}
           height={128}

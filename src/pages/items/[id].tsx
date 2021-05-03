@@ -2,7 +2,7 @@ import Image from "next/image";
 import ItemApi from "../../api/ItemApi";
 import ItemStats from "../../models/items/ItemStats";
 import {winrate, winrateClass} from "../../utils/format";
-import ItemStatsByOrder from "../../components/items/ItemStatsByOrder";
+import StatsByOrder from "../../components/items/StatsByOrder";
 import Card from "../../components/Card";
 import {NextSeo} from "next-seo";
 
@@ -78,7 +78,7 @@ export default function ItemPage({item}) {
           style={{gridTemplateRows: "auto auto"}}
         >
           {item.orderStats.map((stats) => (
-            <ItemStatsByOrder key={Math.random()} orderStats={stats}/>
+            <StatsByOrder key={Math.random()} orderStats={stats}/>
           ))}
         </div>
       </div>
