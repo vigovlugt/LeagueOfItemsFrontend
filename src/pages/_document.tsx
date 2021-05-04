@@ -24,6 +24,25 @@ export default class Document extends NextDocument {
           `,
             }}
           />
+
+          {/*Hotjar Tracking Code for leagueofitems.com*/}
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+            (function(h,o,t,j,a,r){
+            h.hj = h.hj || function () {
+              (h.hj.q = h.hj.q || []).push(arguments)
+            };
+            h._hjSettings={hjid:2382483,hjsv:6};
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1;
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+          })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+          `,
+            }}
+          />
+
           <link
             href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap"
             rel="stylesheet"
