@@ -58,6 +58,11 @@ export default function ChampionTierlist({champions}) {
         id: "runes",
       },
       {
+        Header: "Roles",
+        accessor: (original) => original.roleStats.length,
+        id: "roles",
+      },
+      {
         Header: "Matches",
         accessor: "matches",
       },

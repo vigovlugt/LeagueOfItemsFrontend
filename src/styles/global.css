@@ -15,3 +15,7 @@
     border-radius: 8px;
     background-color: #6B7280;
 }
+
+.role-image{
+    filter: invert(32%) sepia(23%) saturate(357%) hue-rotate(176deg) brightness(92%) contrast(91%);
+}
