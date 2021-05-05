@@ -38,6 +38,7 @@ module.exports = {
             },
             p: {
               marginTop: "0",
+              lineHeight: "1.5",
             },
           },
         },
