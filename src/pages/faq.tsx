@@ -1,18 +1,28 @@
-import remark from "remark";
-import html from "remark-html";
 import fs from "fs";
 import { join } from "path";
 import { NextSeo } from "next-seo";
+import ReactMarkdown from "react-markdown";
+import Link from "next/link";
 
-export default function Faq({ html }) {
+export default function Faq({ content }) {
   return (
     <>
       <NextSeo title="FAQ" />
 
-      <div
+      <ReactMarkdown
         className="prose-xl prose-blue"
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
+        components={{
+          a: ({ children, href }) => (
+            <Link href={href} passHref>
+              <a target={(href as string).startsWith("/") ? null : "_blank"}>
+                {children}
+              </a>
+            </Link>
+          ),
+        }}
+      >
+        {content}
+      </ReactMarkdown>
     </>
   );
 }
@@ -20,12 +30,11 @@ export default function Faq({ html }) {
 export async function getStaticProps() {
   const markdownDir = join(process.cwd(), "content/faq.md");
 
-  const markdown = fs.readFileSync(markdownDir).toString();
+  const content = fs.readFileSync(markdownDir).toString();
 
-  const result = await remark().use(html).process(markdown);
   return {
     props: {
-      html: result.toString(),
+      content,
     },
   };
 }
