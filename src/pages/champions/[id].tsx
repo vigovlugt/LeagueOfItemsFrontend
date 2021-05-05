@@ -15,7 +15,7 @@ import { useState } from "react";
 export default function ChampionPage({ champion, runes, items }) {
   champion = new ChampionStats(champion);
 
-  let [modalIsOpen, setModalOpen] = useState(false);
+  const [modalIsOpen, setModalOpen] = useState(false);
 
   return (
     <div className="flex flex-col">
