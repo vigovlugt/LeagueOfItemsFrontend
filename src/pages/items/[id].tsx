@@ -1,13 +1,18 @@
 import Image from "next/image";
 import ItemApi from "../../api/ItemApi";
 import ItemStats from "../../models/items/ItemStats";
-import {winrate, winrateClass} from "../../utils/format";
+import { winrate, winrateClass } from "../../utils/format";
 import StatsByOrder from "../../components/items/StatsByOrder";
 import Card from "../../components/Card";
-import {NextSeo} from "next-seo";
+import { NextSeo } from "next-seo";
+import { useState } from "react";
+import ChampionModal from "../../components/champions/ChampionModal";
+import ItemModal from "../../components/items/ItemModal";
 
-export default function ItemPage({item}) {
+export default function ItemPage({ item }) {
   item = new ItemStats(item);
+
+  const [modalIsOpen, setModalOpen] = useState(false);
 
   return (
     <div className="flex flex-col">
@@ -16,10 +21,14 @@ export default function ItemPage({item}) {
         description={`See ${item.name}'s best champions and winrate statistics. Data from U.GG.`}
       />
 
+      <ItemModal isOpen={modalIsOpen} setIsOpen={setModalOpen} item={item} />
+
       <div className="flex mb-4 w-full">
-        <div className="w-[256px] h-[256px] mr-4 flex-shrink-0">
+        <div
+          className="w-[256px] h-[256px] mr-4 flex-shrink-0 cursor-pointer"
+          onClick={() => setModalOpen(true)}
+        >
           <Image
-            className="cursor-pointer"
             src={`/images/items/${item.id}.png`}
             width={256}
             height={256}
@@ -63,7 +72,12 @@ export default function ItemPage({item}) {
           {item.championStats
             .sort((a, b) => b.wins / b.matches - a.wins / a.matches)
             .map((championStats, i) => (
-              <Card key={i} type={"champion"} {...championStats} id={championStats.championId}/>
+              <Card
+                key={i}
+                type={"champion"}
+                {...championStats}
+                id={championStats.championId}
+              />
             ))}
         </div>
       </div>
@@ -75,10 +89,10 @@ export default function ItemPage({item}) {
         </h2>
         <div
           className="grid grid-cols-5 grid-flow-col gap-2"
-          style={{gridTemplateRows: "auto auto"}}
+          style={{ gridTemplateRows: "auto auto" }}
         >
           {item.orderStats.map((stats) => (
-            <StatsByOrder key={Math.random()} orderStats={stats}/>
+            <StatsByOrder key={Math.random()} orderStats={stats} />
           ))}
         </div>
       </div>
@@ -90,12 +104,12 @@ export async function getStaticPaths() {
   const items = await ItemApi.getAllItems();
 
   return {
-    paths: items.map((i) => ({params: {id: "" + i.id}})),
+    paths: items.map((i) => ({ params: { id: "" + i.id } })),
     fallback: false,
   };
 }
 
-export async function getStaticProps({params}) {
+export async function getStaticProps({ params }) {
   const item = await ItemApi.getItem(params.id);
 
   return {
@@ -105,4 +119,4 @@ export async function getStaticProps({params}) {
   };
 }
 
-ItemPage.pageName = ({item}) => item.name;
+ItemPage.pageName = ({ item }) => item.name;

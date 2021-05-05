@@ -1,4 +1,5 @@
 const colors = require("tailwindcss/colors");
+const typography = require("@tailwindcss/typography");
 
 module.exports = {
   mode: "jit",
@@ -24,12 +25,26 @@ module.exports = {
           volxd: "#ff9b00",
         },
         "ugg-dark": "#0B0B23",
-        ugg: "#242949"
+        ugg: "#242949",
+      },
+      typography: {
+        xl: {
+          css: {
+            h1: {
+              fontFamily: `"Montserrat", "sans-serif"`,
+              fontSize: "2.25rem",
+              marginBottom:"0"
+            },
+            p: {
+              marginTop:"0"
+            }
+          },
+        },
       },
     },
     variants: {
       extend: {},
     },
-    plugins: [],
   },
+  plugins: [typography],
 };
