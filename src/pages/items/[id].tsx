@@ -36,11 +36,19 @@ export default function ItemPage({ item }) {
           />
         </div>
         <div className="flex flex-col w-full">
-          <h2 className="text-5xl font-header font-medium">{item.name}</h2>
-          <p className="text-lg font-header mb-4 text-gray-600">
+          <h2
+            className="text-5xl font-header font-medium cursor-pointer"
+            onClick={() => setModalOpen(true)}
+          >
+            {item.name}
+          </h2>
+          <p
+            className="text-lg font-header mb-4 text-gray-600 cursor-pointer"
+            onClick={() => setModalOpen(true)}
+          >
             {item.plaintext}
           </p>
-          <div className="grid grid-cols-2 gap-3 mb-4 w-1/2">
+          <div className="grid grid-cols-2 gap-3 mb-4 xl:w-1/2">
             <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow">
               <span
                 className={`text-gray-900 ${winrateClass(

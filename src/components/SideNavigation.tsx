@@ -1,14 +1,12 @@
 import classNames from "classnames";
 import Link from "next/link";
 import ListItem from "./icons/ListIcon";
-import GridIcon from "./icons/GridIcon";
 import { useRouter } from "next/router";
 import RuneIcon from "./icons/RuneIcon";
 import SwordIcon from "./icons/SwordIcon";
-import TableIcon from "./icons/TableIcon";
-import SearchBar from "./layout/SearchBar";
 import SideNavFooter from "./layout/SideNavFooter";
 import ChampionIcon from "./icons/ChampionIcon";
+import Logo from "./Logo";
 
 const MENU_ITEMS = [
   {
@@ -48,14 +46,7 @@ export default function SideNavigation() {
 
   return (
     <nav className="h-screen w-80 p-4 z-10 border-r border-gray-200 flex flex-col flex-none">
-      <Link href={"/"} passHref>
-        <a>
-          <h2 className="text-[1.65rem] font-header font-medium mb-8">
-            LEAGUE OF
-            <span className="block text-5xl">ITEMS</span>
-          </h2>
-        </a>
-      </Link>
+      <Logo />
 
       <div className="m-1">
         {MENU_ITEMS.map((i) => (

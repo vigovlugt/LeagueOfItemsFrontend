@@ -9,6 +9,7 @@ module.exports = {
       "1/4": "25%",
       "1/2": "50%",
       "3/4": "75%",
+      64: "16rem",
     },
     fontFamily: {
       header: ["Montserrat", "sans-serif"],
@@ -33,11 +34,11 @@ module.exports = {
             h1: {
               fontFamily: `"Montserrat", "sans-serif"`,
               fontSize: "2.25rem",
-              marginBottom:"0"
+              marginBottom: "0",
             },
             p: {
-              marginTop:"0"
-            }
+              marginTop: "0",
+            },
           },
         },
       },
