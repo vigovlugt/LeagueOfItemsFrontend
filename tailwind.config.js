@@ -33,7 +33,7 @@ module.exports = {
           css: {
             h1: {
               fontFamily: `"Montserrat", "sans-serif"`,
-              fontSize: "2.25rem",
+              fontSize: "2rem",
               marginBottom: "0",
             },
             p: {
