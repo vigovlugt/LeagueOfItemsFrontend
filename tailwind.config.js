@@ -34,7 +34,7 @@ module.exports = {
         darker: "#090909",
       },
       typography: {
-        xl: {
+        lg: {
           css: {
             h1: {
               fontFamily: `"Montserrat", "sans-serif"`,
