@@ -81,7 +81,7 @@ function MenuItem({ name, active, href, icon = null, className = null }) {
           "py-2 px-3 rounded-lg text-lg font-semibold mb-1 cursor-pointer flex items-center",
           className,
           {
-            "bg-gray-100 dark:bg-gray-900 text-black dark:text-white": active,
+            "bg-gray-100 dark:bg-gray-800 text-black dark:text-white": active,
             "text-gray-700 dark:text-gray-400": !active,
           }
         )}
