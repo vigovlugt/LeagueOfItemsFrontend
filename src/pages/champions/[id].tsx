@@ -61,25 +61,25 @@ export default function ChampionPage({ champion, runes, items }) {
           </p>
           <div className="flex">
             <div className="grid grid-cols-2 gap-3 w-1/2 mr-3">
-              <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-dark">
+              <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
                 <span className={winrateClass(champion.wins, champion.matches)}>
                   {winrate(champion.wins, champion.matches)}
                 </span>{" "}
                 Winrate
               </div>
-              <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-dark">
+              <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
                 <span className="text-gray-900 dark:text-white">
                   {champion.matches}
                 </span>{" "}
                 Matches
               </div>
-              <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-dark">
+              <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
                 <span className="text-gray-900 dark:text-white">
                   {champion.itemStats.length}
                 </span>{" "}
                 Items
               </div>
-              <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-dark">
+              <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
                 <span className="text-gray-900 dark:text-white">
                   {champion.runeStats.length}
                 </span>{" "}

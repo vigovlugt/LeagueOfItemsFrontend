@@ -86,7 +86,7 @@ export default function StatsByOrder({ orderStats, type = "champion" }) {
   return (
     <>
       {/* General stats */}
-      <div className="px-3 py-3 rounded text-center shadow bg-white dark:bg-dark">
+      <div className="px-3 py-3 rounded text-center shadow bg-white dark:bg-gray-900">
         <h3 className="text-xl font-header font-medium mb-1">
           {nameByOrder[orderStats.order]} item
         </h3>

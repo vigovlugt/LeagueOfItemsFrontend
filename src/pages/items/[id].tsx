@@ -49,19 +49,19 @@ export default function ItemPage({ item }) {
             {item.plaintext}
           </p>
           <div className="grid grid-cols-2 gap-3 mb-4 xl:w-1/2">
-            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-dark">
+            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
               <span className={winrateClass(item.wins, item.matches)}>
                 {winrate(item.wins, item.matches)}
               </span>{" "}
               Winrate
             </div>
-            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-dark">
+            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
               <span className="text-gray-900 dark:text-white">
                 {item.matches}
               </span>{" "}
               Matches
             </div>
-            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-dark">
+            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
               <span className="text-gray-900 dark:text-white">
                 {item.championStats.length}
               </span>{" "}
