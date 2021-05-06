@@ -18,7 +18,7 @@ export function winrateClass(wins, matches) {
   } else if (winrate < 0.485) {
     return "text-winrate-meh";
   } else if (winrate < 0.515) {
-    return "text-winrate-okay";
+    return "text-winrate-okay dark:text-winrate-okay-dark";
   } else if (winrate < 0.53) {
     return "text-winrate-good";
   } else if (winrate < 0.55) {
@@ -29,5 +29,5 @@ export function winrateClass(wins, matches) {
 }
 
 export function removeTags(str) {
-  return str.replace(/<[^>]*>/g,"");
+  return str.replace(/<[^>]*>/g, "");
 }

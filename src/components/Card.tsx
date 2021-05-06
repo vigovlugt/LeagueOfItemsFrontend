@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function Card({ type, id, wins, matches }) {
   return (
     <Link href={`/${type}s/${id}`} passHref>
-      <a className="block px-3 py-3 bg-white rounded text-center shadow cursor-pointer">
+      <a className="block px-3 py-3 rounded text-center shadow cursor-pointer bg-white dark:bg-dark">
         {/*<h3 className="font-header mb-1">{championId}</h3>*/}
         {type === "champion" ? (
           <ChampionIcon id={id} />
@@ -14,7 +14,6 @@ export default function Card({ type, id, wins, matches }) {
           <div className="w-[64px] h-[64px]">
             <Image height={64} width={64} src={`/images/${type}s/${id}.png`} />
           </div>
-
         )}
 
         <p

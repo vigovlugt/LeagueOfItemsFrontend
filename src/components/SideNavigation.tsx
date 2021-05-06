@@ -7,7 +7,7 @@ import SwordIcon from "./icons/SwordIcon";
 import SideNavFooter from "./layout/SideNavFooter";
 import ChampionIcon from "./icons/ChampionIcon";
 import Logo from "./Logo";
-import {MailIcon, QuestionMarkCircleIcon} from "@heroicons/react/outline";
+import { MailIcon, QuestionMarkCircleIcon } from "@heroicons/react/outline";
 
 const MENU_ITEMS = [
   {
@@ -57,7 +57,7 @@ export default function SideNavigation() {
   const router = useRouter();
 
   return (
-    <nav className="h-screen w-80 p-4 z-10 border-r border-gray-200 flex flex-col flex-none">
+    <nav className="h-screen w-80 p-4 z-10 border-r flex flex-col flex-none border-gray-200 bg-white dark:bg-dark dark:border-gray-800">
       <Logo />
 
       <div className="flex flex-col m-1 h-100 flex-grow">
@@ -78,18 +78,18 @@ function MenuItem({ name, active, href, icon = null, className = null }) {
     <Link href={href} passHref>
       <a
         className={classNames(
-          "py-2 px-3 rounded-lg text-gray-700 text-lg font-semibold mb-1 cursor-pointer flex items-center",
+          "py-2 px-3 rounded-lg text-lg font-semibold mb-1 cursor-pointer flex items-center",
           className,
           {
-            "bg-gray-100": active,
-            "text-black": active,
+            "bg-gray-100 dark:bg-gray-900 text-black dark:text-white": active,
+            "text-gray-700 dark:text-gray-400": !active,
           }
         )}
       >
         <span
           className={classNames({
-            "text-gray-400": !active,
-            "text-gray-600": active,
+            "text-gray-400 dark:text-gray-600": !active,
+            "text-gray-900 dark:text-gray-50": active,
           })}
         >
           {icon ? <Icon /> : <div className="w-8" />}
