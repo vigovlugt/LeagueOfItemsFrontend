@@ -32,7 +32,7 @@ export default function App({ Component, pageProps }) {
       : Component.pageName;
 
   return (
-    <ThemeProvider attribute="class">
+    <ThemeProvider attribute="class" defaultTheme="light">
       <DefaultSeo
         title="League of Items"
         titleTemplate="League of Items - %s"

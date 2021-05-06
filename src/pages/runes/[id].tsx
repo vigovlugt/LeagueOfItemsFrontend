@@ -18,7 +18,6 @@ export default function RunePage({ rune }) {
       <div className="flex mb-4 w-full">
         <div className="w-[256px] h-[256px] mr-4 flex-shrink-0">
           <Image
-            className="cursor-pointer"
             src={`/images/runes/${rune.id}.png`}
             width={256}
             height={256}
