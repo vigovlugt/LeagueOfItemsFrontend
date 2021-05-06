@@ -30,19 +30,19 @@ export default function RunePage({ rune }) {
             {removeTags(rune.shortDescription)}
           </p>
           <div className="grid grid-cols-2 gap-3 mb-4 xl:w-1/2">
-            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-300 dark:bg-dark">
+            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-300 dark:bg-gray-800">
               <span className={winrateClass(rune.wins, rune.matches)}>
                 {winrate(rune.wins, rune.matches)}
               </span>{" "}
               Winrate
             </div>
-            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-300 dark:bg-dark">
+            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-300 dark:bg-gray-800">
               <span className="text-gray-900 dark:text-white">
                 {rune.matches}
               </span>{" "}
               Matches
             </div>
-            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-300 dark:bg-dark">
+            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-300 dark:bg-gray-800">
               <span className="text-gray-900 dark:text-white">
                 {rune.championStats.length}
               </span>{" "}
