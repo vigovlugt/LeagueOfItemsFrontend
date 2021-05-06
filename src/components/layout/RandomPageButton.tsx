@@ -64,7 +64,7 @@ export default function RandomPageButton() {
 
   return (
     <button
-      className="bg-white border border-gray-300 rounded-md px-3 text-gray-700 shadow flex items-center hover:bg-gray-200 focus:outline-none"
+      className="border rounded-md px-3 shadow flex items-center focus:outline-none bg-white border-gray-300 text-gray-700 hover:bg-gray-200  dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200"
       onClick={onClick}
       title="Random page"
     >

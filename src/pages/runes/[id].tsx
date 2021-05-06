@@ -1,11 +1,11 @@
 import Image from "next/image";
-import {removeTags, winrate, winrateClass} from "../../utils/format";
+import { removeTags, winrate, winrateClass } from "../../utils/format";
 import RuneApi from "../../api/RuneApi";
 import RuneStats from "../../models/runes/RuneStats";
 import Card from "../../components/Card";
-import {NextSeo} from "next-seo";
+import { NextSeo } from "next-seo";
 
-export default function RunePage({rune}) {
+export default function RunePage({ rune }) {
   rune = new RuneStats(rune);
 
   return (
@@ -27,26 +27,26 @@ export default function RunePage({rune}) {
         </div>
         <div className="flex flex-col w-full">
           <h2 className="text-5xl font-header font-medium">{rune.name}</h2>
-          <p className="text-lg font-header mb-4 text-gray-600">
+          <p className="text-lg font-header mb-4 text-gray-600 dark:text-gray-400">
             {removeTags(rune.shortDescription)}
           </p>
           <div className="grid grid-cols-2 gap-3 mb-4 xl:w-1/2">
-            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow">
-              <span
-                className={`text-gray-900 ${winrateClass(
-                  rune.wins,
-                  rune.matches
-                )}`}
-              >
+            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-300 dark:bg-dark">
+              <span className={winrateClass(rune.wins, rune.matches)}>
                 {winrate(rune.wins, rune.matches)}
               </span>{" "}
               Winrate
             </div>
-            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow">
-              <span className="text-gray-900">{rune.matches}</span> Matches
+            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-300 dark:bg-dark">
+              <span className="text-gray-900 dark:text-white">
+                {rune.matches}
+              </span>{" "}
+              Matches
             </div>
-            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow">
-              <span className="text-gray-900">{rune.championStats.length}</span>{" "}
+            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-300 dark:bg-dark">
+              <span className="text-gray-900 dark:text-white">
+                {rune.championStats.length}
+              </span>{" "}
               Champions
             </div>
           </div>
@@ -62,7 +62,12 @@ export default function RunePage({rune}) {
           {rune.championStats
             .sort((a, b) => b.wins / b.matches - a.wins / a.matches)
             .map((championStats, i) => (
-              <Card key={i} type={"champion"} {...championStats} id={championStats.championId}/>
+              <Card
+                key={i}
+                type={"champion"}
+                {...championStats}
+                id={championStats.championId}
+              />
             ))}
         </div>
       </div>
@@ -74,12 +79,12 @@ export async function getStaticPaths() {
   const runes = await RuneApi.getAllRunes();
 
   return {
-    paths: runes.map((r) => ({params: {id: r.id.toString()}})),
+    paths: runes.map((r) => ({ params: { id: r.id.toString() } })),
     fallback: false,
   };
 }
 
-export async function getStaticProps({params}) {
+export async function getStaticProps({ params }) {
   const rune = await RuneApi.getRune(params.id);
 
   return {
@@ -89,4 +94,4 @@ export async function getStaticProps({params}) {
   };
 }
 
-RunePage.pageName = ({rune}) => rune.name;
+RunePage.pageName = ({ rune }) => rune.name;

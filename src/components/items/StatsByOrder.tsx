@@ -86,7 +86,7 @@ export default function StatsByOrder({ orderStats, type = "champion" }) {
   return (
     <>
       {/* General stats */}
-      <div className="px-3 py-3 bg-white rounded text-center shadow">
+      <div className="px-3 py-3 rounded text-center shadow bg-white dark:bg-dark">
         <h3 className="text-xl font-header font-medium mb-1">
           {nameByOrder[orderStats.order]} item
         </h3>
@@ -105,7 +105,7 @@ export default function StatsByOrder({ orderStats, type = "champion" }) {
 
       {/* Champion stats */}
       <div>
-        <div className="rounded-lg overflow-hidden shadow bg-white">
+        <div className="rounded-lg overflow-hidden shadow bg-white dark:bg-dark">
           <Table table={table} onClick={goTo} size="sm" />
         </div>
       </div>

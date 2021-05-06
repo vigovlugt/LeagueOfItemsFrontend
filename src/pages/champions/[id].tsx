@@ -54,36 +54,33 @@ export default function ChampionPage({ champion, runes, items }) {
           </div>
 
           <p
-            className="text-lg font-header mb-4 text-gray-600 overflow-ellipsis overflow-hidden max-h-[56px] cursor-pointer"
+            className="text-lg font-header mb-4 overflow-ellipsis overflow-hidden max-h-[56px] cursor-pointer text-gray-600 dark:text-gray-400"
             onClick={() => setModalOpen(true)}
           >
             {champion.blurb}
           </p>
           <div className="flex">
             <div className="grid grid-cols-2 gap-3 w-1/2 mr-3">
-              <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow">
-                <span
-                  className={`text-gray-900 ${winrateClass(
-                    champion.wins,
-                    champion.matches
-                  )}`}
-                >
+              <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-dark">
+                <span className={winrateClass(champion.wins, champion.matches)}>
                   {winrate(champion.wins, champion.matches)}
                 </span>{" "}
                 Winrate
               </div>
-              <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow">
-                <span className="text-gray-900">{champion.matches}</span>{" "}
+              <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-dark">
+                <span className="text-gray-900 dark:text-white">
+                  {champion.matches}
+                </span>{" "}
                 Matches
               </div>
-              <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow">
-                <span className="text-gray-900">
+              <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-dark">
+                <span className="text-gray-900 dark:text-white">
                   {champion.itemStats.length}
                 </span>{" "}
                 Items
               </div>
-              <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow">
-                <span className="text-gray-900">
+              <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-dark">
+                <span className="text-gray-900 dark:text-white">
                   {champion.runeStats.length}
                 </span>{" "}
                 Runes

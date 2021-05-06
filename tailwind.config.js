@@ -2,6 +2,7 @@ const colors = require("tailwindcss/colors");
 const typography = require("@tailwindcss/typography");
 
 module.exports = {
+  darkMode: "class",
   mode: "jit",
   purge: ["./src/**/*.{js,jsx,ts,tsx,vue}"],
   theme: {
@@ -17,16 +18,20 @@ module.exports = {
     },
     extend: {
       colors: {
+        gray: colors.trueGray,
         winrate: {
           shiggo: "#ff4e50",
           meh: "#fcb1b2",
           okay: colors.gray[900], //"#000",
+          "okay-dark": colors.gray[50],
           good: "#7ea4f4",
           great: "#3273fa",
           volxd: "#ff9b00",
         },
         "ugg-dark": "#0B0B23",
         ugg: "#242949",
+        dark: "#121212",
+        darker: "#090909",
       },
       typography: {
         xl: {

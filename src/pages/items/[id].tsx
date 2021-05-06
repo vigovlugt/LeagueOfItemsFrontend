@@ -43,28 +43,28 @@ export default function ItemPage({ item }) {
             {item.name}
           </h2>
           <p
-            className="text-lg font-header mb-4 text-gray-600 cursor-pointer"
+            className="text-lg font-header mb-4 text-gray-600 cursor-pointer dark:text-gray-400"
             onClick={() => setModalOpen(true)}
           >
             {item.plaintext}
           </p>
           <div className="grid grid-cols-2 gap-3 mb-4 xl:w-1/2">
-            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow">
-              <span
-                className={`text-gray-900 ${winrateClass(
-                  item.wins,
-                  item.matches
-                )}`}
-              >
+            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-dark">
+              <span className={winrateClass(item.wins, item.matches)}>
                 {winrate(item.wins, item.matches)}
               </span>{" "}
               Winrate
             </div>
-            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow">
-              <span className="text-gray-900">{item.matches}</span> Matches
+            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-dark">
+              <span className="text-gray-900 dark:text-white">
+                {item.matches}
+              </span>{" "}
+              Matches
             </div>
-            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow">
-              <span className="text-gray-900">{item.championStats.length}</span>{" "}
+            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-dark">
+              <span className="text-gray-900 dark:text-white">
+                {item.championStats.length}
+              </span>{" "}
               Champions
             </div>
           </div>

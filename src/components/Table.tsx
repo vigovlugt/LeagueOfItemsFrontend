@@ -12,15 +12,15 @@ export default function Table({ table, onClick, size = "md" }) {
   return (
     <table
       {...table.getTableProps()}
-      className="min-w-full divide-y divide-gray-200 font-semibold"
+      className="min-w-full divide-y divide-gray-200 font-semibold dark:divide-gray-700"
     >
-      <thead className="bg-gray-50">
+      <thead className="bg-gray-50 dark:bg-gray-800">
         {table.headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column) => (
               <th
                 {...column.getHeaderProps(column.getSortByToggleProps())}
-                className={`${thPaddingBySize[size]} text-left text-xs font-medium text-gray-500 uppercase tracking-wider`}
+                className={`${thPaddingBySize[size]} text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400`}
               >
                 {column.render("Header")}
                 <span>
@@ -37,7 +37,7 @@ export default function Table({ table, onClick, size = "md" }) {
       </thead>
       <tbody
         {...table.getTableBodyProps()}
-        className="bg-white divide-y divide-gray-200"
+        className="divide-y bg-white divide-gray-200 dark:bg-gray-900 dark:divide-gray-700"
       >
         {table.rows.map((row) => {
           table.prepareRow(row);
