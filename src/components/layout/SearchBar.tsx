@@ -68,7 +68,7 @@ export default function SearchBar() {
     const runeResults = query
       ? dataset.runes
           .filter(filterFunction)
-          .map((r) => ({ id: r.id, name: r.name, type: "runes" }))
+          .map((r) => ({ id: r.id, name: r.name, type: "rune" }))
       : [];
 
     const championResults = query
