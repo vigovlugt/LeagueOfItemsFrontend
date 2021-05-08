@@ -8,6 +8,7 @@ import { NextSeo } from "next-seo";
 import { useState } from "react";
 import ChampionModal from "../../components/champions/ChampionModal";
 import ItemModal from "../../components/items/ItemModal";
+import PageHeader from "../../components/PageHeader";
 
 export default function ItemPage({ item }) {
   item = new ItemStats(item);
@@ -23,53 +24,35 @@ export default function ItemPage({ item }) {
 
       <ItemModal isOpen={modalIsOpen} setIsOpen={setModalOpen} item={item} />
 
-      <div className="flex mb-4 w-full">
-        <div
-          className="w-[256px] h-[256px] mr-4 flex-shrink-0 cursor-pointer"
-          onClick={() => setModalOpen(true)}
-        >
-          <Image
-            src={`/images/items/${item.id}.png`}
-            width={256}
-            height={256}
-            quality={100}
-          />
-        </div>
-        <div className="flex flex-col w-full">
-          <h2
-            className="text-5xl font-header font-medium cursor-pointer"
-            onClick={() => setModalOpen(true)}
-          >
-            {item.name}
-          </h2>
-          <p
-            className="text-lg font-header mb-4 text-gray-600 cursor-pointer dark:text-gray-400"
-            onClick={() => setModalOpen(true)}
-          >
-            {item.plaintext}
-          </p>
-          <div className="grid grid-cols-2 gap-3 mb-4 xl:w-1/2">
-            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
-              <span className={winrateClass(item.wins, item.matches)}>
-                {winrate(item.wins, item.matches)}
-              </span>{" "}
-              Winrate
-            </div>
-            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
-              <span className="text-gray-900 dark:text-white">
-                {item.matches}
-              </span>{" "}
-              Matches
-            </div>
-            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
-              <span className="text-gray-900 dark:text-white">
-                {item.championStats.length}
-              </span>{" "}
-              Champions
-            </div>
+      <PageHeader
+        type="item"
+        id={item.id}
+        setModalOpen={setModalOpen}
+        hasModal
+        name={item.name}
+        description={item.plaintext}
+      >
+        <div className="grid grid-cols-2 gap-3 mb-4 xl:w-1/2">
+          <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
+            <span className={winrateClass(item.wins, item.matches)}>
+              {winrate(item.wins, item.matches)}
+            </span>{" "}
+            Winrate
+          </div>
+          <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
+            <span className="text-gray-900 dark:text-white">
+              {item.matches}
+            </span>{" "}
+            Matches
+          </div>
+          <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
+            <span className="text-gray-900 dark:text-white">
+              {item.championStats.length}
+            </span>{" "}
+            Champions
           </div>
         </div>
-      </div>
+      </PageHeader>
 
       {/* Highest winrate champions */}
       <div>
@@ -96,7 +79,7 @@ export default function ItemPage({ item }) {
           Stats by order
         </h2>
         <div
-          className="grid grid-cols-5 grid-flow-col gap-2"
+          className="grid grid-cols-1 grid-flow-row xl:grid-flow-col xl:grid-cols-5 gap-2"
           style={{ gridTemplateRows: "auto auto" }}
         >
           {item.orderStats.map((stats) => (
