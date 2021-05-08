@@ -26,6 +26,13 @@ export default function SearchBar({ onSubmit = null }) {
       fetchDataset();
     }
   };
+  
+  const reset = () => {
+    setQuery("");
+    if (onSubmit) {
+      onSubmit();
+    }
+  };
 
   const submit = (e) => {
     e.preventDefault();
@@ -36,10 +43,7 @@ export default function SearchBar({ onSubmit = null }) {
     const { type, id } = results[0];
 
     router.push(`/${type}s/${id}`);
-    setQuery("");
-    if (onSubmit) {
-      onSubmit();
-    }
+    reset();
   };
 
   const filterFunction = (i) => {
@@ -114,7 +118,7 @@ export default function SearchBar({ onSubmit = null }) {
             <SearchResult
               {...result}
               key={result.id}
-              onClick={() => setQuery("")}
+              onClick={reset}
             />
           ))}
         </div>
