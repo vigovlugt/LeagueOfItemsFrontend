@@ -4,6 +4,7 @@ import RuneApi from "../../api/RuneApi";
 import RuneStats from "../../models/runes/RuneStats";
 import Card from "../../components/Card";
 import { NextSeo } from "next-seo";
+import PageHeader from "../../components/PageHeader";
 
 export default function RunePage({ rune }) {
   rune = new RuneStats(rune);
@@ -15,42 +16,33 @@ export default function RunePage({ rune }) {
         description={`See ${rune.name}'s best champions and winrate statistics. Data from U.GG.`}
       />
 
-      <div className="flex mb-4 w-full">
-        <div className="w-[256px] h-[256px] mr-4 flex-shrink-0">
-          <Image
-            src={`/images/runes/${rune.id}.png`}
-            width={256}
-            height={256}
-            quality={100}
-          />
-        </div>
-        <div className="flex flex-col w-full">
-          <h2 className="text-5xl font-header font-medium">{rune.name}</h2>
-          <p className="text-lg font-header mb-4 text-gray-600 dark:text-gray-400">
-            {removeTags(rune.shortDescription)}
-          </p>
-          <div className="grid grid-cols-2 gap-3 mb-4 xl:w-1/2">
-            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-300 dark:bg-gray-800">
-              <span className={winrateClass(rune.wins, rune.matches)}>
-                {winrate(rune.wins, rune.matches)}
-              </span>{" "}
-              Winrate
-            </div>
-            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-300 dark:bg-gray-800">
-              <span className="text-gray-900 dark:text-white">
-                {rune.matches}
-              </span>{" "}
-              Matches
-            </div>
-            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-300 dark:bg-gray-800">
-              <span className="text-gray-900 dark:text-white">
-                {rune.championStats.length}
-              </span>{" "}
-              Champions
-            </div>
+      <PageHeader
+        type="rune"
+        id={rune.id}
+        name={rune.name}
+        description={removeTags(rune.shortDescription)}
+      >
+        <div className="grid grid-cols-2 gap-3 mb-4 xl:w-1/2">
+          <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-300 dark:bg-gray-800">
+            <span className={winrateClass(rune.wins, rune.matches)}>
+              {winrate(rune.wins, rune.matches)}
+            </span>{" "}
+            Winrate
+          </div>
+          <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-300 dark:bg-gray-800">
+            <span className="text-gray-900 dark:text-white">
+              {rune.matches}
+            </span>{" "}
+            Matches
+          </div>
+          <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-300 dark:bg-gray-800">
+            <span className="text-gray-900 dark:text-white">
+              {rune.championStats.length}
+            </span>{" "}
+            Champions
           </div>
         </div>
-      </div>
+      </PageHeader>
 
       {/* Highest winrate champions */}
       <div>

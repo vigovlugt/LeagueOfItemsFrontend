@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-export default function SearchBar() {
+export default function SearchBar({ onSubmit = null }) {
   const router = useRouter();
 
   const [query, setQuery] = useState("");
@@ -37,6 +37,9 @@ export default function SearchBar() {
 
     router.push(`/${type}s/${id}`);
     setQuery("");
+    if (onSubmit) {
+      onSubmit();
+    }
   };
 
   const filterFunction = (i) => {
@@ -81,10 +84,10 @@ export default function SearchBar() {
   }, [query, dataset]);
 
   return (
-    <form className="relative" onSubmit={submit}>
+    <form className="relative h-full" onSubmit={submit}>
       <input
         className={classNames(
-          "h-full border rounded-md px-3 text-sm w-96 shadow-sm border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-300 dark:text-white",
+          "h-full border rounded-md px-3 text-sm w-72 xl:w-96 shadow-sm border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-300 dark:text-white",
           {
             "rounded-b-none": results.length > 0 && isFocussed,
           }
