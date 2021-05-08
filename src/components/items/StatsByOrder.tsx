@@ -23,7 +23,7 @@ export default function StatsByOrder({ orderStats, type = "champion" }) {
         Header: "",
         accessor: "name",
         Cell: ({ row }) => (
-          <div className="flex items-center">
+          <div className="flex items-center h-[32px] w-[32px]">
             {type === "champion" ? (
               <ChampionIcon id={row.original.championId} size="sm" />
             ) : (
@@ -105,7 +105,7 @@ export default function StatsByOrder({ orderStats, type = "champion" }) {
 
       {/* Champion stats */}
       <div>
-        <div className="rounded-lg overflow-hidden shadow bg-white dark:bg-dark">
+        <div className="rounded-lg overflow-hidden mb-4 shadow bg-white dark:bg-dark">
           <Table table={table} onClick={goTo} size="sm" />
         </div>
       </div>

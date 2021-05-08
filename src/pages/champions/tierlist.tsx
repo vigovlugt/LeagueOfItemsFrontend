@@ -1,14 +1,14 @@
-import {useMemo} from "react";
-import {useTable, useSortBy} from "react-table";
+import { useMemo } from "react";
+import { useTable, useSortBy } from "react-table";
 import Table from "../../components/Table";
 import Image from "next/image";
-import {useRouter} from "next/router";
-import {winrate, winrateClass} from "../../utils/format";
-import {NextSeo} from "next-seo";
+import { useRouter } from "next/router";
+import { winrate, winrateClass } from "../../utils/format";
+import { NextSeo } from "next-seo";
 import ChampionStats from "../../models/champions/ChampionStats";
 import ChampionApi from "../../api/ChampionApi";
 
-export default function ChampionTierlist({champions}) {
+export default function ChampionTierlist({ champions }) {
   const router = useRouter();
 
   const data = useMemo(() => champions.map((i) => new ChampionStats(i)), []);
@@ -18,25 +18,28 @@ export default function ChampionTierlist({champions}) {
       {
         Header: "Champion",
         accessor: "champion",
-        Cell: ({row}) => (
+        Cell: ({ row }) => (
           <div className="flex items-center">
-            <Image
-              className="champion-image"
-              src={`/images/champions/${row.original.id}.png`}
-              height={32}
-              width={32}
-            />
+            <div className="h-[32px] w-[32px]">
+              <Image
+                className="champion-image"
+                src={`/images/champions/${row.original.id}.png`}
+                height={32}
+                width={32}
+              />
+            </div>
+
             <span className="ml-2 block">{row.original.name}</span>
           </div>
         ),
       },
       {
-        Header: "Overall winrate",
+        Header: "Winrate",
         Cell: ({
-                 row: {
-                   original: {wins, matches},
-                 },
-               }) => (
+          row: {
+            original: { wins, matches },
+          },
+        }) => (
           <span className={`${winrateClass(wins, matches)}`}>
             {winrate(wins, matches)}
           </span>
@@ -95,7 +98,7 @@ export default function ChampionTierlist({champions}) {
         description="League of Legends champion tierlist."
       />
 
-      <Table table={table} onClick={goToChampion}/>
+      <Table table={table} onClick={goToChampion} />
     </div>
   );
 }
