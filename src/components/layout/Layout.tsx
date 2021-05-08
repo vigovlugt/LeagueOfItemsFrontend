@@ -1,25 +1,26 @@
 import Logo from "../Logo";
 import SideNavigation from "../SideNavigation";
 import NavBar from "../NavBar";
+import { useState } from "react";
 
 export default function Layout({ children, pageName, pageContainer }) {
+  const [sideNavOpen, setSideNavOpen] = useState(false);
+
   return (
     <div className="font-sans w-screen">
-      <div className="h-screen flex flex-col justify-center items-center lg:hidden text-xl p-4 text-center">
-        <Logo />
-        League of items currently doesn't support mobile, please try it on
-        desktop!
-      </div>
-      <div className="hidden lg:flex flex-row">
-        <SideNavigation />
-        <div
-          className="flex flex-col h-screen bg-gray-100 dark:bg-darker"
-          style={{ width: "calc(100% - 320px)" }}
-        >
-          <NavBar title={pageName || ""} />
+      <div className="flex flex-row w-full">
+        <SideNavigation
+          open={sideNavOpen}
+          onClickClose={() => setSideNavOpen(false)}
+        />
+        <div className="flex flex-col h-screen bg-gray-100 dark:bg-darker flex-shrink flex-grow min-w-0">
+          <NavBar
+            title={pageName || ""}
+            onClickMenu={() => setSideNavOpen(true)}
+          />
           <div
             ref={pageContainer}
-            className="p-8 text-gray-900 overflow-y-auto h-full dark:text-white"
+            className="p-4 lg:p-8 text-gray-900 overflow-y-auto h-full dark:text-white"
           >
             {children}
           </div>

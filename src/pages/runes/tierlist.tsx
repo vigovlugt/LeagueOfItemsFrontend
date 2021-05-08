@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { winrate, winrateClass } from "../../utils/format";
 import RuneApi from "../../api/RuneApi";
-import {NextSeo} from "next-seo";
+import { NextSeo } from "next-seo";
 
 export default function RuneTierlist({ runes }) {
   const router = useRouter();
@@ -27,17 +27,20 @@ export default function RuneTierlist({ runes }) {
         accessor: "name",
         Cell: ({ row }) => (
           <div className="flex items-center">
-            <Image
-              src={`/images/runes/${row.original.id}.png`}
-              height={32}
-              width={32}
-            />
+            <div className="h-[32px] w-[32px]">
+              <Image
+                src={`/images/runes/${row.original.id}.png`}
+                height={32}
+                width={32}
+              />
+            </div>
+
             <span className="ml-2 block">{row.original.name}</span>
           </div>
         ),
       },
       {
-        Header: "Overall winrate",
+        Header: "Winrate",
         Cell: ({
           row: {
             original: { wins, matches },

@@ -11,6 +11,7 @@ import ChampionRoles from "../../components/champions/ChampionRoles";
 import UggButton from "../../components/champions/UggButton";
 import ChampionModal from "../../components/champions/ChampionModal";
 import { useState } from "react";
+import PageHeader from "../../components/PageHeader";
 
 export default function ChampionPage({ champion, runes, items }) {
   champion = new ChampionStats(champion);
@@ -30,73 +31,51 @@ export default function ChampionPage({ champion, runes, items }) {
         champion={champion}
       />
 
-      <div className="flex mb-4 w-full">
-        <div
-          className="w-[256px] h-[256px] mr-4 flex-shrink-0 cursor-pointer"
-          onClick={() => setModalOpen(true)}
-        >
-          <Image
-            src={`/images/champions/tiles/${champion.id}.jpg`}
-            width={256}
-            height={256}
-            quality={100}
-          />
-        </div>
-        <div className="flex flex-col w-full">
-          <div className="flex justify-between items-center">
-            <h2
-              className="text-5xl font-header font-medium cursor-pointer"
-              onClick={() => setModalOpen(true)}
-            >
-              {champion.name}
-            </h2>
-            <UggButton champion={champion} />
-          </div>
-
-          <p
-            className="text-lg font-header mb-4 overflow-ellipsis overflow-hidden max-h-[56px] cursor-pointer text-gray-600 dark:text-gray-400"
-            onClick={() => setModalOpen(true)}
-          >
-            {champion.blurb}
-          </p>
-          <div className="flex">
-            <div className="grid grid-cols-2 gap-3 w-1/2 mr-3">
-              <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
-                <span className={winrateClass(champion.wins, champion.matches)}>
-                  {winrate(champion.wins, champion.matches)}
-                </span>{" "}
-                Winrate
-              </div>
-              <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
-                <span className="text-gray-900 dark:text-white">
-                  {champion.matches}
-                </span>{" "}
-                Matches
-              </div>
-              <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
-                <span className="text-gray-900 dark:text-white">
-                  {champion.itemStats.length}
-                </span>{" "}
-                Items
-              </div>
-              <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
-                <span className="text-gray-900 dark:text-white">
-                  {champion.runeStats.length}
-                </span>{" "}
-                Runes
-              </div>
+      <PageHeader
+        type="champion"
+        id={champion.id}
+        setModalOpen={setModalOpen}
+        hasModal
+        name={champion.name}
+        description={champion.blurb}
+      >
+        <div className="flex flex-col lg:flex-row">
+          <div className="grid grid-cols-2 gap-3 lg:w-1/2 mr-3 mb-4 lg:mb-0">
+            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
+              <span className={winrateClass(champion.wins, champion.matches)}>
+                {winrate(champion.wins, champion.matches)}
+              </span>{" "}
+              Winrate
             </div>
-            <ChampionRoles roleStats={champion.roleStats} />
+            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
+              <span className="text-gray-900 dark:text-white">
+                {champion.matches}
+              </span>{" "}
+              Matches
+            </div>
+            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
+              <span className="text-gray-900 dark:text-white">
+                {champion.itemStats.length}
+              </span>{" "}
+              Items
+            </div>
+            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
+              <span className="text-gray-900 dark:text-white">
+                {champion.runeStats.length}
+              </span>{" "}
+              Runes
+            </div>
           </div>
+          <ChampionRoles roleStats={champion.roleStats} />
         </div>
-      </div>
+      </PageHeader>
 
       {/* Highest winrate items */}
       <h2 className="text-2xl font-header font-medium mb-1">
         Highest winrate items
       </h2>
-      <div className="flex space-x-8 mb-4">
-        <div className="max-w-1/2">
+      <div className="flex flex-col lg:flex-row lg:space-x-8 mb-4">
+        <div className="lg:max-w-1/2">
           <div className="flex space-x-2 w-full overflow-x-auto pb-2">
             {champion.itemStats
               .filter(
@@ -139,8 +118,8 @@ export default function ChampionPage({ champion, runes, items }) {
       <h2 className="text-2xl font-header font-medium mb-1">
         Highest winrate runes
       </h2>
-      <div className="flex space-x-8 mb-4">
-        <div className="max-w-1/2">
+      <div className="flex flex-col lg:flex-row lg:space-x-8 mb-4">
+        <div className="lg:max-w-1/2">
           <div className="flex space-x-2 w-full overflow-x-auto pb-2">
             {champion.runeStats
               .filter(
@@ -185,7 +164,7 @@ export default function ChampionPage({ champion, runes, items }) {
           Stats by order
         </h2>
         <div
-          className="grid grid-cols-5 grid-flow-col gap-2"
+          className="grid grid-cols-1 grid-flow-row xl:grid-flow-col xl:grid-cols-5 gap-2"
           style={{ gridTemplateRows: "auto auto" }}
         >
           {champion.orderStats.map((stats) => (
