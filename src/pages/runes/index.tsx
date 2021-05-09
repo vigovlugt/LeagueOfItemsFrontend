@@ -40,7 +40,7 @@ export default function RuneIndex({ runes }) {
 }
 
 export async function getStaticProps(context) {
-  const runes = await RuneApi.getAllRunes();
+  const runes = RuneApi.getAllRunes();
 
   return {
     props: {

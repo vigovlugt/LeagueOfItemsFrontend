@@ -3,15 +3,18 @@ import { useTable, useSortBy } from "react-table";
 import Table from "../../components/Table";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { winrate, winrateClass } from "../../utils/format";
+import { pickrate, winrate, winrateClass } from "../../utils/format";
 import { NextSeo } from "next-seo";
 import ChampionStats from "../../models/champions/ChampionStats";
 import ChampionApi from "../../api/ChampionApi";
+import MatchApi from "../../api/MatchApi";
 
-export default function ChampionTierlist({ champions }) {
+export default function ChampionTierlist({ champions, totalMatches }) {
   const router = useRouter();
 
-  const data = useMemo(() => champions.map((i) => new ChampionStats(i)), []);
+  const data = useMemo(() => champions.map((i) => new ChampionStats(i)), [
+    champions,
+  ]);
 
   const columns = useMemo(
     () => [
@@ -49,6 +52,17 @@ export default function ChampionTierlist({ champions }) {
           rowA.original.wins / rowA.original.matches -
           rowB.original.wins / rowB.original.matches,
         id: "winrate",
+      },
+      {
+        Header: "Pickrate",
+        Cell: ({
+          row: {
+            original: { matches },
+          },
+        }) => <span>{pickrate(matches, totalMatches)}</span>,
+        accessor: "matches",
+        sortType: (rowA, rowB) => rowA.original.matches - rowB.original.matches,
+        id: "pickrate",
       },
       {
         Header: "Items",
@@ -104,11 +118,13 @@ export default function ChampionTierlist({ champions }) {
 }
 
 export async function getStaticProps(context) {
-  const champions = await ChampionApi.getAllChampions();
+  const champions = ChampionApi.getAllChampions();
+  const totalMatches = MatchApi.getTotalMatches();
 
   return {
     props: {
       champions,
+      totalMatches,
     },
   };
 }

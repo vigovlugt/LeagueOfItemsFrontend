@@ -4,11 +4,17 @@ import Table from "../../components/Table";
 import RuneStats from "../../models/runes/RuneStats";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { winrate, winrateClass } from "../../utils/format";
+import { pickrate, winrate, winrateClass } from "../../utils/format";
 import RuneApi from "../../api/RuneApi";
 import { NextSeo } from "next-seo";
+import {
+  CHAMPIONS_PER_MATCH,
+  RUNES_PER_CHAMPION,
+} from "../../constants/constants";
+import ChampionApi from "../../api/ChampionApi";
+import MatchApi from "../../api/MatchApi";
 
-export default function RuneTierlist({ runes }) {
+export default function RuneTierlist({ runes, totalMatches }) {
   const router = useRouter();
 
   const data = useMemo(
@@ -55,6 +61,17 @@ export default function RuneTierlist({ runes }) {
           rowA.original.wins / rowA.original.matches -
           rowB.original.wins / rowB.original.matches,
         id: "winrate",
+      },
+      {
+        Header: "Pickrate",
+        Cell: ({
+          row: {
+            original: { matches },
+          },
+        }) => <span>{pickrate(matches, totalMatches)}</span>,
+        accessor: "matches",
+        sortType: (rowA, rowB) => rowA.original.matches - rowB.original.matches,
+        id: "pickrate",
       },
       {
         Header: "Champions",
@@ -123,11 +140,14 @@ export default function RuneTierlist({ runes }) {
 }
 
 export async function getStaticProps(context) {
-  const runes = await RuneApi.getAllRunes();
+  const runes = RuneApi.getAllRunes();
+
+  const totalMatches = MatchApi.getTotalMatches();
 
   return {
     props: {
       runes,
+      totalMatches,
     },
   };
 }

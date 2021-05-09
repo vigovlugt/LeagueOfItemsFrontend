@@ -39,7 +39,7 @@ export default function Index({ items }) {
 }
 
 export async function getStaticProps(context) {
-  const items = await ItemApi.getAllItems();
+  const items = ItemApi.getAllItems();
 
   return {
     props: {

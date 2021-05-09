@@ -1,11 +1,17 @@
 import Api from "./Api";
 
-export default class RuneApi extends Api {
-  static async getAllRunes() {
-    return this.getDataset().runes;
+export default class RuneApi {
+  static getAllRunes() {
+    return Api.getDataset().runes;
   }
 
-  static async getRune(id) {
-    return this.getDataset().runes.find(r => r.id == id);
+  static getRune(id) {
+    return Api.getDataset().runes.find((r) => r.id == id);
+  }
+
+  static getTotalMatches() {
+    return this.getAllRunes()
+      .map((c) => c.matches)
+      .reduce((a, b) => a + b, 0);
   }
 }

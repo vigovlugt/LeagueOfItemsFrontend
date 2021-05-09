@@ -2,12 +2,18 @@ import * as path from "path";
 import * as fs from "fs";
 import Api from "./Api";
 
-export default class ChampionApi extends Api {
-  static async getAllChampions() {
-    return this.getDataset().champions;
+export default class ChampionApi {
+  static getAllChampions() {
+    return Api.getDataset().champions;
   }
 
-  static async getChampion(id) {
-    return this.getDataset().champions.find(i => i.id == id);
+  static getChampion(id) {
+    return Api.getDataset().champions.find((i) => i.id == id);
+  }
+
+  static getTotalMatches() {
+    return this.getAllChampions()
+      .map((c) => c.matches)
+      .reduce((a, b) => a + b, 0);
   }
 }

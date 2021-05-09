@@ -1,16 +1,17 @@
-import Image from "next/image";
 import ItemApi from "../../api/ItemApi";
 import ItemStats from "../../models/items/ItemStats";
-import { winrate, winrateClass } from "../../utils/format";
+import { pickrate, winrate, winrateClass } from "../../utils/format";
 import StatsByOrder from "../../components/items/StatsByOrder";
 import Card from "../../components/Card";
 import { NextSeo } from "next-seo";
 import { useState } from "react";
-import ChampionModal from "../../components/champions/ChampionModal";
 import ItemModal from "../../components/items/ItemModal";
 import PageHeader from "../../components/PageHeader";
+import ChampionApi from "../../api/ChampionApi";
+import { CHAMPIONS_PER_MATCH } from "../../constants/constants";
+import MatchApi from "../../api/MatchApi";
 
-export default function ItemPage({ item }) {
+export default function ItemPage({ item, totalMatches }) {
   item = new ItemStats(item);
 
   const [modalIsOpen, setModalOpen] = useState(false);
@@ -41,7 +42,7 @@ export default function ItemPage({ item }) {
           </div>
           <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
             <span className="text-gray-900 dark:text-white">
-              {item.matches}
+              {pickrate(item.matches, totalMatches)}
             </span>{" "}
             Matches
           </div>
@@ -62,11 +63,12 @@ export default function ItemPage({ item }) {
         <div className="flex space-x-2 w-full overflow-x-auto pb-2">
           {item.championStats
             .sort((a, b) => b.wins / b.matches - a.wins / a.matches)
-            .map((championStats, i) => (
+            .map((championStats) => (
               <Card
-                key={i}
+                key={championStats.championId}
                 type={"champion"}
                 {...championStats}
+                totalMatches={item.matches}
                 id={championStats.championId}
               />
             ))}
@@ -83,7 +85,11 @@ export default function ItemPage({ item }) {
           style={{ gridTemplateRows: "auto auto" }}
         >
           {item.orderStats.map((stats) => (
-            <StatsByOrder key={Math.random()} orderStats={stats} />
+            <StatsByOrder
+              key={Math.random()}
+              totalMatches={item.matches}
+              orderStats={stats}
+            />
           ))}
         </div>
       </div>
@@ -92,7 +98,7 @@ export default function ItemPage({ item }) {
 }
 
 export async function getStaticPaths() {
-  const items = await ItemApi.getAllItems();
+  const items = ItemApi.getAllItems();
 
   return {
     paths: items.map((i) => ({ params: { id: "" + i.id } })),
@@ -101,11 +107,14 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const item = await ItemApi.getItem(params.id);
+  const item = ItemApi.getItem(params.id);
+
+  const totalMatches = MatchApi.getTotalMatches();
 
   return {
     props: {
       item,
+      totalMatches,
     },
   };
 }
