@@ -1,4 +1,4 @@
-import { winrate, winrateClass } from "../../utils/format";
+import {pickrate, winrate, winrateClass} from "../../utils/format";
 import ChampionIcon from "../ChampionIcon";
 import { useMemo } from "react";
 import { useTable, useSortBy } from "react-table";
@@ -8,7 +8,7 @@ import Image from "next/image";
 
 const nameByOrder = ["First", "Second", "Third", "Fourth", "Last"];
 
-export default function StatsByOrder({ orderStats, type = "champion" }) {
+export default function StatsByOrder({ orderStats, totalMatches, type = "champion" }) {
   const router = useRouter();
 
   const data = useMemo(
@@ -99,7 +99,7 @@ export default function StatsByOrder({ orderStats, type = "champion" }) {
           >
             {winrate(orderStats.wins, orderStats.matches)}
           </p>
-          <p className="text-center font-bold text-lg">{orderStats.matches}</p>
+          <p className="text-center font-bold text-lg" title={orderStats.matches}>{pickrate(orderStats.matches, totalMatches)}</p>
         </div>
       </div>
 

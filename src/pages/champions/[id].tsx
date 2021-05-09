@@ -1,5 +1,4 @@
-import Image from "next/image";
-import { winrate, winrateClass } from "../../utils/format";
+import { pickrate, winrate, winrateClass } from "../../utils/format";
 import Card from "../../components/Card";
 import { NextSeo } from "next-seo";
 import ChampionStats from "../../models/champions/ChampionStats";
@@ -8,12 +7,12 @@ import StatsByOrder from "../../components/items/StatsByOrder";
 import RuneApi from "../../api/RuneApi";
 import ItemApi from "../../api/ItemApi";
 import ChampionRoles from "../../components/champions/ChampionRoles";
-import UggButton from "../../components/champions/UggButton";
 import ChampionModal from "../../components/champions/ChampionModal";
 import { useState } from "react";
 import PageHeader from "../../components/PageHeader";
+import MatchApi from "../../api/MatchApi";
 
-export default function ChampionPage({ champion, runes, items }) {
+export default function ChampionPage({ champion, runes, items, totalMatches }) {
   champion = new ChampionStats(champion);
 
   const [modalIsOpen, setModalOpen] = useState(false);
@@ -41,32 +40,43 @@ export default function ChampionPage({ champion, runes, items }) {
       >
         <div className="flex flex-col lg:flex-row">
           <div className="grid grid-cols-2 gap-3 lg:w-1/2 mr-3 mb-4 lg:mb-0">
-            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
-              <span className={winrateClass(champion.wins, champion.matches)}>
+            <div className="flex items-center justify-center bg-white rounded p-4 text-lg font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
+              <span
+                className={`${winrateClass(
+                  champion.wins,
+                  champion.matches
+                )} mr-1`}
+              >
                 {winrate(champion.wins, champion.matches)}
-              </span>{" "}
+              </span>
               Winrate
             </div>
-            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
-              <span className="text-gray-900 dark:text-white">
-                {champion.matches}
+            <div
+              className="flex items-center justify-center bg-white rounded p-4 text-lg font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800"
+              title={champion.matches}
+            >
+              <span className="text-gray-900 dark:text-white mr-1">
+                {pickrate(champion.matches, totalMatches)}
               </span>{" "}
-              Matches
+              Pickrate
             </div>
-            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
-              <span className="text-gray-900 dark:text-white">
+            <div className="flex items-center justify-center bg-white rounded p-4 text-lg font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
+              <span className="text-gray-900 dark:text-white mr-1">
                 {champion.itemStats.length}
               </span>{" "}
               Items
             </div>
-            <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
-              <span className="text-gray-900 dark:text-white">
+            <div className="flex items-center justify-center bg-white rounded p-4 text-lg font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
+              <span className="text-gray-900 dark:text-white mr-1">
                 {champion.runeStats.length}
               </span>{" "}
               Runes
             </div>
           </div>
-          <ChampionRoles roleStats={champion.roleStats} />
+          <ChampionRoles
+            roleStats={champion.roleStats}
+            totalMatches={champion.matches}
+          />
         </div>
       </PageHeader>
 
@@ -83,11 +93,12 @@ export default function ChampionPage({ champion, runes, items }) {
                   items.find((item) => item.id == stats.itemId).isMythic
               )
               .sort((a, b) => b.wins / b.matches - a.wins / a.matches)
-              .map((itemStats, i) => (
+              .map((itemStats) => (
                 <Card
-                  key={i}
+                  key={itemStats.itemId}
                   type={"item"}
                   {...itemStats}
+                  totalMatches={champion.matches}
                   id={itemStats.itemId}
                 />
               ))}
@@ -102,11 +113,12 @@ export default function ChampionPage({ champion, runes, items }) {
                   !items.find((item) => item.id == stats.itemId).isMythic
               )
               .sort((a, b) => b.wins / b.matches - a.wins / a.matches)
-              .map((itemStats, i) => (
+              .map((itemStats) => (
                 <Card
-                  key={i}
+                  key={itemStats.itemId}
                   type={"item"}
                   {...itemStats}
+                  totalMatches={champion.matches}
                   id={itemStats.itemId}
                 />
               ))}
@@ -127,11 +139,12 @@ export default function ChampionPage({ champion, runes, items }) {
                   runes.find((rune) => rune.id == stats.runeId).tier === 0
               )
               .sort((a, b) => b.wins / b.matches - a.wins / a.matches)
-              .map((runeStats, i) => (
+              .map((runeStats) => (
                 <Card
-                  key={i}
+                  key={runeStats.runeId}
                   type={"rune"}
                   {...runeStats}
+                  totalMatches={champion.matches}
                   id={runeStats.runeId}
                 />
               ))}
@@ -146,11 +159,12 @@ export default function ChampionPage({ champion, runes, items }) {
                   runes.find((rune) => rune.id == stats.runeId).tier !== 0
               )
               .sort((a, b) => b.wins / b.matches - a.wins / a.matches)
-              .map((runeStats, i) => (
+              .map((runeStats) => (
                 <Card
-                  key={i}
+                  key={runeStats.runeId}
                   type={"rune"}
                   {...runeStats}
+                  totalMatches={champion.matches}
                   id={runeStats.runeId}
                 />
               ))}
@@ -170,6 +184,7 @@ export default function ChampionPage({ champion, runes, items }) {
           {champion.orderStats.map((stats) => (
             <StatsByOrder
               key={Math.random()}
+              totalMatches={champion.matches}
               type={"items"}
               orderStats={stats}
             />
@@ -181,7 +196,7 @@ export default function ChampionPage({ champion, runes, items }) {
 }
 
 export async function getStaticPaths() {
-  const champions = await ChampionApi.getAllChampions();
+  const champions = ChampionApi.getAllChampions();
 
   return {
     paths: champions.map((i) => ({ params: { id: "" + i.id } })),
@@ -190,13 +205,16 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const champion = await ChampionApi.getChampion(params.id);
-  const runes = await RuneApi.getAllRunes();
-  const items = await ItemApi.getAllItems();
+  const champion = ChampionApi.getChampion(params.id);
+  const runes = RuneApi.getAllRunes();
+  const items = ItemApi.getAllItems();
+
+  const totalMatches = MatchApi.getTotalMatches();
 
   return {
     props: {
       champion,
+      totalMatches,
       runes: runes.map(({ id, tier }) => ({ id, tier })),
       items: items.map(({ id, description }) => ({
         id,

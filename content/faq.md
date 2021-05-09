@@ -29,5 +29,16 @@ This also means items which are built later in the game ([Guardian Angel](/items
 have higher winrates, and mythics which are generally built first, lower winrates.  
 Additionally, some items are only built when already winning, like [Mejai's Soulstealer](/items/3041).
 
+# How are pickrates of champions/items/runes calculated?
+
+This is calculated as the amount of matches for this champion/rune/item divided by the amount of matches data is
+gathered from.  
+This means that if a champion has a pickrate of 25%, you will on average see it in 1 out of 4 games.
+
+# How can items/runes have higher pickrates than 100%?
+
+If an item has a pickrate of 100% it is built once per game on average, so if an item for example has a 200% winrate it
+would be built twice per game.
+
 **If you have any other questions, feedback or feature requests, feel free to send an email
 to: [info@leagueofitems.com](mailto:info@leagueofitems.com)**

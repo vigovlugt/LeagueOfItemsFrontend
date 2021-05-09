@@ -6,9 +6,17 @@ export function winrate(wins, matches) {
   return parseFloat(((wins / matches) * 100).toFixed(2)) + "%";
 }
 
+export function pickrate(wins, matches) {
+  if (matches === 0) {
+    return "-%";
+  }
+
+  return parseFloat(((wins / matches) * 100).toFixed(2)) + "%";
+}
+
 export function winrateClass(wins, matches) {
   if (matches === 0) {
-    return "text-winrate-okay";
+    return "text-winrate-okay dark:text-winrate-okay-dark";
   }
 
   const winrate = wins / matches;

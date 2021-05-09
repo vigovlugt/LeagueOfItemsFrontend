@@ -5,10 +5,13 @@ import Table from "../components/Table";
 import ItemStats from "../models/items/ItemStats";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { winrate, winrateClass } from "../utils/format";
+import { pickrate, winrate, winrateClass } from "../utils/format";
 import { NextSeo } from "next-seo";
+import { CHAMPIONS_PER_MATCH } from "../constants/constants";
+import ChampionApi from "../api/ChampionApi";
+import MatchApi from "../api/MatchApi";
 
-export default function Tierlist({ items }) {
+export default function Tierlist({ items, totalMatches }) {
   const router = useRouter();
 
   const data = useMemo(() => items.map((i) => new ItemStats(i)), []);
@@ -48,6 +51,17 @@ export default function Tierlist({ items }) {
           rowA.original.wins / rowA.original.matches -
           rowB.original.wins / rowB.original.matches,
         id: "winrate",
+      },
+      {
+        Header: "Pickrate",
+        Cell: ({
+          row: {
+            original: { matches },
+          },
+        }) => <span>{pickrate(matches, totalMatches)}</span>,
+        accessor: "matches",
+        sortType: (rowA, rowB) => rowA.original.matches - rowB.original.matches,
+        id: "pickrate",
       },
       {
         Header: "Champions",
@@ -93,11 +107,14 @@ export default function Tierlist({ items }) {
 }
 
 export async function getStaticProps(context) {
-  const items = await ItemApi.getAllItems();
+  const items = ItemApi.getAllItems();
+
+  const totalMatches = MatchApi.getTotalMatches();
 
   return {
     props: {
       items,
+      totalMatches,
     },
   };
 }

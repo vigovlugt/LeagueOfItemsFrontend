@@ -1,9 +1,9 @@
-import {NextSeo} from "next-seo";
+import { NextSeo } from "next-seo";
 import ChampionApi from "../../api/ChampionApi";
 import ChampionGridCell from "../../components/champions/ChampionGridCell";
 import ChampionStats from "../../models/champions/ChampionStats";
 
-export default function ChampionIndex({champions}) {
+export default function ChampionIndex({ champions }) {
   champions = champions.map((i) => new ChampionStats(i));
 
   return (
@@ -16,7 +16,7 @@ export default function ChampionIndex({champions}) {
       <h2 className="font-header text-4xl mb-2">Champions</h2>
       <div className="flex flex-wrap">
         {champions.map((c) => (
-          <ChampionGridCell {...c} key={c.id}/>
+          <ChampionGridCell {...c} key={c.id} />
         ))}
       </div>
     </div>
@@ -24,7 +24,7 @@ export default function ChampionIndex({champions}) {
 }
 
 export async function getStaticProps(context) {
-  const champions = await ChampionApi.getAllChampions();
+  const champions = ChampionApi.getAllChampions();
 
   return {
     props: {
