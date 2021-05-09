@@ -44,7 +44,7 @@ export default function ItemPage({ item, totalMatches }) {
             <span className="text-gray-900 dark:text-white">
               {pickrate(item.matches, totalMatches)}
             </span>{" "}
-            Matches
+            Pickrate
           </div>
           <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
             <span className="text-gray-900 dark:text-white">
