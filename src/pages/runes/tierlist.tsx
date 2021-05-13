@@ -28,7 +28,7 @@ export default function RuneTierlist({ runes, totalMatches }) {
         Cell: ({ row }) => (
           <div className="flex items-center">
             <img
-              src={`/images/runes/32/${row.original.id}.png`}
+              src={`/images/runes/32/${row.original.id}.webp`}
               style={{
                 width: "32px",
                 height: "32px",
