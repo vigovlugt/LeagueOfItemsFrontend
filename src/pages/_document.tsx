@@ -47,6 +47,11 @@ export default class Document extends NextDocument {
             href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap"
             rel="stylesheet"
           />
+          <link
+            type="application/opensearchdescription+xml"
+            rel="search"
+            href="/opensearchdescription.xml"
+          />
         </Head>
         <body>
           <Main />
