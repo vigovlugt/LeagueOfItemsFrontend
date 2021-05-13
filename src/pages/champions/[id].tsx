@@ -185,7 +185,7 @@ export default function ChampionPage({ champion, runes, items, totalMatches }) {
             <StatsByOrder
               key={Math.random()}
               totalMatches={champion.matches}
-              type={"items"}
+              type={"item"}
               orderStats={stats}
             />
           ))}

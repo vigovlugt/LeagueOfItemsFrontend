@@ -1,14 +1,16 @@
-import {pickrate, winrate, winrateClass} from "../../utils/format";
-import ChampionIcon from "../ChampionIcon";
+import { pickrate, winrate, winrateClass } from "../../utils/format";
 import { useMemo } from "react";
 import { useTable, useSortBy } from "react-table";
 import Table from "../Table";
 import { useRouter } from "next/router";
-import Image from "next/image";
 
 const nameByOrder = ["First", "Second", "Third", "Fourth", "Last"];
 
-export default function StatsByOrder({ orderStats, totalMatches, type = "champion" }) {
+export default function StatsByOrder({
+  orderStats,
+  totalMatches,
+  type = "champion",
+}) {
   const router = useRouter();
 
   const data = useMemo(
@@ -23,17 +25,18 @@ export default function StatsByOrder({ orderStats, totalMatches, type = "champio
         Header: "",
         accessor: "name",
         Cell: ({ row }) => (
-          <div className="flex items-center h-[32px] w-[32px]">
-            {type === "champion" ? (
-              <ChampionIcon id={row.original.championId} size="sm" />
-            ) : (
-              <Image
-                height={32}
-                width={32}
-                src={`/images/items/${row.original.itemId}.png`}
-              />
-            )}
-          </div>
+          <img
+            src={`/images/${type}s/32/${
+              row.original.itemId || row.original.championId
+            }.webp`}
+            style={{
+              height: "32px",
+              width: "32px",
+              minHeight: "32px",
+              minWidth: "32px",
+            }}
+            alt="Image"
+          />
         ),
         disableSortBy: true,
       },
@@ -99,7 +102,12 @@ export default function StatsByOrder({ orderStats, totalMatches, type = "champio
           >
             {winrate(orderStats.wins, orderStats.matches)}
           </p>
-          <p className="text-center font-bold text-lg" title={orderStats.matches}>{pickrate(orderStats.matches, totalMatches)}</p>
+          <p
+            className="text-center font-bold text-lg"
+            title={orderStats.matches}
+          >
+            {pickrate(orderStats.matches, totalMatches)}
+          </p>
         </div>
       </div>
 

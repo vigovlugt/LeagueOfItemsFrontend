@@ -2,16 +2,10 @@ import { useMemo } from "react";
 import { useTable, useSortBy } from "react-table";
 import Table from "../../components/Table";
 import RuneStats from "../../models/runes/RuneStats";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { pickrate, winrate, winrateClass } from "../../utils/format";
 import RuneApi from "../../api/RuneApi";
 import { NextSeo } from "next-seo";
-import {
-  CHAMPIONS_PER_MATCH,
-  RUNES_PER_CHAMPION,
-} from "../../constants/constants";
-import ChampionApi from "../../api/ChampionApi";
 import MatchApi from "../../api/MatchApi";
 
 export default function RuneTierlist({ runes, totalMatches }) {
@@ -33,13 +27,16 @@ export default function RuneTierlist({ runes, totalMatches }) {
         accessor: "name",
         Cell: ({ row }) => (
           <div className="flex items-center">
-            <div className="h-[32px] w-[32px]">
-              <Image
-                src={`/images/runes/${row.original.id}.png`}
-                height={32}
-                width={32}
-              />
-            </div>
+            <img
+              src={`/images/runes/32/${row.original.id}.png`}
+              style={{
+                width: "32px",
+                height: "32px",
+                minHeight: "32px",
+                minWidth: "32px",
+              }}
+              alt="Rune icon"
+            />
 
             <span className="ml-2 block">{row.original.name}</span>
           </div>

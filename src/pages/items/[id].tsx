@@ -7,8 +7,6 @@ import { NextSeo } from "next-seo";
 import { useState } from "react";
 import ItemModal from "../../components/items/ItemModal";
 import PageHeader from "../../components/PageHeader";
-import ChampionApi from "../../api/ChampionApi";
-import { CHAMPIONS_PER_MATCH } from "../../constants/constants";
 import MatchApi from "../../api/MatchApi";
 
 export default function ItemPage({ item, totalMatches }) {

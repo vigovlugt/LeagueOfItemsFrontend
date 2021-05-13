@@ -1,4 +1,3 @@
-import Image from "next/image";
 import {
   pickrate,
   removeTags,
@@ -10,12 +9,6 @@ import RuneStats from "../../models/runes/RuneStats";
 import Card from "../../components/Card";
 import { NextSeo } from "next-seo";
 import PageHeader from "../../components/PageHeader";
-import ChampionApi from "../../api/ChampionApi";
-import ItemApi from "../../api/ItemApi";
-import {
-  CHAMPIONS_PER_MATCH,
-  RUNES_PER_CHAMPION,
-} from "../../constants/constants";
 import MatchApi from "../../api/MatchApi";
 
 export default function RunePage({ rune, totalMatches }) {
