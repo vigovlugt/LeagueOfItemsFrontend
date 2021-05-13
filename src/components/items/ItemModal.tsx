@@ -1,7 +1,6 @@
 import { Dialog } from "@headlessui/react";
 import { useRef } from "react";
 import { XIcon } from "@heroicons/react/solid";
-import Image from "next/image";
 
 export default function ItemModal({ setIsOpen, isOpen, item }) {
   const cancelButtonRef = useRef();
@@ -17,10 +16,16 @@ export default function ItemModal({ setIsOpen, isOpen, item }) {
         <Dialog.Overlay className="fixed inset-0 bg-black opacity-90" />
 
         <div className="z-30 p-4 mx-auto text-white bg-black w-[512px] h-[512px] flex flex-col justify-between relative">
-          <Image
-            src={`/images/items/${item.id}.png`}
-            layout="fill"
-            quality={100}
+          <img
+            src={`/images/items/512/${item.id}.webp`}
+            style={{
+              width: "512px",
+              height: "512px",
+              minHeight: "512px",
+              minWidth: "512px",
+            }}
+            className="absolute inset-0"
+            alt="Item image"
           />
           <div
             className="absolute inset-0"

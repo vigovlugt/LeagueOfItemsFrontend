@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import classNames from "classnames";
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/router";
 
 export default function SearchBar({ onSubmit = null }) {
@@ -26,7 +25,7 @@ export default function SearchBar({ onSubmit = null }) {
       fetchDataset();
     }
   };
-  
+
   const reset = () => {
     setQuery("");
     if (onSubmit) {
@@ -115,11 +114,7 @@ export default function SearchBar({ onSubmit = null }) {
       {results.length > 0 && isFocussed && (
         <div className="absolute rounded-md border py-2 w-full z-10 rounded-t-none bg-white border-gray-300 dark:bg-dark dark:border-gray-600">
           {results.slice(0, 5).map((result, i) => (
-            <SearchResult
-              {...result}
-              key={result.id}
-              onClick={reset}
-            />
+            <SearchResult {...result} key={result.id} onClick={reset} />
           ))}
         </div>
       )}
@@ -134,7 +129,16 @@ function SearchResult({ name, id, type, onClick }) {
         className="cursor-pointer px-3 py-2 flex items-center justify-start hover:bg-gray-100 dark:hover:bg-gray-800"
         onClick={onClick}
       >
-        <Image src={`/images/${type}s/${id}.png`} height={32} width={32} />{" "}
+        <img
+          src={`/images/${type}s/32/${id}.webp`}
+          style={{
+            width: "32px",
+            height: "32px",
+            minWidth: "32px",
+            minHeight: "32px",
+          }}
+          alt="Search result image"
+        />{" "}
         <span className="ml-2 font-bold">{name}</span>
       </a>
     </Link>

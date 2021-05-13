@@ -3,12 +3,9 @@ import { useMemo } from "react";
 import { useTable, useSortBy } from "react-table";
 import Table from "../components/Table";
 import ItemStats from "../models/items/ItemStats";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { pickrate, winrate, winrateClass } from "../utils/format";
 import { NextSeo } from "next-seo";
-import { CHAMPIONS_PER_MATCH } from "../constants/constants";
-import ChampionApi from "../api/ChampionApi";
 import MatchApi from "../api/MatchApi";
 
 export default function Tierlist({ items, totalMatches }) {
@@ -23,13 +20,16 @@ export default function Tierlist({ items, totalMatches }) {
         accessor: "name",
         Cell: ({ row }) => (
           <div className="flex items-center">
-            <div className="h-[32px] w-[32px]">
-              <Image
-                src={`/images/items/${row.original.id}.png`}
-                height={32}
-                width={32}
-              />
-            </div>
+            <img
+              src={`/images/items/32/${row.original.id}.webp`}
+              style={{
+                width: "32px",
+                height: "32px",
+                minHeight: "32px",
+                minWidth: "32px",
+              }}
+              alt="Item image"
+            />
 
             <span className="ml-2 block">{row.original.name}</span>
           </div>

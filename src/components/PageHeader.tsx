@@ -1,4 +1,3 @@
-import Image from "next/image";
 import classNames from "classnames";
 
 export default function PageHeader({
@@ -31,13 +30,17 @@ export default function PageHeader({
           })}
           onClick={() => hasModal && setModalOpen(true)}
         >
-          <Image
+          <img
             src={`/images/${type}s/${
               type === "champion" ? "tiles/" : ""
-            }${id}.${type === "champion" ? "jpg" : "png"}`}
-            width={256}
-            height={256}
-            quality={100}
+            }256/${id}.webp`}
+            style={{
+              width: "256px",
+              height: "256px",
+              minHeight: "256px",
+              minWidth: "256px",
+            }}
+            alt="Image"
           />
         </div>
 
