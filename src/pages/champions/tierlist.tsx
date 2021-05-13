@@ -23,7 +23,7 @@ export default function ChampionTierlist({ champions, totalMatches }) {
         Cell: ({ row }) => (
           <div className="flex items-center">
             <img
-              src={`/images/champions/32/${row.original.id}.png`}
+              src={`/images/champions/32/${row.original.id}.webp`}
               style={{
                 width: "32px",
                 height: "32px",
