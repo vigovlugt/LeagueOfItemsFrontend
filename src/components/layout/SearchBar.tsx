@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import classNames from "classnames";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import getSearchResults from "../../lib/search";
 
 export default function SearchBar({ onSubmit = null }) {
   const router = useRouter();
@@ -45,18 +46,6 @@ export default function SearchBar({ onSubmit = null }) {
     reset();
   };
 
-  const filterFunction = (i) => {
-    const name = i.name.toLowerCase().replaceAll("'", "");
-    const searchQuery = query.toLowerCase().replaceAll("'", "");
-
-    const firstLetters = name
-      .split(" ")
-      .map((str) => str.substr(0, 1))
-      .join("");
-
-    return name.includes(searchQuery) || firstLetters.includes(searchQuery);
-  };
-
   const fetchDataset = async () => {
     const res = await fetch("/data/dataset.json");
     const dataset = await res.json();
@@ -65,25 +54,9 @@ export default function SearchBar({ onSubmit = null }) {
   };
 
   useEffect(() => {
-    const itemResults = query
-      ? dataset.items
-          .filter(filterFunction)
-          .map((i) => ({ id: i.id, name: i.name, type: "item" }))
-      : [];
+    const results = getSearchResults(query, dataset);
 
-    const runeResults = query
-      ? dataset.runes
-          .filter(filterFunction)
-          .map((r) => ({ id: r.id, name: r.name, type: "rune" }))
-      : [];
-
-    const championResults = query
-      ? dataset.champions
-          .filter(filterFunction)
-          .map((r) => ({ id: r.id, name: r.name, type: "champion" }))
-      : [];
-
-    setResults([...itemResults, ...runeResults, ...championResults]);
+    setResults(results);
   }, [query, dataset]);
 
   return (

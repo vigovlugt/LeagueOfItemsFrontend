@@ -2,9 +2,7 @@
                        xmlns:moz="http://www.mozilla.org/2006/browser/search/">
     <ShortName>League of Items</ShortName>
     <Description>League of Items Search</Description>
-    <Url type="text/html" method="get" template="https://leagueofitems.com/opensearch/?query={searchTerms}"/>
+    <Url type="text/html" method="get" template="https://leagueofitems.com/search/?q={searchTerms}"/>
     <Image width="16" height="16">https://leagueofitems.com/favicon.ico</Image>
     <InputEncoding>UTF-8</InputEncoding>
-    <Url type="application/json" rel="suggestions"
-         template="https://leagueofitems.com/opensearch/?query={searchTerms}"/>
 </OpenSearchDescription>
