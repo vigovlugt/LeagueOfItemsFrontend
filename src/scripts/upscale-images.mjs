@@ -22,7 +22,7 @@ const upscale = async (file) => {
   });
 };
 
-async function main() {
+async function upscaleRunes() {
   const dir = path.join(__dirname, "../../public/images/runes/");
   const files = fs.readdirSync(dir);
 
@@ -31,9 +31,27 @@ async function main() {
       await upscale(path.join(dir, file));
     } catch (e) {
       console.error(e);
-      process.exit(1);
     }
   }
+}
+
+async function upscaleItems() {
+  const dir = path.join(__dirname, "../../public/images/items/");
+  const files = fs.readdirSync(dir);
+
+  for (const file of files) {
+    try {
+      await upscale(path.join(dir, file));
+    } catch (e) {
+      console.error(e);
+    }
+  }
+}
+
+async function main() {
+  await upscaleRunes();
+
+  await upscaleItems();
 }
 
 main();
