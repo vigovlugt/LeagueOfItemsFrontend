@@ -21,7 +21,7 @@ export default function Table({ table, onClick, size = "md" }) {
               {headerGroup.headers.map((column) => (
                 <th
                   {...column.getHeaderProps(column.getSortByToggleProps())}
-                  className={`${thPaddingBySize[size]} text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400 whitespace-nowrap`}
+                  className={`${thPaddingBySize[size]} text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400 whitespace-nowrap`}
                 >
                   {column.render("Header")}
                   <span>
