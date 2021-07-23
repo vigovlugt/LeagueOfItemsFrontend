@@ -13,11 +13,11 @@ export default function RuneTierlist({ runes, totalMatches }) {
 
   const data = useMemo(
     () => runes.map((r) => new RuneStats(r)).filter((r) => r.isKeystone()),
-    []
+    [runes]
   );
   const data2 = useMemo(
     () => runes.map((r) => new RuneStats(r)).filter((r) => !r.isKeystone()),
-    []
+    [runes]
   );
 
   const columns = useMemo(

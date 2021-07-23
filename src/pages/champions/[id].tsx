@@ -11,11 +11,14 @@ import ChampionModal from "../../components/champions/ChampionModal";
 import { useState } from "react";
 import PageHeader from "../../components/PageHeader";
 import MatchApi from "../../api/MatchApi";
+import usePageView from "../../hooks/usePageView";
 
 export default function ChampionPage({ champion, runes, items, totalMatches }) {
   champion = new ChampionStats(champion);
 
   const [modalIsOpen, setModalOpen] = useState(false);
+
+  usePageView("CHAMPION", champion.id);
 
   return (
     <div className="flex flex-col">
@@ -224,4 +227,4 @@ export async function getStaticProps({ params }) {
   };
 }
 
-ChampionPage.pageName = ({ champion }) => champion.name;
+ChampionPage.pageName = ({champion}) => champion.name;

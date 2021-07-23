@@ -10,9 +10,12 @@ import Card from "../../components/Card";
 import { NextSeo } from "next-seo";
 import PageHeader from "../../components/PageHeader";
 import MatchApi from "../../api/MatchApi";
+import usePageView from "../../hooks/usePageView";
 
 export default function RunePage({ rune, totalMatches }) {
   rune = new RuneStats(rune);
+
+  usePageView("RUNE", rune.id);
 
   return (
     <div className="flex flex-col">

@@ -1,3 +1,7 @@
+export function percentage(num){
+  return parseFloat((num * 100).toFixed(2)) + "%";
+}
+
 export function winrate(wins, matches) {
   if (matches === 0) {
     return "-%";
@@ -14,12 +18,12 @@ export function pickrate(wins, matches) {
   return parseFloat(((wins / matches) * 100).toFixed(2)) + "%";
 }
 
-export function winrateClass(wins, matches) {
+export function winrateClass(wins: number, matches?: number) {
   if (matches === 0) {
     return "text-winrate-okay dark:text-winrate-okay-dark";
   }
 
-  const winrate = wins / matches;
+  const winrate = matches === undefined ? wins : wins / matches;
 
   if (winrate < 0.45) {
     return "text-winrate-shiggo";

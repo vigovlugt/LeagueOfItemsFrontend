@@ -1,4 +1,4 @@
-import Api from "./Api";
+import Api from "./DatasetApi";
 
 export default class ItemApi {
   static getAllItems() {
@@ -6,7 +6,7 @@ export default class ItemApi {
   }
 
   static getItem(id) {
-    return Api.getDataset().items.find(i => i.id == id);
+    return Api.getDataset().items.find((i) => i.id == id);
   }
 
   static getTotalMatches() {

@@ -1,6 +1,6 @@
 import * as path from "path";
 import * as fs from "fs";
-import Api from "./Api";
+import Api from "./DatasetApi";
 
 export default class ChampionApi {
   static getAllChampions() {
