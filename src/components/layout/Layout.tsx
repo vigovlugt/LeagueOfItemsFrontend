@@ -1,5 +1,5 @@
 import Logo from "../Logo";
-import SideNavigation from "../SideNavigation";
+import SideNavigation from "./SideNavigation";
 import NavBar from "../NavBar";
 import { useState } from "react";
 

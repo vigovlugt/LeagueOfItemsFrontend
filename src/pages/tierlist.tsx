@@ -11,7 +11,7 @@ import MatchApi from "../api/MatchApi";
 export default function Tierlist({ items, totalMatches }) {
   const router = useRouter();
 
-  const data = useMemo(() => items.map((i) => new ItemStats(i)), []);
+  const data = useMemo(() => items.map((i) => new ItemStats(i)), [items]);
 
   const columns = useMemo(
     () => [

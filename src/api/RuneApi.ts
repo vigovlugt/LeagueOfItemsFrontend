@@ -1,4 +1,4 @@
-import Api from "./Api";
+import Api from "./DatasetApi";
 
 export default class RuneApi {
   static getAllRunes() {

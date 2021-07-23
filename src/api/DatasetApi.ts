@@ -1,7 +1,7 @@
 import * as path from "path";
 import * as fs from "fs";
 
-class Api {
+class DatasetApi {
   private _json: string = null;
 
   getDataset() {
@@ -19,5 +19,5 @@ class Api {
   }
 }
 
-const api = new Api();
+const api = new DatasetApi();
 export default api;

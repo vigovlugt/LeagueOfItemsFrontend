@@ -1,24 +1,30 @@
 import classNames from "classnames";
 import Link from "next/link";
-import ListItem from "./icons/ListIcon";
+import ListItem from "../icons/ListIcon";
 import { useRouter } from "next/router";
-import RuneIcon from "./icons/RuneIcon";
-import SwordIcon from "./icons/SwordIcon";
-import SideNavFooter from "./layout/SideNavFooter";
-import ChampionIcon from "./icons/ChampionIcon";
-import Logo from "./Logo";
+import RuneIcon from "../icons/RuneIcon";
+import SwordIcon from "../icons/SwordIcon";
+import SideNavFooter from "./SideNavFooter";
+import ChampionIcon from "../icons/ChampionIcon";
+import Logo from "../Logo";
 import {
   MailIcon,
   MenuIcon,
   QuestionMarkCircleIcon,
   XIcon,
 } from "@heroicons/react/outline";
-import SearchBar from "./layout/SearchBar";
+import SearchBar from "./SearchBar";
+import {HomeIcon} from "@heroicons/react/solid";
 
 const MENU_ITEMS = [
   {
-    name: "Items",
+    name: "Home",
     href: "/",
+    icon: HomeIcon,
+  },
+  {
+    name: "Items",
+    href: "/items",
     icon: SwordIcon,
   },
   {
@@ -135,7 +141,7 @@ function MenuItem({
             "text-gray-900 dark:text-gray-50": active,
           })}
         >
-          {icon ? <Icon /> : <div className="w-8" />}
+          {icon ? <Icon className="w-8" /> : <div className="w-8" />}
         </span>
         <span className="ml-3">{name}</span>
       </a>

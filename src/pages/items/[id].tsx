@@ -4,15 +4,18 @@ import { pickrate, winrate, winrateClass } from "../../utils/format";
 import StatsByOrder from "../../components/items/StatsByOrder";
 import Card from "../../components/Card";
 import { NextSeo } from "next-seo";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ItemModal from "../../components/items/ItemModal";
 import PageHeader from "../../components/PageHeader";
 import MatchApi from "../../api/MatchApi";
+import usePageView from "../../hooks/usePageView";
 
 export default function ItemPage({ item, totalMatches }) {
   item = new ItemStats(item);
 
   const [modalIsOpen, setModalOpen] = useState(false);
+
+  usePageView("ITEM", item.id);
 
   return (
     <div className="flex flex-col">
