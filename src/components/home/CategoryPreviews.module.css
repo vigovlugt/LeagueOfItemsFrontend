@@ -1,0 +1,28 @@
+.categoryImageItems {
+    filter: opacity(.25) contrast(1.5);
+}
+
+:global(.dark) .categoryImageItems{
+    filter: opacity(.3);
+}
+
+.categoryImageRunes {
+    filter: opacity(.25) brightness(1.5);
+}
+
+:global(.dark) .categoryImageRunes {
+    filter: opacity(.3) brightness(1.5) contrast(1.2);
+}
+
+.categoryImageChampions {
+    filter: opacity(.25) contrast(1) brightness(2);
+}
+
+:global(.dark) .categoryImageChampions {
+    filter: opacity(.3) contrast(1) brightness(2);
+}
+
+.categoryImageItems, .categoryImageRunes, .categoryImageChampions {
+    object-fit: cover;
+    object-position: center;
+}
