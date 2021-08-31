@@ -137,8 +137,8 @@ function MenuItem({
       >
         <span
           className={classNames({
-            "text-gray-400 dark:text-gray-600": !active,
-            "text-gray-900 dark:text-gray-50": active,
+            "text-gray-400 dark:text-gray-700": !active,
+            "text-gray-700 dark:text-gray-400": active,
           })}
         >
           {icon ? <Icon className="w-8" /> : <div className="w-8" />}

@@ -13,7 +13,7 @@ export default function HomeSidebar({ playrateBuilds, winrateBuilds }) {
       <h3 className="font-header mt-4 mb-1 text-xl">
         Biggest playrate increases
       </h3>
-      <BuildsTable builds={playrateBuilds} type="playrate"/>
+      <BuildsTable builds={playrateBuilds} type="pickrate"/>
 
       <h3 className="font-header mt-4 my-1 text-xl">
         Biggest winrate increases

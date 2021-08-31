@@ -1,7 +1,7 @@
 import ItemApi from "../api/ItemApi";
 import { useMemo } from "react";
 import { useTable, useSortBy } from "react-table";
-import Table from "../components/Table";
+import Table from "../components/table/Table";
 import ItemStats from "../models/items/ItemStats";
 import { useRouter } from "next/router";
 import { pickrate, winrate, winrateClass } from "../utils/format";
@@ -37,6 +37,8 @@ export default function Tierlist({ items, totalMatches }) {
       },
       {
         Header: "Winrate",
+        headerClass: "text-right",
+        cellClass: "text-right",
         Cell: ({
           row: {
             original: { wins, matches },
@@ -54,6 +56,8 @@ export default function Tierlist({ items, totalMatches }) {
       },
       {
         Header: "Pickrate",
+        headerClass: "text-right",
+        cellClass: "text-right",
         Cell: ({
           row: {
             original: { matches },
@@ -65,11 +69,15 @@ export default function Tierlist({ items, totalMatches }) {
       },
       {
         Header: "Champions",
+        headerClass: "text-right",
+        cellClass: "text-right",
         accessor: (original) => original.championStats.length,
         id: "champions",
       },
       {
         Header: "Matches",
+        headerClass: "text-right",
+        cellClass: "text-right",
         accessor: "matches",
       },
     ],

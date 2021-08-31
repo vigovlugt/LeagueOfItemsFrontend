@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useTable, useSortBy } from "react-table";
-import Table from "../../components/Table";
+import Table from "../../components/table/Table";
 import { useRouter } from "next/router";
 import { pickrate, winrate, winrateClass } from "../../utils/format";
 import { NextSeo } from "next-seo";
@@ -11,9 +11,10 @@ import MatchApi from "../../api/MatchApi";
 export default function ChampionTierlist({ champions, totalMatches }) {
   const router = useRouter();
 
-  const data = useMemo(() => champions.map((i) => new ChampionStats(i)), [
-    champions,
-  ]);
+  const data = useMemo(
+    () => champions.map((i) => new ChampionStats(i)),
+    [champions]
+  );
 
   const columns = useMemo(
     () => [
@@ -39,6 +40,8 @@ export default function ChampionTierlist({ champions, totalMatches }) {
       },
       {
         Header: "Winrate",
+        headerClass: "text-right",
+        cellClass: "text-right",
         Cell: ({
           row: {
             original: { wins, matches },
@@ -56,6 +59,8 @@ export default function ChampionTierlist({ champions, totalMatches }) {
       },
       {
         Header: "Pickrate",
+        headerClass: "text-right",
+        cellClass: "text-right",
         Cell: ({
           row: {
             original: { matches },
@@ -67,21 +72,29 @@ export default function ChampionTierlist({ champions, totalMatches }) {
       },
       {
         Header: "Items",
+        headerClass: "text-right",
+        cellClass: "text-right",
         accessor: (original) => original.itemStats.length,
         id: "items",
       },
       {
         Header: "Runes",
+        headerClass: "text-right",
+        cellClass: "text-right",
         accessor: (original) => original.runeStats.length,
         id: "runes",
       },
       {
         Header: "Roles",
+        headerClass: "text-right",
+        cellClass: "text-right",
         accessor: (original) => original.roleStats.length,
         id: "roles",
       },
       {
         Header: "Matches",
+        headerClass: "text-right",
+        cellClass: "text-right",
         accessor: "matches",
       },
     ],
