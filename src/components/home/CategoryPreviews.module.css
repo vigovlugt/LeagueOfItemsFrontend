@@ -1,5 +1,5 @@
 .categoryImageItems {
-    filter: opacity(.25) contrast(1.5);
+    filter: opacity(.4) contrast(1.5);
 }
 
 :global(.dark) .categoryImageItems{
@@ -7,7 +7,7 @@
 }
 
 .categoryImageRunes {
-    filter: opacity(.25) brightness(1.5);
+    filter: opacity(.4) brightness(1.5);
 }
 
 :global(.dark) .categoryImageRunes {
@@ -15,7 +15,7 @@
 }
 
 .categoryImageChampions {
-    filter: opacity(.25) contrast(1) brightness(2);
+    filter: opacity(.4) contrast(1) brightness(2);
 }
 
 :global(.dark) .categoryImageChampions {

@@ -1,7 +1,7 @@
 import { pickrate, winrate, winrateClass } from "../../utils/format";
 import { useMemo } from "react";
 import { useTable, useSortBy } from "react-table";
-import Table from "../Table";
+import Table from "../table/Table";
 import { useRouter } from "next/router";
 
 const nameByOrder = ["First", "Second", "Third", "Fourth", "Last"];
@@ -27,7 +27,9 @@ export default function StatsByOrder({
         Cell: ({ row }) => (
           <img
             src={`/images/${type}s/32/${
-              type === "champion" ? row.original.championId : row.original.itemId
+              type === "champion"
+                ? row.original.championId
+                : row.original.itemId
             }.webp`}
             style={{
               height: "32px",
@@ -42,14 +44,15 @@ export default function StatsByOrder({
       },
       {
         Header: "Winrate",
+        headerClass: "text-right",
         Cell: ({
           row: {
             original: { wins, matches },
           },
         }) => (
-          <span className={`${winrateClass(wins, matches)}`}>
+          <div className={`${winrateClass(wins, matches)} text-right w-full`}>
             {winrate(wins, matches)}
-          </span>
+          </div>
         ),
         accessor: "wins",
         sortType: (rowA, rowB) =>
@@ -59,6 +62,8 @@ export default function StatsByOrder({
       },
       {
         Header: "Matches",
+        headerClass: "text-right",
+        cellClass: "text-right",
         accessor: "matches",
       },
     ],
