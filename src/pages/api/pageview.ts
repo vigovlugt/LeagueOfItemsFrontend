@@ -24,7 +24,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(400).send(null);
   }
 
-  const ip = req.headers["x-forwarded-for"];
+  const ip = req.headers["x-forwarded-for"] || "localhost";
   const userAgent = req.headers["user-agent"];
 
   const user = md5(ip + userAgent + IP_HASH_SALT);
