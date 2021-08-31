@@ -27,7 +27,7 @@ export default function StatsByOrder({
         Cell: ({ row }) => (
           <img
             src={`/images/${type}s/32/${
-              row.original.itemId || row.original.championId
+              type === "champion" ? row.original.championId : row.original.itemId
             }.webp`}
             style={{
               height: "32px",
