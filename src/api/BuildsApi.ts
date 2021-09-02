@@ -1,5 +1,5 @@
 import Api from "./DatasetApi";
-import { getPlayrateIncrease, getWinrateIncrease } from "../utils/builds";
+import { getPlayrateIncrease, getWinrateIncrease } from "../utils/stats";
 
 export default class BuildsApi {
   static getAllBuilds() {
