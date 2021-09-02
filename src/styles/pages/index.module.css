@@ -1,0 +1,9 @@
+.homePageGrid {
+    grid-template-columns: auto 370px;
+}
+
+@media (max-width: 1500px) {
+    .homePageGrid {
+        grid-template-columns: auto;
+    }
+}
