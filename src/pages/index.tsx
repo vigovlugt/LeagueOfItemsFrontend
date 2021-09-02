@@ -13,12 +13,16 @@ import CategoryPreviews from "../components/home/CategoryPreviews";
 import PopularSection from "../components/home/PopularSection";
 import PageViewApi from "../api/PageViewApi";
 import styles from "../styles/pages/index.module.css";
+import ChampionApi from "../api/ChampionApi";
+import { pickrate } from "../utils/format";
+import ChampionGridCell from "../components/champions/ChampionGridCell";
 
 export default function Home({
   totalMatches = 0,
   popularPages = [],
   winrateBuilds = [],
   playrateBuilds = [],
+  winrateChampions = [],
 }) {
   const numberFormatter = new Intl.NumberFormat("us-US");
 
@@ -72,18 +76,20 @@ export default function Home({
             </a>
           </Link>
 
-          <h2 className="font-header text-4xl mb-2">Biggest changes</h2>
+          <h2 className="font-header text-4xl mb-2">
+            Biggest champion winrate changes
+          </h2>
           <div className="flex space-x-2 w-full overflow-x-auto pb-2">
-            {popularPages.map((p) => (
+            {winrateChampions.map((c) => (
               <div
-                key={p.type + "-" + p.id}
+                key={c.id}
                 className="flex flex-col items-center bg-white rounded shadow dark:text-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
               >
-                <GridCell {...p} />
+                <ChampionGridCell id={c.id} />
                 <div className="flex items-center font-semibold my-1">
                   <TrendingUpIcon className="w-8 text-green-400 inline mr-2" />
                   <span className="text-xl font-header">
-                    {/*{percentageFormatter.format(0.25)}*/}
+                    {pickrate(c.wins, c.matches)} {JSON.stringify(c)} {pickrate(c.previousWins, c.previousMatches)}
                   </span>
                 </div>
               </div>
@@ -108,6 +114,11 @@ export async function getStaticProps() {
   const winrateBuilds = await BuildsApi.getByWinrate().slice(0, 10);
   const playrateBuilds = await BuildsApi.getByPlayrate().slice(0, 10);
 
+  const winrateChampions = ChampionApi.getChampionsByWinRateDifference().slice(
+    0,
+    10
+  );
+
   return {
     props: {
       items,
@@ -115,6 +126,7 @@ export async function getStaticProps() {
       popularPages,
       winrateBuilds,
       playrateBuilds,
+      winrateChampions,
     },
   };
 }

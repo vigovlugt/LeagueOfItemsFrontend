@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import Table from "../table/Table";
 import { useRouter } from "next/router";
 import { useTable, useSortBy, usePagination } from "react-table";
-import { getPlayrateIncrease, getWinrateIncrease } from "../../utils/builds";
+import { getPlayrateIncrease, getWinrateIncrease } from "../../utils/stats";
 import { percentage, winrate, winrateClass } from "../../utils/format";
 import {
   ArrowSmRightIcon,
