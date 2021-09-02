@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import UggButton from "./champions/UggButton";
 
 export default function PageHeader({
   id,
@@ -45,17 +46,21 @@ export default function PageHeader({
         </div>
 
         <div className="flex flex-col w-full">
-          <h2
-            className={classNames(
-              "text-5xl font-header font-medium hidden lg:block",
-              {
-                "cursor-pointer": hasModal,
-              }
-            )}
-            onClick={() => hasModal && setModalOpen(true)}
-          >
-            {name}
-          </h2>
+          <div className="flex justify-between items-end">
+            <h2
+              className={classNames(
+                "text-5xl font-header font-medium hidden lg:block",
+                {
+                  "cursor-pointer": hasModal,
+                }
+              )}
+              onClick={() => hasModal && setModalOpen(true)}
+            >
+              {name}
+            </h2>
+            {type === "champion" && <UggButton name={name} />}
+          </div>
+
           <p
             className={classNames(
               `text-lg font-header mb-4 text-center lg:text-left lg:overflow-ellipsis lg:overflow-hidden lg:max-h-[56px] cursor-pointer text-gray-600 dark:text-gray-400`,

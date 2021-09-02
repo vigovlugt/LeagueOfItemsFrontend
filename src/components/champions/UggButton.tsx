@@ -20,8 +20,8 @@ const MENU_ITEMS = [
   },
 ];
 
-export default function UggButton({ champion }) {
-  const name = champion.name.toLowerCase().replace(/[^\w]/g, "");
+export default function UggButton({ name }) {
+  name = name.toLowerCase().replace(/[^\w]/g, "");
 
   return (
     <div className="flex bg-ugg-dark rounded-md px-3 py-2 text-white shadow focus:outline-none dark:bg-ugg">
