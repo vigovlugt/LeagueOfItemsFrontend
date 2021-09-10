@@ -4,5 +4,5 @@ export const getPlayrateIncrease = (build) =>
 export const getPlayrateIncreasePercentage = (build) =>
   build.playRate / build.previousPlayRate;
 
-export const getWinrateIncrease = (build) =>
-  build.wins / build.matches - build.previousWins / build.previousMatches;
+export const getWinrateIncrease = (s) =>
+  s.wins / s.matches - s.previousWins / s.previousMatches;

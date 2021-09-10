@@ -1,3 +1,5 @@
+// UNUSED
+
 const fetch = require("node-fetch");
 
 const sharp = require("sharp");

@@ -20,8 +20,9 @@ export default class ChampionApi {
 
   static getChampionsByWinRateDifference() {
     return Api.getDataset()
-      .champions.sort((a, b) =>
-        Math.abs(getWinrateIncrease(b) - getWinrateIncrease(a))
+      .champions.sort(
+        (a, b) =>
+          Math.abs(getWinrateIncrease(b)) - Math.abs(getWinrateIncrease(a))
       )
       .map(({ id, wins, matches, previousWins, previousMatches }) => ({
         id,
