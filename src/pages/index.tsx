@@ -14,8 +14,10 @@ import PopularSection from "../components/home/PopularSection";
 import PageViewApi from "../api/PageViewApi";
 import styles from "../styles/pages/index.module.css";
 import ChampionApi from "../api/ChampionApi";
-import { pickrate } from "../utils/format";
+import {pickrate, winrate, winrateClass, winrateIncrease} from "../utils/format";
 import ChampionGridCell from "../components/champions/ChampionGridCell";
+import { getPlayrateIncrease, getWinrateIncrease } from "../utils/stats";
+import { TrendingDownIcon } from "@heroicons/react/solid";
 
 export default function Home({
   totalMatches = 0,
@@ -81,18 +83,7 @@ export default function Home({
           </h2>
           <div className="flex space-x-2 w-full overflow-x-auto pb-2">
             {winrateChampions.map((c) => (
-              <div
-                key={c.id}
-                className="flex flex-col items-center bg-white rounded shadow dark:text-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
-              >
-                <ChampionGridCell id={c.id} />
-                <div className="flex items-center font-semibold my-1">
-                  <TrendingUpIcon className="w-8 text-green-400 inline mr-2" />
-                  <span className="text-xl font-header">
-                    {pickrate(c.wins, c.matches)} {JSON.stringify(c)} {pickrate(c.previousWins, c.previousMatches)}
-                  </span>
-                </div>
-              </div>
+              <DifferenceCard champion={c} />
             ))}
           </div>
         </div>
@@ -104,6 +95,36 @@ export default function Home({
     </div>
   );
 }
+
+const DifferenceCard = ({ champion }) => {
+  const increase = getWinrateIncrease(champion);
+
+  const TrendingIcon = increase > 0 ? TrendingUpIcon : TrendingDownIcon;
+
+  return (
+    <div
+      key={champion.id}
+      className="flex flex-col items-center bg-white rounded shadow dark:text-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
+    >
+      <ChampionGridCell id={champion.id} />
+      <div
+        className={`flex items-center font-semibold my-1 ${winrateClass(
+          0.5 + increase
+        )}`}
+      >
+        <TrendingIcon className="w-8 inline mr-2" />
+        <span className="text-xl font-header">
+          {winrateIncrease(
+            champion.wins,
+            champion.matches,
+            champion.previousWins,
+            champion.previousMatches
+          )}
+        </span>
+      </div>
+    </div>
+  );
+};
 
 export async function getStaticProps() {
   const items = ItemApi.getAllItems();

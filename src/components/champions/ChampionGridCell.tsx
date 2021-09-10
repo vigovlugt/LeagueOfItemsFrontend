@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function ChampionGridCell({ id, className = "", size = "md" }) {
   return (
     <Link href={`/champions/${id}`} passHref>
-      <a className={`block mr-[6px] mb-[6px] cursor-pointer ${className}`}>
+      <a className={`block cursor-pointer ${className}`}>
         <img
           src={`/images/champions/${size == "md" ? "tiles/" : ""}${size == "md" ? 128 : 64}/${id}.webp`}
           style={{

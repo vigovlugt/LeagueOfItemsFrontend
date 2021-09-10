@@ -16,7 +16,7 @@ export default function ChampionIndex({ champions }) {
       <h2 className="font-header text-4xl mb-2">Champions</h2>
       <div className="flex flex-wrap">
         {champions.map((c) => (
-          <ChampionGridCell {...c} key={c.id} />
+          <ChampionGridCell {...c} key={c.id} className="mr-[6px] mb-[6px]" />
         ))}
       </div>
     </div>
