@@ -2,9 +2,7 @@ const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
-  future: {
-    webpack5: true
-  },
+  webpack5: true,
   webpack: (config, {buildId, dev, isServer, defaultLoaders, webpack}) => {
     config.plugins.push(new CopyPlugin({
       patterns: [
