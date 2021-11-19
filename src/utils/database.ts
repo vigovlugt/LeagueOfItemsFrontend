@@ -18,13 +18,6 @@ export default async function connect() {
       .connect(MONGODB_URL, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        bufferCommands: false,
-        bufferMaxEntries: 0,
-        useFindAndModify: false,
-        useCreateIndex: true,
-      })
-      .then((mongoose) => {
-        return mongoose;
       });
   }
 
