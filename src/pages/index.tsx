@@ -14,17 +14,30 @@ import PopularSection from "../components/home/PopularSection";
 import PageViewApi from "../api/PageViewApi";
 import styles from "../styles/pages/index.module.css";
 import ChampionApi from "../api/ChampionApi";
-import {pickrate, winrate, winrateClass, winrateIncrease} from "../utils/format";
+import {
+  percentage,
+  pickrate,
+  winrate,
+  winrateClass,
+  winrateIncrease,
+} from "../utils/format";
 import ChampionGridCell from "../components/champions/ChampionGridCell";
-import { getPlayrateIncrease, getWinrateIncrease } from "../utils/stats";
+import {
+  getChampionPlayrateIncrease,
+  getPlayrateIncrease,
+  getWinrateIncrease,
+} from "../utils/stats";
 import { TrendingDownIcon } from "@heroicons/react/solid";
 
 export default function Home({
   totalMatches = 0,
+  championMatches = 0,
+  previousChampionMatches = 0,
   popularPages = [],
   winrateBuilds = [],
   playrateBuilds = [],
   winrateChampions = [],
+  playrateChampions = [],
 }) {
   const numberFormatter = new Intl.NumberFormat("us-US");
 
@@ -83,7 +96,21 @@ export default function Home({
           </h2>
           <div className="flex space-x-2 w-full overflow-x-auto pb-2">
             {winrateChampions.map((c) => (
-              <DifferenceCard champion={c} />
+              <DifferenceCard key={c.id} champion={c} />
+            ))}
+          </div>
+          <h2 className="font-header text-4xl mb-2 mt-8">
+            Biggest champion playrate changes
+          </h2>
+          <div className="flex space-x-2 w-full overflow-x-auto pb-2">
+            {playrateChampions.map((c) => (
+              <DifferenceCard
+                key={c.id}
+                champion={c}
+                type="playrate"
+                championMatches={championMatches}
+                previousChampionMatches={previousChampionMatches}
+              />
             ))}
           </div>
         </div>
@@ -96,8 +123,21 @@ export default function Home({
   );
 }
 
-const DifferenceCard = ({ champion }) => {
-  const increase = getWinrateIncrease(champion);
+const DifferenceCard = ({
+  champion,
+  type = "winrate",
+  championMatches = 0,
+  previousChampionMatches = 0,
+}) => {
+  const isWinrate = type === "winrate";
+
+  const increase = isWinrate
+    ? getWinrateIncrease(champion)
+    : getChampionPlayrateIncrease(
+        champion,
+        championMatches,
+        previousChampionMatches
+      );
 
   const TrendingIcon = increase > 0 ? TrendingUpIcon : TrendingDownIcon;
 
@@ -113,14 +153,7 @@ const DifferenceCard = ({ champion }) => {
         )}`}
       >
         <TrendingIcon className="w-8 inline mr-2" />
-        <span className="text-xl font-header">
-          {winrateIncrease(
-            champion.wins,
-            champion.matches,
-            champion.previousWins,
-            champion.previousMatches
-          )}
-        </span>
+        <span className="text-xl font-header">{percentage(increase)}</span>
       </div>
     </div>
   );
@@ -129,6 +162,8 @@ const DifferenceCard = ({ champion }) => {
 export async function getStaticProps() {
   const items = ItemApi.getAllItems();
   const totalMatches = MatchApi.getTotalMatches();
+  const championMatches = MatchApi.getChampionMatches();
+  const previousChampionMatches = MatchApi.getPreviousChampionMatches();
 
   const popularPages = await PageViewApi.getPopularPages();
 
@@ -137,17 +172,23 @@ export async function getStaticProps() {
 
   const winrateChampions = ChampionApi.getChampionsByWinRateDifference().slice(
     0,
-    10
+    20
   );
+
+  const playrateChampions =
+    ChampionApi.getChampionsByPlayRateDifference().slice(0, 20);
 
   return {
     props: {
       items,
       totalMatches: Math.round(totalMatches),
+      championMatches,
+      previousChampionMatches,
       popularPages,
       winrateBuilds,
       playrateBuilds,
       winrateChampions,
+      playrateChampions,
     },
   };
 }

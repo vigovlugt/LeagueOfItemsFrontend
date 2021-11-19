@@ -1,7 +1,11 @@
 import * as path from "path";
 import * as fs from "fs";
 import Api from "./DatasetApi";
-import { getWinrateIncrease } from "../utils/stats";
+import {
+  getChampionPlayrateIncrease,
+  getPlayrateIncrease,
+  getWinrateIncrease,
+} from "../utils/stats";
 
 export default class ChampionApi {
   static getAllChampions() {
@@ -34,8 +38,30 @@ export default class ChampionApi {
   }
 
   static getChampionsByPlayRateDifference() {
-    return Api.getDataset().champions.sort(
-      (a, b) => getWinrateIncrease(b) - getWinrateIncrease(a)
-    );
+    const dataset = Api.getDataset();
+
+    return dataset.champions
+      .sort(
+        (a, b) =>
+          Math.abs(
+            getChampionPlayrateIncrease(
+              b,
+              dataset.championMatches,
+              dataset.previousChampionMatches
+            )
+          ) -
+          Math.abs(
+            getChampionPlayrateIncrease(
+              a,
+              dataset.championMatches,
+              dataset.previousChampionMatches
+            )
+          )
+      )
+      .map(({ id, previousMatches, matches }) => ({
+        id,
+        matches,
+        previousMatches,
+      }));
   }
 }
