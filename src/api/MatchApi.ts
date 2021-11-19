@@ -8,4 +8,12 @@ export default class MatchApi {
       Api.getDataset().championMatches / CHAMPIONS_PER_MATCH
     );
   }
+
+  static getChampionMatches() {
+    return Api.getDataset().championMatches;
+  }
+
+  static getPreviousChampionMatches() {
+    return Api.getDataset().previousChampionMatches;
+  }
 }
