@@ -22,7 +22,7 @@ const getImageUrl = async (name) => {
 };
 
 const transformName = (name) => {
-  return name.replace(":", "-").replaceAll("'", "");
+  return name.replace(":", "-");
 };
 
 const saveItemImage = async (i) => {
