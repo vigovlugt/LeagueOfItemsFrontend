@@ -3,6 +3,7 @@ import classNames from "classnames";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import getSearchResults from "../../lib/search";
+import useOuterClick from "../../hooks/useOuterClick";
 
 export default function SearchBar({ onSubmit = null }) {
   const router = useRouter();
@@ -43,6 +44,7 @@ export default function SearchBar({ onSubmit = null }) {
     const { type, id } = results[0];
 
     router.push(`/${type}s/${id}`);
+    (document.activeElement as HTMLElement).blur();
     reset();
   };
 
@@ -59,8 +61,12 @@ export default function SearchBar({ onSubmit = null }) {
     setResults(results);
   }, [query, dataset]);
 
+  const outerClickRef = useOuterClick((e) => {
+    setIsFocussed(false);
+  });
+
   return (
-    <form className="relative h-full" onSubmit={submit}>
+    <form className="relative h-full" onSubmit={submit} ref={outerClickRef}>
       <input
         className={classNames(
           "h-full border rounded-md px-3 text-sm w-72 xl:w-96 shadow-sm border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-300 dark:text-white",
@@ -71,7 +77,6 @@ export default function SearchBar({ onSubmit = null }) {
         placeholder="Search items, runes and champions"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        onBlur={() => setTimeout(() => setIsFocussed(false), 100)}
         onFocus={onFocus}
       />
       <button type="submit" className="absolute right-0 top-0 mt-3 mr-4">
@@ -86,7 +91,7 @@ export default function SearchBar({ onSubmit = null }) {
       </button>
       {results.length > 0 && isFocussed && (
         <div className="absolute rounded-md border py-2 w-full z-10 rounded-t-none bg-white border-gray-300 dark:bg-dark dark:border-gray-600">
-          {results.slice(0, 5).map((result, i) => (
+          {results.slice(0, 5).map((result) => (
             <SearchResult {...result} key={result.id} onClick={reset} />
           ))}
         </div>

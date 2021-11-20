@@ -11,7 +11,7 @@ import {
 } from "@heroicons/react/solid";
 import Link from "next/link";
 
-export default function BuildsTable({ builds, type = "winrate" }) {
+export default function BuildsTable({ builds, type = "winrate", size = "md" }) {
   const router = useRouter();
 
   const data = useMemo(() => builds, [builds]);
@@ -31,7 +31,7 @@ export default function BuildsTable({ builds, type = "winrate" }) {
       Cell: ({ row }) => {
         const increase = isWinrate
           ? getWinrateIncrease(row.original)
-          : getPlayrateIncrease(row.original);
+          : getPlayrateIncrease(row.original) - 1;
 
         const TrendingIcon = increase > 0 ? TrendingUpIcon : TrendingDownIcon;
 
@@ -39,7 +39,9 @@ export default function BuildsTable({ builds, type = "winrate" }) {
           <div className="flex justify-end">
             <div
               className={`text-xl flex items-center ${winrateClass(
-                0.5 + increase
+                0.5 + increase,
+                undefined,
+                true
               )}`}
             >
               <TrendingIcon className="w-5 h-5 inline mr-1" />
@@ -80,7 +82,7 @@ export default function BuildsTable({ builds, type = "winrate" }) {
   const columns = useMemo(
     () => [
       {
-        Header: "Build",
+        Header: "Combo",
         headerClass: "text-left",
         accessor: (row) => row.championId + "-" + row.buildTypeId,
         Cell: ({ row }) => (
@@ -136,6 +138,7 @@ export default function BuildsTable({ builds, type = "winrate" }) {
     {
       columns,
       data,
+      autoResetSortBy: false
     },
     isFull ? useSortBy : null,
     isFull ? usePagination : null
@@ -153,15 +156,21 @@ export default function BuildsTable({ builds, type = "winrate" }) {
     router.push(`/champions/${row.original.championId}`);
 
   return (
-    <div className={!isFull ? "rounded overflow-hidden shadow mb-4" : "mb-4"}>
-      <Table table={table} onClick={gotoBuild} />
+    <div
+      className={
+        !isFull
+          ? "rounded overflow-hidden shadow mb-4"
+          : "rounded overflow-hidden mb-4"
+      }
+    >
+      <Table table={table} onClick={gotoBuild} size={size} />
       {!isFull && (
         <Link
-          href={`/builds?sortby=${isPickrate ? "playrate" : "winrate"}`}
+          href={`/combos?sortby=${isPickrate ? "playrate" : "winrate"}`}
           passHref
         >
           <a className="flex justify-center items-center w-full rounded-b p-2 text-lg shadow bg-gray-50 dark:text-gray-50 dark:bg-gray-800">
-            <h2 className="font-header">View all builds</h2>
+            <h2 className="font-header">View all combos</h2>
             <ArrowSmRightIcon className="w-8 inline text-gray-600 dark:text-gray-400" />
           </a>
         </Link>

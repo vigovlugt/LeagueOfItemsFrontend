@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function RuneGridCell({ id, size = "md", className }) {
+export default function RuneGridCell({ id, size = "md", className = "" }) {
   return (
     <Link href={`/runes/${id}`} passHref>
       <a className={`block mr-[6px] mb-[6px] cursor-pointer ${className}`}>

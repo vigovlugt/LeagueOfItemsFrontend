@@ -8,13 +8,14 @@ import SideNavFooter from "./SideNavFooter";
 import ChampionIcon from "../icons/ChampionIcon";
 import Logo from "../Logo";
 import {
+  LinkIcon,
   MailIcon,
   MenuIcon,
   QuestionMarkCircleIcon,
   XIcon,
 } from "@heroicons/react/outline";
 import SearchBar from "./SearchBar";
-import {HomeIcon} from "@heroicons/react/solid";
+import { HomeIcon } from "@heroicons/react/solid";
 
 const MENU_ITEMS = [
   {
@@ -51,6 +52,11 @@ const MENU_ITEMS = [
     name: "Champion Tierlist",
     href: "/champions/tierlist",
     icon: ListItem,
+  },
+  {
+    name: "Combos",
+    href: "/combos",
+    icon: () => <LinkIcon className="w-8 transform rotate-45" />,
   },
   {
     name: "FAQ",
