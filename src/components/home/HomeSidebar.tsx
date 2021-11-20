@@ -1,24 +1,31 @@
 import ItemGridCell from "../items/ItemGridCell";
 import BuildsTable from "./BuildsTable";
+import RuneGridCell from "../runes/RuneGridCell";
 
 export default function HomeSidebar({ playrateBuilds, winrateBuilds }) {
   return (
     <div className="flex flex-col">
-      <h3 className="font-header text-xl mb-1 mt-4">New items</h3>
-      <div className="flex space-x-4">
-        <ItemGridCell id={8001} size="sm" />
-        <ItemGridCell id={3181} size="sm" />
+      <h3 className="font-header text-xl mb-1 mt-4">New content</h3>
+      <div className="flex flex-wrap justify-left">
+        <ItemGridCell id={3001} size="sm" />
+        <ItemGridCell id={4644} size="sm" />
+        <ItemGridCell id={6696} size="sm" />
+        <ItemGridCell id={4645} size="sm" />
+        <ItemGridCell id={3119} size="sm" />
+        <RuneGridCell id={8369} size="sm" />
+        <RuneGridCell id={8351} size="sm" />
+        <RuneGridCell id={8008} size="sm" />
       </div>
 
       <h3 className="font-header mt-4 mb-1 text-xl">
         Biggest playrate increases
       </h3>
-      <BuildsTable builds={playrateBuilds} type="pickrate"/>
+      <BuildsTable builds={playrateBuilds} type="pickrate" size="sm" />
 
       <h3 className="font-header mt-4 my-1 text-xl">
         Biggest winrate increases
       </h3>
-      <BuildsTable builds={winrateBuilds} />
+      <BuildsTable builds={winrateBuilds} size="sm" />
     </div>
   );
 }

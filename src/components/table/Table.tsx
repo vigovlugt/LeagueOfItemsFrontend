@@ -1,12 +1,14 @@
 import styles from "./Table.module.css";
 
 const thPaddingBySize = {
-  sm: "px-2 py-2 md:px-2 md:py-2",
+  xs: "px-2 py-2 md:px-2 md:py-2",
+  sm: "px-2 py-2 md:px-3 md:py-3",
   md: "px-2 py-2 md:px-6 md:py-3",
 };
 
 const tdPaddingBySize = {
-  sm: "px-2 py-2 md:px-2 md:py-2",
+  xs: "px-2 py-2 md:px-2 md:py-2",
+  sm: "px-2 py-2 md:px-3 md:py-3",
   md: "px-2 py-2 md:px-6 md:py-4",
 };
 

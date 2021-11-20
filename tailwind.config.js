@@ -29,7 +29,7 @@ module.exports = {
           volxd: "#ff9b00",
         },
         "ugg-dark": "#0B0B23",
-        ugg: "#242949",
+        ugg: "#191937",
         dark: "#121212",
         darker: "#090909",
       },

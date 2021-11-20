@@ -50,7 +50,7 @@ export default function StatsByOrder({
             original: { wins, matches },
           },
         }) => (
-          <div className={`${winrateClass(wins, matches)} text-right w-full`}>
+          <div className={`${winrateClass(wins, matches)} text-right w-full`} title={wins}>
             {winrate(wins, matches)}
           </div>
         ),

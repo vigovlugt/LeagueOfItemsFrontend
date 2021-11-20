@@ -28,6 +28,8 @@ import {
   getWinrateIncrease,
 } from "../utils/stats";
 import { TrendingDownIcon } from "@heroicons/react/solid";
+import RuneApi from "../api/RuneApi";
+import RuneStats from "../models/runes/RuneStats";
 
 export default function Home({
   totalMatches = 0,
@@ -74,7 +76,7 @@ export default function Home({
               className="flex justify-center items-center w-full bg-white rounded-lg p-8 py-32 shadow mb-8 dark:text-gray-50 dark:bg-dark relative overflow-hidden"
             >
               <img
-                src="https://images.contentstack.io/v3/assets/blt731acb42bb3d1659/blt4cc8c7e493705e7d/611db1fce74bc3148654e387/082421_Patch1117Notes_Banner.jpg"
+                src="https://images.contentstack.io/v3/assets/blt731acb42bb3d1659/blt2161d99d433ee6fd/6189caf9cc735f786653bb6e/patch-10-24-banner.jpg"
                 alt={""}
                 style={{
                   objectFit: "cover",
@@ -149,7 +151,9 @@ const DifferenceCard = ({
       <ChampionGridCell id={champion.id} />
       <div
         className={`flex items-center font-semibold my-1 ${winrateClass(
-          0.5 + increase
+          0.5 + increase,
+          undefined,
+          true
         )}`}
       >
         <TrendingIcon className="w-8 inline mr-2" />
@@ -161,14 +165,23 @@ const DifferenceCard = ({
 
 export async function getStaticProps() {
   const items = ItemApi.getAllItems();
+  const runes = RuneApi.getAllRunes();
+  const keystones = runes
+    .map((r) => new RuneStats(r))
+    .filter((r) => r.isKeystone())
+    .map((r) => r.id);
   const totalMatches = MatchApi.getTotalMatches();
   const championMatches = MatchApi.getChampionMatches();
   const previousChampionMatches = MatchApi.getPreviousChampionMatches();
 
   const popularPages = await PageViewApi.getPopularPages();
 
-  const winrateBuilds = await BuildsApi.getByWinrate().slice(0, 10);
-  const playrateBuilds = await BuildsApi.getByPlayrate().slice(0, 10);
+  const winrateBuilds = await BuildsApi.getByWinrate()
+    .filter((b) => !BuildStats.isSmallRune(b, keystones))
+    .slice(0, 10);
+  const playrateBuilds = await BuildsApi.getByPlayrate()
+    .filter((b) => !BuildStats.isSmallRune(b, keystones))
+    .slice(0, 10);
 
   const winrateChampions = ChampionApi.getChampionsByWinRateDifference().slice(
     0,
