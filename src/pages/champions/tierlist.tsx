@@ -104,7 +104,7 @@ export default function ChampionTierlist({ champions, totalMatches }) {
     useSortBy
   );
 
-  const goToChampion = (row) => router.push(`/champions/${row.original.id}`);
+  const href = (row) => `/champions/${row.original.id}`;
 
   return (
     <div className="rounded-lg overflow-hidden shadow-lg">
@@ -113,7 +113,7 @@ export default function ChampionTierlist({ champions, totalMatches }) {
         description="League of Legends champion tierlist."
       />
 
-      <Table table={table} onClick={goToChampion} />
+      <Table table={table} href={href} />
     </div>
   );
 }

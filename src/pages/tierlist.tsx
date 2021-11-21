@@ -92,7 +92,7 @@ export default function Tierlist({ items, totalMatches }) {
     useSortBy
   );
 
-  const goToItem = (row) => router.push(`/items/${row.original.id}`);
+  const href = (row) => `/items/${row.original.id}`;
 
   return (
     <div className="rounded-lg overflow-hidden shadow-lg">
@@ -101,7 +101,7 @@ export default function Tierlist({ items, totalMatches }) {
         description="Item tierlist with all League of Legends items."
       />
 
-      <Table table={table} onClick={goToItem} />
+      <Table table={table} href={href} />
     </div>
   );
 }
