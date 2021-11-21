@@ -1,5 +1,8 @@
 import Api from "./DatasetApi";
-import { getPlayrateIncrease, getWinrateIncrease } from "../utils/stats";
+import {
+  getPlayrateIncreaseFromPlayRate,
+  getWinrateIncrease,
+} from "../utils/stats";
 
 export default class BuildsApi {
   static getAllBuilds() {
@@ -14,7 +17,8 @@ export default class BuildsApi {
 
   static getByPlayrate() {
     return Api.getDataset().builds.sort(
-      (a, b) => getPlayrateIncrease(b) - getPlayrateIncrease(a)
+      (a, b) =>
+        getPlayrateIncreaseFromPlayRate(b) - getPlayrateIncreaseFromPlayRate(a)
     );
   }
 }

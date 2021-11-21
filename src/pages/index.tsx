@@ -23,13 +23,14 @@ import {
 } from "../utils/format";
 import ChampionGridCell from "../components/champions/ChampionGridCell";
 import {
-  getChampionPlayrateIncrease,
   getPlayrateIncrease,
+  getPlayrateIncreaseFromPlayRate,
   getWinrateIncrease,
 } from "../utils/stats";
 import { TrendingDownIcon } from "@heroicons/react/solid";
 import RuneApi from "../api/RuneApi";
 import RuneStats from "../models/runes/RuneStats";
+import PatchSection from "../components/home/PatchSection";
 
 export default function Home({
   totalMatches = 0,
@@ -40,6 +41,14 @@ export default function Home({
   playrateBuilds = [],
   winrateChampions = [],
   playrateChampions = [],
+  winrateItems = [],
+  playrateItems = [],
+  itemMatches,
+  previousItemMatches,
+  winrateRunes,
+  playrateRunes,
+  runeMatches,
+  previousRuneMatches,
 }) {
   const numberFormatter = new Intl.NumberFormat("us-US");
 
@@ -64,57 +73,21 @@ export default function Home({
 
           <PopularSection popularPages={popularPages} />
 
-          <Link
-            href={`https://www.leagueoflegends.com/en-us/news/game-updates/patch-${dataset.version.replace(
-              ".",
-              "-"
-            )}-notes/`}
-            passHref
-          >
-            <a
-              target="_blank"
-              className="flex justify-center items-center w-full bg-white rounded-lg p-8 py-32 shadow mb-8 dark:text-gray-50 dark:bg-dark relative overflow-hidden"
-            >
-              <img
-                src="https://images.contentstack.io/v3/assets/blt731acb42bb3d1659/blt2161d99d433ee6fd/6189caf9cc735f786653bb6e/patch-10-24-banner.jpg"
-                alt={""}
-                style={{
-                  objectFit: "cover",
-                  objectPosition: "center",
-                  filter: "saturate(0) opacity(0.3)",
-                }}
-                className="absolute inset-0 w-full h-full"
-              />
-              <div className="absolute inset-0 flex justify-center items-center">
-                <h2 className="font-header text-4xl">
-                  Patch {dataset.version}
-                </h2>
-              </div>
-            </a>
-          </Link>
-
-          <h2 className="font-header text-4xl mb-2">
-            Biggest champion winrate changes
-          </h2>
-          <div className="flex space-x-2 w-full overflow-x-auto pb-2">
-            {winrateChampions.map((c) => (
-              <DifferenceCard key={c.id} champion={c} />
-            ))}
-          </div>
-          <h2 className="font-header text-4xl mb-2 mt-8">
-            Biggest champion playrate changes
-          </h2>
-          <div className="flex space-x-2 w-full overflow-x-auto pb-2">
-            {playrateChampions.map((c) => (
-              <DifferenceCard
-                key={c.id}
-                champion={c}
-                type="playrate"
-                championMatches={championMatches}
-                previousChampionMatches={previousChampionMatches}
-              />
-            ))}
-          </div>
+          <PatchSection
+            dataset={dataset}
+            winrateChampions={winrateChampions}
+            playrateChampions={playrateChampions}
+            championMatches={championMatches}
+            previousChampionMatches={previousChampionMatches}
+            winrateItems={winrateItems}
+            playrateItems={playrateItems}
+            itemMatches={itemMatches}
+            previousItemMatches={previousItemMatches}
+            winrateRunes={winrateRunes}
+            playrateRunes={playrateRunes}
+            runeMatches={runeMatches}
+            previousRuneMatches={previousRuneMatches}
+          />
         </div>
         <HomeSidebar
           playrateBuilds={playrateBuilds}
@@ -124,44 +97,6 @@ export default function Home({
     </div>
   );
 }
-
-const DifferenceCard = ({
-  champion,
-  type = "winrate",
-  championMatches = 0,
-  previousChampionMatches = 0,
-}) => {
-  const isWinrate = type === "winrate";
-
-  const increase = isWinrate
-    ? getWinrateIncrease(champion)
-    : getChampionPlayrateIncrease(
-        champion,
-        championMatches,
-        previousChampionMatches
-      );
-
-  const TrendingIcon = increase > 0 ? TrendingUpIcon : TrendingDownIcon;
-
-  return (
-    <div
-      key={champion.id}
-      className="flex flex-col items-center bg-white rounded shadow dark:text-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50"
-    >
-      <ChampionGridCell id={champion.id} />
-      <div
-        className={`flex items-center font-semibold my-1 ${winrateClass(
-          0.5 + increase,
-          undefined,
-          true
-        )}`}
-      >
-        <TrendingIcon className="w-8 inline mr-2" />
-        <span className="text-xl font-header">{percentage(increase)}</span>
-      </div>
-    </div>
-  );
-};
 
 export async function getStaticProps() {
   const items = ItemApi.getAllItems();
@@ -173,6 +108,10 @@ export async function getStaticProps() {
   const totalMatches = MatchApi.getTotalMatches();
   const championMatches = MatchApi.getChampionMatches();
   const previousChampionMatches = MatchApi.getPreviousChampionMatches();
+  const itemMatches = ItemApi.getTotalMatches();
+  const previousItemMatches = ItemApi.getPreviousTotalMatches();
+  const runeMatches = RuneApi.getTotalMatches();
+  const previousRuneMatches = RuneApi.getPreviousTotalMatches();
 
   const popularPages = await PageViewApi.getPopularPages();
 
@@ -187,14 +126,19 @@ export async function getStaticProps() {
     0,
     20
   );
-
   const playrateChampions =
     ChampionApi.getChampionsByPlayRateDifference().slice(0, 20);
+
+  const winrateItems = ItemApi.getByWinRateDifference().slice(0, 20);
+  const playrateItems = ItemApi.getByPlayRateDifference().slice(0, 20);
+
+  const winrateRunes = RuneApi.getByWinRateDifference().slice(0, 20);
+  const playrateRunes = RuneApi.getByPlayRateDifference().slice(0, 20);
 
   return {
     props: {
       items,
-      totalMatches: Math.round(totalMatches),
+      totalMatches,
       championMatches,
       previousChampionMatches,
       popularPages,
@@ -202,6 +146,14 @@ export async function getStaticProps() {
       playrateBuilds,
       winrateChampions,
       playrateChampions,
+      winrateItems,
+      playrateItems,
+      itemMatches,
+      previousItemMatches,
+      winrateRunes,
+      playrateRunes,
+      runeMatches,
+      previousRuneMatches,
     },
   };
 }

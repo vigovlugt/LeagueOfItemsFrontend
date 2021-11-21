@@ -1,4 +1,5 @@
 import Api from "./DatasetApi";
+import { getPlayrateIncrease, getWinrateIncrease } from "../utils/stats";
 
 export default class RuneApi {
   static getAllRunes() {
@@ -13,5 +14,47 @@ export default class RuneApi {
     return this.getAllRunes()
       .map((c) => c.matches)
       .reduce((a, b) => a + b, 0);
+  }
+
+  static getPreviousTotalMatches() {
+    return this.getAllRunes()
+      .map((c) => c.previousMatches)
+      .reduce((a, b) => a + b, 0);
+  }
+
+  static getByWinRateDifference() {
+    return this.getAllRunes()
+      .filter((i) => i.matches && i.previousMatches)
+      .sort(
+        (a, b) =>
+          Math.abs(getWinrateIncrease(b)) - Math.abs(getWinrateIncrease(a))
+      )
+      .map(({ id, wins, matches, previousWins, previousMatches, tier }) => ({
+        id,
+        wins,
+        matches,
+        previousWins,
+        previousMatches,
+        isKeystone: tier == 0,
+      }));
+  }
+
+  static getByPlayRateDifference() {
+    const matches = this.getTotalMatches();
+    const previousMatches = this.getPreviousTotalMatches();
+
+    return this.getAllRunes()
+      .filter((i) => i.matches && i.previousMatches)
+      .sort(
+        (a, b) =>
+          Math.abs(getPlayrateIncrease(b, matches, previousMatches)) -
+          Math.abs(getPlayrateIncrease(a, matches, previousMatches))
+      )
+      .map(({ id, previousMatches, matches, tier }) => ({
+        id,
+        matches,
+        previousMatches,
+        isKeystone: tier === 0,
+      }));
   }
 }

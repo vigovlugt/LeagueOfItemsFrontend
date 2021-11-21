@@ -5,7 +5,7 @@ export default function ChampionIcon() {
       viewBox="0 0 5.8 5.8"
       stroke="currentColor"
       fill="currentColor"
-      className="w-8 inline"
+      className="w-7 inline"
       // style={{transform: "rotate(180deg)"}}
     >
       <path
