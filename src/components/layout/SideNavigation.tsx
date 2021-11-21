@@ -1,6 +1,5 @@
 import classNames from "classnames";
 import Link from "next/link";
-import ListItem from "../icons/ListIcon";
 import { useRouter } from "next/router";
 import RuneIcon from "../icons/RuneIcon";
 import SwordIcon from "../icons/SwordIcon";
@@ -10,18 +9,18 @@ import Logo from "../Logo";
 import {
   LinkIcon,
   MailIcon,
-  MenuIcon,
   QuestionMarkCircleIcon,
   XIcon,
+  HomeIcon,
+  ViewListIcon,
 } from "@heroicons/react/outline";
 import SearchBar from "./SearchBar";
-import { HomeIcon } from "@heroicons/react/solid";
 
 const MENU_ITEMS = [
   {
     name: "Home",
     href: "/",
-    icon: HomeIcon,
+    icon: () => <HomeIcon className="w-7" />,
   },
   {
     name: "Items",
@@ -31,7 +30,7 @@ const MENU_ITEMS = [
   {
     name: "Item Tierlist",
     href: "/tierlist",
-    icon: ListItem,
+    icon: () => <ViewListIcon className="w-7" />,
   },
   {
     name: "Runes",
@@ -41,7 +40,7 @@ const MENU_ITEMS = [
   {
     name: "Rune Tierlist",
     href: "/runes/tierlist",
-    icon: ListItem,
+    icon: () => <ViewListIcon className="w-7" />,
   },
   {
     name: "Champions",
@@ -51,12 +50,12 @@ const MENU_ITEMS = [
   {
     name: "Champion Tierlist",
     href: "/champions/tierlist",
-    icon: ListItem,
+    icon: () => <ViewListIcon className="w-7" />,
   },
   {
     name: "Combos",
     href: "/combos",
-    icon: () => <LinkIcon className="w-8 transform rotate-45" />,
+    icon: () => <LinkIcon className="w-7 transform rotate-45" />,
   },
   {
     name: "FAQ",

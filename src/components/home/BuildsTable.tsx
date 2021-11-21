@@ -2,7 +2,10 @@ import { useEffect, useMemo, useState } from "react";
 import Table from "../table/Table";
 import { useRouter } from "next/router";
 import { useTable, useSortBy, usePagination } from "react-table";
-import { getPlayrateIncrease, getWinrateIncrease } from "../../utils/stats";
+import {
+  getPlayrateIncreaseFromPlayRate,
+  getWinrateIncrease,
+} from "../../utils/stats";
 import { percentage, winrate, winrateClass } from "../../utils/format";
 import {
   ArrowSmRightIcon,
@@ -27,11 +30,13 @@ export default function BuildsTable({ builds, type = "winrate", size = "md" }) {
       headerClass: "text-right",
       id: isWinrate ? "winrate" : "playrate",
       accessor: (row) =>
-        isWinrate ? getWinrateIncrease(row) : getPlayrateIncrease(row),
+        isWinrate
+          ? getWinrateIncrease(row)
+          : getPlayrateIncreaseFromPlayRate(row),
       Cell: ({ row }) => {
         const increase = isWinrate
           ? getWinrateIncrease(row.original)
-          : getPlayrateIncrease(row.original) - 1;
+          : getPlayrateIncreaseFromPlayRate(row.original) - 1;
 
         const TrendingIcon = increase > 0 ? TrendingUpIcon : TrendingDownIcon;
 
@@ -138,7 +143,7 @@ export default function BuildsTable({ builds, type = "winrate", size = "md" }) {
     {
       columns,
       data,
-      autoResetSortBy: false
+      autoResetSortBy: false,
     },
     isFull ? useSortBy : null,
     isFull ? usePagination : null

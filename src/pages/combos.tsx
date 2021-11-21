@@ -6,14 +6,13 @@ import RuneStats from "../models/runes/RuneStats";
 import BuildStats from "../models/builds/BuildStats";
 import { useEffect, useRef, useState } from "react";
 import { Popover } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/solid";
+import { ChevronDownIcon, XIcon } from "@heroicons/react/solid";
 import ItemStats from "../models/items/ItemStats";
-import { useRouter } from "next/router";
 import classNames from "classnames";
+import getSearchResults from "../lib/search";
+import useOuterClick from "../hooks/useOuterClick";
 
 export default function ComboPage({ builds }) {
-  const router = useRouter();
-
   const [filteredBuilds, setFilteredBuilds] = useState(builds);
 
   const [showSmallRunes, setShowSmallRunes] = useState(false);
@@ -25,6 +24,8 @@ export default function ComboPage({ builds }) {
   const [showNonMythics, setShowNonMythics] = useState(true);
   const toggleShowNonMythics = () => setShowNonMythics(!showNonMythics);
 
+  const [championFilter, setChampionFilter] = useState(null);
+
   const championInput = useRef<HTMLInputElement>();
   const [showChampionSelect, setShowChampionSelect] = useState(false);
   const onClickAllChampions = () => {
@@ -34,6 +35,7 @@ export default function ComboPage({ builds }) {
   useEffect(() => {
     if (showChampionSelect) {
       championInput.current.focus();
+      fetchDataset();
     }
   }, [showChampionSelect]);
 
@@ -41,6 +43,10 @@ export default function ComboPage({ builds }) {
     () =>
       setFilteredBuilds(
         builds.filter((b) => {
+          if (championFilter && b.championId !== championFilter.id) {
+            return false;
+          }
+
           if (!showMythics && b.isMythic) {
             return false;
           }
@@ -60,8 +66,58 @@ export default function ComboPage({ builds }) {
           return true;
         })
       ),
-    [showMythics, showNonMythics, showKeyStones, showSmallRunes]
+    [showMythics, showNonMythics, showKeyStones, showSmallRunes, championFilter]
   );
+
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
+
+  const [dataset, setDataset] = useState({
+    items: [],
+    runes: [],
+    champions: [],
+  });
+  const [hasFetchedDataset, setHasFetchedDataset] = useState(false);
+
+  const outerClickRef = useOuterClick(() => {
+    if (showChampionSelect) {
+      setShowChampionSelect(false);
+    }
+  });
+
+  const submit = (e) => {
+    e.preventDefault();
+    if (!results.length) {
+      return;
+    }
+
+    onSubmit(results[0]);
+  };
+
+  const onSubmit = (champion) => {
+    setChampionFilter(champion);
+    setShowChampionSelect(false);
+  };
+
+  const fetchDataset = async () => {
+    if (hasFetchedDataset) {
+      return;
+    }
+
+    setHasFetchedDataset(true);
+
+    const res = await fetch("/data/dataset.json");
+    const dataset = await res.json();
+    setDataset(dataset);
+  };
+
+  useEffect(() => {
+    const results = getSearchResults(query, dataset).filter(
+      (r) => r.type === "champion"
+    );
+
+    setResults(results);
+  }, [query, dataset]);
 
   return (
     <div>
@@ -123,27 +179,80 @@ export default function ComboPage({ builds }) {
 
         <div className="ml-auto flex items-center">
           {showChampionSelect ? (
-            <input
-              ref={championInput}
-              onBlur={() => setShowChampionSelect(false)}
-              className={classNames(
-                "h-full border rounded-md px-3 text-sm w-72 xl:w-96 shadow-sm border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-300 dark:text-white"
-              )}
-              placeholder="Search champion"
-            />
-          ) : (
-            <button
-              className="px-3 py-2 rounded-md inline-flex items-center font-medium dark:text-white"
-              onClick={onClickAllChampions}
+            <form
+              className="relative h-full"
+              onSubmit={submit}
+              ref={outerClickRef as any}
             >
-              <span>All champions</span>
-              <ChevronDownIcon className="ml-1 h-5 w-5" />
-            </button>
+              <input
+                ref={championInput}
+                className={classNames(
+                  "h-full border rounded-md px-3 text-sm w-72 xl:w-96 shadow-sm border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-300 dark:text-white"
+                )}
+                placeholder="Search champion"
+                onChange={(e) => setQuery(e.target.value)}
+                value={query}
+              />
+              {results.length > 0 && (
+                <div className="absolute rounded-md border py-2 w-full z-10 rounded-t-none bg-white border-gray-300 dark:bg-dark dark:border-gray-600">
+                  {results.slice(0, 5).map((result) => (
+                    <SearchResult
+                      {...result}
+                      key={result.id}
+                      onClick={() => onSubmit(result)}
+                    />
+                  ))}
+                </div>
+              )}
+            </form>
+          ) : (
+            <>
+              <button
+                className="px-1 py-2 rounded-md inline-flex items-center font-medium dark:text-white"
+                onClick={onClickAllChampions}
+              >
+                <span>
+                  {championFilter
+                    ? "Only " + championFilter.name
+                    : "All champions"}
+                </span>
+                <ChevronDownIcon className="ml-1 h-5 w-5" />
+              </button>
+              {championFilter && (
+                <button
+                  className="px-1 py-2 rounded-md inline-flex items-center font-medium dark:text-white"
+                  onClick={() => setChampionFilter(null)}
+                >
+                  <XIcon className="h-5 w-5" />
+                </button>
+              )}
+            </>
           )}
         </div>
       </div>
 
       <ComboTable builds={filteredBuilds} type="full" />
+    </div>
+  );
+}
+
+function SearchResult({ name, id, onClick }) {
+  return (
+    <div
+      className="cursor-pointer px-3 py-2 flex items-center justify-start hover:bg-gray-100 dark:hover:bg-gray-800"
+      onClick={onClick}
+    >
+      <img
+        src={`/images/champions/32/${id}.webp`}
+        style={{
+          width: "32px",
+          height: "32px",
+          minWidth: "32px",
+          minHeight: "32px",
+        }}
+        alt="Search result image"
+      />{" "}
+      <span className="ml-2 font-bold">{name}</span>
     </div>
   );
 }

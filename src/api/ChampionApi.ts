@@ -2,8 +2,8 @@ import * as path from "path";
 import * as fs from "fs";
 import Api from "./DatasetApi";
 import {
-  getChampionPlayrateIncrease,
   getPlayrateIncrease,
+  getPlayrateIncreaseFromPlayRate,
   getWinrateIncrease,
 } from "../utils/stats";
 
@@ -44,14 +44,14 @@ export default class ChampionApi {
       .sort(
         (a, b) =>
           Math.abs(
-            getChampionPlayrateIncrease(
+            getPlayrateIncrease(
               b,
               dataset.championMatches,
               dataset.previousChampionMatches
             )
           ) -
           Math.abs(
-            getChampionPlayrateIncrease(
+            getPlayrateIncrease(
               a,
               dataset.championMatches,
               dataset.previousChampionMatches

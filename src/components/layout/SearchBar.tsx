@@ -66,7 +66,7 @@ export default function SearchBar({ onSubmit = null }) {
   });
 
   return (
-    <form className="relative h-full" onSubmit={submit} ref={outerClickRef}>
+    <form className="relative h-full" onSubmit={submit} ref={outerClickRef as any}>
       <input
         className={classNames(
           "h-full border rounded-md px-3 text-sm w-72 xl:w-96 shadow-sm border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-300 dark:text-white",

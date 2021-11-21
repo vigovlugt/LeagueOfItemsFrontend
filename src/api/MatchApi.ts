@@ -4,9 +4,7 @@ import Api from "./DatasetApi";
 
 export default class MatchApi {
   static getTotalMatches() {
-    return (
-      Api.getDataset().championMatches / CHAMPIONS_PER_MATCH
-    );
+    return Math.round(Api.getDataset().championMatches / CHAMPIONS_PER_MATCH);
   }
 
   static getChampionMatches() {

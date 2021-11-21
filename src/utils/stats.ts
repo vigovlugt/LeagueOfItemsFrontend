@@ -1,13 +1,10 @@
-export const getPlayrateIncrease = (build) =>
-  build.playRate / build.previousPlayRate;
-
-export const getPlayrateIncreasePercentage = (build) =>
+export const getPlayrateIncreaseFromPlayRate = (build) =>
   build.playRate / build.previousPlayRate;
 
 export const getWinrateIncrease = (s) =>
   (s.wins / s.matches) - (s.previousWins / s.previousMatches);
 
-export const getChampionPlayrateIncrease = (
+export const getPlayrateIncrease = (
   c,
   totalMatches,
   previousTotalMatches
