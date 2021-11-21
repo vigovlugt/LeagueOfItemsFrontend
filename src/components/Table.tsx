@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const thPaddingBySize = {
   sm: "px-2 py-2 md:px-2 md:py-2",
   md: "px-2 py-2 md:px-6 md:py-3",
@@ -8,7 +10,7 @@ const tdPaddingBySize = {
   md: "px-2 py-2 md:px-6 md:py-4",
 };
 
-export default function Table({ table, onClick, size = "md" }) {
+export default function Table({ table, onClick = null, size = "md", href = null }) {
   return (
     <div className="overflow-x-auto">
       <table
@@ -45,16 +47,26 @@ export default function Table({ table, onClick, size = "md" }) {
             return (
               <tr
                 {...row.getRowProps()}
-                onClick={() => onClick(row)}
+                onClick={onClick ? () => onClick(row) : undefined}
                 className="cursor-pointer"
               >
                 {row.cells.map((cell) => {
                   return (
                     <td
                       {...cell.getCellProps()}
-                      className={`${tdPaddingBySize[size]} whitespace-nowrap w-[1%]`}
+                      className={`${
+                        href ? null : tdPaddingBySize[size]
+                      } whitespace-nowrap w-[1%] p-0`}
                     >
-                      {cell.render("Cell")}
+                      {href ? (
+                        <Link href={href(row)} passHref>
+                          <a className={"block " + tdPaddingBySize[size]}>
+                            {cell.render("Cell")}
+                          </a>
+                        </Link>
+                      ) : (
+                        cell.render("Cell")
+                      )}
                     </td>
                   );
                 })}

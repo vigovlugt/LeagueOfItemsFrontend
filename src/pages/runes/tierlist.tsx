@@ -115,7 +115,7 @@ export default function RuneTierlist({ runes, totalMatches }) {
     useSortBy
   );
 
-  const goToRune = (row) => router.push(`/runes/${row.original.id}`);
+  const href = (row) => `/runes/${row.original.id}`;
 
   return (
     <div>
@@ -126,11 +126,11 @@ export default function RuneTierlist({ runes, totalMatches }) {
 
       <h2 className="font-header text-4xl mb-2">Keystones</h2>
       <div className="rounded-lg overflow-hidden shadow-lg mb-8">
-        <Table table={keystoneTable} onClick={goToRune} />
+        <Table table={keystoneTable} href={href} />
       </div>
       <h2 className="font-header text-4xl mb-2">Runes</h2>
       <div className="rounded-lg overflow-hidden shadow-lg">
-        <Table table={normalTable} onClick={goToRune} />
+        <Table table={normalTable} href={href} />
       </div>
     </div>
   );
