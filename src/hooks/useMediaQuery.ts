@@ -4,7 +4,6 @@ export default function useMediaQuery(query) {
   const [match, setMatch] = useState(false);
 
   useEffect(() => {
-    console.log(process.browser);
     const mediaQuery = window.matchMedia(query);
 
     const handler = () => setMatch(mediaQuery.matches);
