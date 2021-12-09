@@ -16,7 +16,6 @@ export default function ItemPage({ item, totalMatches }) {
   const [modalIsOpen, setModalOpen] = useState(false);
 
   usePageView("ITEM", item.id);
-  console.log(item)
 
   return (
     <div className="flex flex-col">
