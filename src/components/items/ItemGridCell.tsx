@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function ItemGridCell({ id, className="", size = "md" }) {
   return (
     <Link href={`/items/${id}`} passHref>
-      <a className={`block mr-[6px] mb-[6px] cursor-pointer ${className}`}>
+      <a className={`block cursor-pointer ${className}`}>
         <img
           src={`/images/items/${size == "md" ? 128 : 64}/${id}.webp`}
           style={{

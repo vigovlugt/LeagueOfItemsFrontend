@@ -22,7 +22,7 @@ export default function PopularSection({ popularPages }) {
         </a>
       </Link>
 
-      <div className="flex space-x-8 mb-16">
+      <div className="flex space-x-8">
         <div className="w-1/2">
           <h2 className="font-header text-4xl mb-2">Popular runes</h2>
           <div className="flex w-full overflow-hidden space-x-4">

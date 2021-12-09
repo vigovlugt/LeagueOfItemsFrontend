@@ -73,6 +73,8 @@ export default function Home({
 
           <PopularSection popularPages={popularPages} />
 
+          <div className="my-16 h-[3px] bg-white dark:bg-gray-900"/>
+
           <PatchSection
             dataset={dataset}
             winrateChampions={winrateChampions}

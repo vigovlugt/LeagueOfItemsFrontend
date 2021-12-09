@@ -1,5 +1,6 @@
 const colors = require("tailwindcss/colors");
 const typography = require("@tailwindcss/typography");
+const aspectRatio = require("@tailwindcss/aspect-ratio");
 
 module.exports = {
   darkMode: "class",
@@ -53,5 +54,5 @@ module.exports = {
       extend: {},
     },
   },
-  plugins: [typography],
+  plugins: [typography, aspectRatio],
 };

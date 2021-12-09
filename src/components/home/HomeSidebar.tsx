@@ -7,14 +7,14 @@ export default function HomeSidebar({ playrateBuilds, winrateBuilds }) {
     <div className="flex flex-col">
       <h3 className="font-header text-xl mb-1 mt-4">New content</h3>
       <div className="flex flex-wrap justify-left">
-        <ItemGridCell id={3001} size="sm" />
-        <ItemGridCell id={4644} size="sm" />
-        <ItemGridCell id={6696} size="sm" />
-        <ItemGridCell id={4645} size="sm" />
-        <ItemGridCell id={3119} size="sm" />
-        <RuneGridCell id={8369} size="sm" />
-        <RuneGridCell id={8351} size="sm" />
-        <RuneGridCell id={8008} size="sm" />
+        <ItemGridCell id={3001} size="sm" className="mr-[6px] mb-[6px]" />
+        <ItemGridCell id={4644} size="sm" className="mr-[6px] mb-[6px]" />
+        <ItemGridCell id={6696} size="sm" className="mr-[6px] mb-[6px]" />
+        <ItemGridCell id={4645} size="sm" className="mr-[6px] mb-[6px]" />
+        <ItemGridCell id={3119} size="sm" className="mr-[6px] mb-[6px]" />
+        <RuneGridCell id={8369} size="sm" className="mr-[6px] mb-[6px]" />
+        <RuneGridCell id={8351} size="sm" className="mr-[6px] mb-[6px]" />
+        <RuneGridCell id={8008} size="sm" className="mr-[6px] mb-[6px]" />
       </div>
 
       <h3 className="font-header mt-4 mb-1 text-xl">

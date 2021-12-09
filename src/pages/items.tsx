@@ -21,14 +21,14 @@ export default function Items({ items }) {
       <h2 className="font-header text-4xl mb-2">Mythic</h2>
       <div className="flex flex-wrap">
         {mythic.map((i) => (
-          <ItemGridCell {...i} key={i.id} />
+          <ItemGridCell {...i} key={i.id} className="mr-[6px] mb-[6px]" />
         ))}
       </div>
 
       <h2 className="font-header text-4xl mt-8 mb-2">Legendary</h2>
       <div className="flex flex-wrap">
         {legendary.map((i) => (
-          <ItemGridCell {...i} key={i.id} />
+          <ItemGridCell {...i} key={i.id} className="mr-[6px] mb-[6px]" />
         ))}
       </div>
     </div>
