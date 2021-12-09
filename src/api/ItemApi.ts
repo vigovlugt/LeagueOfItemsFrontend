@@ -1,5 +1,6 @@
 import Api from "./DatasetApi";
 import { getPlayrateIncrease, getWinrateIncrease } from "../utils/stats";
+import MatchApi from "./MatchApi";
 
 export default class ItemApi {
   static getAllItems() {
@@ -39,8 +40,8 @@ export default class ItemApi {
   }
 
   static getByPlayRateDifference() {
-    const matches = this.getTotalMatches();
-    const previousMatches = this.getPreviousTotalMatches();
+    const matches = MatchApi.getTotalMatches();
+    const previousMatches = MatchApi.getPreviousTotalMatches();
 
     return this.getAllItems()
       .filter((i) => i.matches && i.previousMatches)

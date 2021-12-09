@@ -1,3 +1,8 @@
+.categoryImageItems, .categoryImageRunes, .categoryImageChampions {
+    object-fit: cover;
+    object-position: center;
+}
+
 .categoryImageItems {
     filter: opacity(.4) contrast(1.5);
 }
@@ -8,6 +13,7 @@
 
 .categoryImageRunes {
     filter: opacity(.4) brightness(1.5);
+    object-position: right;
 }
 
 :global(.dark) .categoryImageRunes {
@@ -22,7 +28,3 @@
     filter: opacity(.4) contrast(1) brightness(2);
 }
 
-.categoryImageItems, .categoryImageRunes, .categoryImageChampions {
-    object-fit: cover;
-    object-position: center;
-}

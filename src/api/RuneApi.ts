@@ -3,7 +3,7 @@ import { getPlayrateIncrease, getWinrateIncrease } from "../utils/stats";
 
 export default class RuneApi {
   static getAllRunes() {
-    return Api.getDataset().runes;
+    return Api.getDataset().runes.filter(r => r.matches);
   }
 
   static getRune(id) {

@@ -4,7 +4,7 @@ import { pickrate, winrate, winrateClass } from "../../utils/format";
 import StatsByOrder from "../../components/items/StatsByOrder";
 import Card from "../../components/Card";
 import { NextSeo } from "next-seo";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ItemModal from "../../components/items/ItemModal";
 import PageHeader from "../../components/PageHeader";
 import MatchApi from "../../api/MatchApi";
@@ -16,6 +16,7 @@ export default function ItemPage({ item, totalMatches }) {
   const [modalIsOpen, setModalOpen] = useState(false);
 
   usePageView("ITEM", item.id);
+  console.log(item)
 
   return (
     <div className="flex flex-col">
@@ -36,10 +37,16 @@ export default function ItemPage({ item, totalMatches }) {
       >
         <div className="grid grid-cols-2 gap-3 mb-4 xl:w-1/2">
           <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
-            <span className={winrateClass(item.wins, item.matches)}>
-              {winrate(item.wins, item.matches)}
-            </span>{" "}
-            Winrate
+            <p>
+              <span className={winrateClass(item.wins, item.matches)}>
+                {winrate(item.wins, item.matches)}
+              </span>{" "}
+              Winrate
+            </p>
+            {/*<p className="text-sm text-gray-500">*/}
+            {/*  <span>{winrate(item.previousWins, item.previousMatches)}</span>{" "}*/}
+            {/*  Last patch*/}
+            {/*</p>*/}
           </div>
           <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
             <span className="text-gray-900 dark:text-white">

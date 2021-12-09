@@ -6,6 +6,7 @@ import ChampionGridCell from "../champions/ChampionGridCell";
 import { percentage, winrateClass } from "../../utils/format";
 import ItemGridCell from "../items/ItemGridCell";
 import RuneGridCell from "../runes/RuneGridCell";
+import {CHAMPIONS_PER_MATCH} from "../../constants/constants";
 
 export default function PatchSection({
   dataset,
@@ -45,8 +46,9 @@ export default function PatchSection({
             }}
             className="absolute inset-0 w-full h-full"
           />
-          <div className="absolute inset-0 flex justify-center items-center">
-            <h2 className="font-header text-4xl">Patch {dataset.version}</h2>
+          <div className="absolute inset-0 flex flex-col justify-center items-center font-header">
+            <h2 className="text-4xl mt-8">Patch {dataset.version}</h2>
+            <p className="text-gray-600 dark:text-gray-400 text-sm mt-4">Patch notes <ArrowSmRightIcon className="w-6 inline" /></p>
           </div>
         </a>
       </Link>
@@ -67,8 +69,8 @@ export default function PatchSection({
             key={c.id}
             champion={c}
             type="playrate"
-            matches={championMatches}
-            previousMatches={previousChampionMatches}
+            matches={championMatches / CHAMPIONS_PER_MATCH}
+            previousMatches={previousChampionMatches / CHAMPIONS_PER_MATCH}
           />
         ))}
       </div>
@@ -89,8 +91,8 @@ export default function PatchSection({
             key={i.id}
             item={i}
             type="playrate"
-            matches={itemMatches}
-            previousMatches={previousItemMatches}
+            matches={championMatches / CHAMPIONS_PER_MATCH}
+            previousMatches={previousChampionMatches / CHAMPIONS_PER_MATCH}
           />
         ))}
       </div>
@@ -148,9 +150,9 @@ const DifferenceCard = ({
 
   return (
     <div className="flex flex-col items-center bg-white rounded shadow dark:text-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50">
-      <div className="h-32 w-32 flex justify-center items-center">
+      <div className="h-32 w-32 flex justify-center items-center rounded-t overflow-hidden">
         {champion && <ChampionGridCell id={champion.id} />}
-        {item && <ItemGridCell id={item.id} className="mr-0 mb-0" />}
+        {item && <ItemGridCell id={item.id} />}
         {rune && (
           <RuneGridCell
             id={rune.id}

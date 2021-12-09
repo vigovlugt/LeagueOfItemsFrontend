@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function RuneGridCell({ id, size = "md", className = "" }) {
   return (
     <Link href={`/runes/${id}`} passHref>
-      <a className={`block mr-[6px] mb-[6px] cursor-pointer ${className}`}>
+      <a className={`block cursor-pointer ${className}`}>
         <img
           src={`/images/runes/${size == "md" ? 128 : 64}/${id}.webp`}
           style={{
