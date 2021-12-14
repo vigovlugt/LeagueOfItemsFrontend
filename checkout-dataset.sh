@@ -1,2 +1,1 @@
-git pull
-git checkout master -- data/dataset.json
+curl https://raw.githubusercontent.com/vigovlugt/LeagueOfItemsFrontend/master/data/dataset.json -o data/dataset.json
