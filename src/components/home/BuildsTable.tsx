@@ -36,7 +36,7 @@ export default function BuildsTable({ builds, type = "winrate", size = "md" }) {
       Cell: ({ row }) => {
         const increase = isWinrate
           ? getWinrateIncrease(row.original)
-          : getPlayrateIncreaseFromPlayRate(row.original) - 1;
+          : getPlayrateIncreaseFromPlayRate(row.original);
 
         const TrendingIcon = increase > 0 ? TrendingUpIcon : TrendingDownIcon;
 

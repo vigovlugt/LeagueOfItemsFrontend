@@ -1,6 +1,6 @@
 export default function BottomIcon({ className }) {
   return (
-    <svg viewBox="0 0 31 31" className={`w-[46px] ${className}`}>
+    <svg viewBox="0 0 31 31" className={className}>
       <g fill="currentColor" fillRule="evenodd" transform="translate(4.5 4.5)">
         <polygon points="22.063 3 22.063 21.969 3 21.969 7.053 17.936 18.063 17.969 17.999 7.044" />
         <polygon

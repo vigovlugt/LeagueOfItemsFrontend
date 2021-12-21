@@ -96,6 +96,7 @@ export default function ComboPage({ builds }) {
 
   const onSubmit = (champion) => {
     setChampionFilter(champion);
+    setQuery("");
     setShowChampionSelect(false);
   };
 

@@ -5,7 +5,7 @@ import { ArrowSmRightIcon } from "@heroicons/react/solid";
 export default function PopularSection({ popularPages }) {
   return (
     <div>
-      <h2 className="font-header text-4xl mb-2">Popular items</h2>
+      <h2 className="font-header text-4xl mb-2">Most viewed items</h2>
       <div className="flex w-full overflow-hidden space-x-4">
         {popularPages
           .filter((p) => p.type === "ITEM")
@@ -22,9 +22,9 @@ export default function PopularSection({ popularPages }) {
         </a>
       </Link>
 
-      <div className="flex space-x-8">
-        <div className="w-1/2">
-          <h2 className="font-header text-4xl mb-2">Popular runes</h2>
+      <div className="flex">
+        <div className="w-1/2 pr-4">
+          <h2 className="font-header text-4xl mb-2">Most viewed runes</h2>
           <div className="flex w-full overflow-hidden space-x-4">
             {popularPages
               .filter((p) => p.type === "RUNE")
@@ -42,8 +42,8 @@ export default function PopularSection({ popularPages }) {
           </Link>
         </div>
 
-        <div className="w-1/2">
-          <h2 className="font-header text-4xl mb-2">Popular champions</h2>
+        <div className="w-1/2 pl-4">
+          <h2 className="font-header text-4xl mb-2">Most viewed champions</h2>
           <div className="flex w-full overflow-hidden space-x-4">
             {popularPages
               .filter((p) => p.type === "CHAMPION")

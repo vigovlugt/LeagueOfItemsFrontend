@@ -64,4 +64,35 @@ export default class ChampionApi {
         previousMatches,
       }));
   }
+
+  static getChampionRolesByPlayrateIncrease() {
+    const dataset = Api.getDataset();
+
+    const roleStats = dataset.champions
+      .map((c) => c.roleStats.map((r) => [c, r]))
+      .flat();
+
+    return roleStats
+      .sort(
+        ([aChampion, aRoleStats], [bChampion, bRoleStats]) =>
+          getPlayrateIncrease(
+            bRoleStats,
+            bChampion.matches,
+            bChampion.previousMatches
+          ) -
+          getPlayrateIncrease(
+            aRoleStats,
+            aChampion.matches,
+            aChampion.previousMatches
+          )
+      )
+      .map(([champ, roleStats]) => ({
+        championId: champ.id,
+        role: roleStats.role,
+        matches: roleStats.matches,
+        previousMatches: roleStats.previousMatches,
+        totalMatches: champ.matches,
+        previousTotalMatches: champ.previousMatches,
+      }));
+  }
 }
