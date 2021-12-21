@@ -10,13 +10,13 @@ export default class BuildsApi {
   }
 
   static getByWinrate() {
-    return Api.getDataset().builds.sort(
+    return this.getAllBuilds().sort(
       (a, b) => getWinrateIncrease(b) - getWinrateIncrease(a)
     );
   }
 
   static getByPlayrate() {
-    return Api.getDataset().builds.sort(
+    return this.getAllBuilds().sort(
       (a, b) =>
         getPlayrateIncreaseFromPlayRate(b) - getPlayrateIncreaseFromPlayRate(a)
     );

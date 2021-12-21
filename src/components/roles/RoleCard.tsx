@@ -17,7 +17,7 @@ export default function RoleCard({ role, wins, matches, totalMatches }) {
 
   return (
     <div className="block px-3 py-3 rounded text-center shadow bg-white dark:bg-gray-800">
-      <Icon className="mb-1 text-gray-600 mx-auto dark:text-white" />
+      <Icon className="w-[46px] mb-1 text-gray-600 mx-auto dark:text-white" />
       {/*<p className="text-center text-xs font-medium uppercase tracking-wider -mb-1 text-gray-500 dark:text-gray-400 whitespace-nowrap">*/}
       {/*  Wins*/}
       {/*</p>*/}

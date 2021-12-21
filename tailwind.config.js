@@ -4,8 +4,7 @@ const aspectRatio = require("@tailwindcss/aspect-ratio");
 
 module.exports = {
   darkMode: "class",
-  mode: "jit",
-  purge: ["./src/**/*.{js,jsx,ts,tsx,vue}"],
+  content: ["./src/**/*.{js,jsx,ts,tsx,vue}"],
   theme: {
     maxWidth: {
       "1/4": "25%",
@@ -19,7 +18,7 @@ module.exports = {
     },
     extend: {
       colors: {
-        gray: colors.trueGray,
+        gray: colors.neutral,
         winrate: {
           shiggo: "#ff4e50",
           meh: "#fcb1b2",
@@ -49,9 +48,6 @@ module.exports = {
           },
         },
       },
-    },
-    variants: {
-      extend: {},
     },
   },
   plugins: [typography, aspectRatio],

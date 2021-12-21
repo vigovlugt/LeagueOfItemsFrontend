@@ -6,7 +6,13 @@ import ChampionGridCell from "../champions/ChampionGridCell";
 import { percentage, winrateClass } from "../../utils/format";
 import ItemGridCell from "../items/ItemGridCell";
 import RuneGridCell from "../runes/RuneGridCell";
-import {CHAMPIONS_PER_MATCH} from "../../constants/constants";
+import { CHAMPIONS_PER_MATCH } from "../../constants/constants";
+import TopIcon from "../icons/roles/TopIcon";
+import Role from "../../models/roles/Role";
+import JungleIcon from "../icons/roles/JungleIcon";
+import MidIcon from "../icons/roles/MidIcon";
+import BottomIcon from "../icons/roles/BottomIcon";
+import SupportIcon from "../icons/roles/SupportIcon";
 
 export default function PatchSection({
   dataset,
@@ -22,6 +28,7 @@ export default function PatchSection({
   previousItemMatches,
   runeMatches,
   previousRuneMatches,
+  playrateRoles,
 }) {
   return (
     <div>
@@ -48,79 +55,105 @@ export default function PatchSection({
           />
           <div className="absolute inset-0 flex flex-col justify-center items-center font-header">
             <h2 className="text-4xl mt-8">Patch {dataset.version}</h2>
-            <p className="text-gray-600 dark:text-gray-400 text-sm mt-4">Patch notes <ArrowSmRightIcon className="w-6 inline" /></p>
+            <p className="text-gray-600 dark:text-gray-400 text-sm mt-4">
+              Patch notes <ArrowSmRightIcon className="w-6 inline" />
+            </p>
           </div>
         </a>
       </Link>
 
-      <h2 className="font-header text-4xl mb-2 mt-8">Champions</h2>
-      <h2 className="font-header text-2xl mb-2">Biggest winrate changes</h2>
-      <div className="flex space-x-2 w-full overflow-x-auto pb-2">
-        {winrateChampions.map((c) => (
-          <DifferenceCard key={c.id} champion={c} />
-        ))}
-      </div>
-      <h2 className="font-header text-2xl mb-2 mt-8">
-        Biggest playrate changes
-      </h2>
-      <div className="flex space-x-2 w-full overflow-x-auto pb-2">
-        {playrateChampions.map((c) => (
-          <DifferenceCard
-            key={c.id}
-            champion={c}
-            type="playrate"
-            matches={championMatches / CHAMPIONS_PER_MATCH}
-            previousMatches={previousChampionMatches / CHAMPIONS_PER_MATCH}
-          />
-        ))}
-      </div>
+      <PatchEntityChanges
+        playrateData={playrateChampions}
+        winrateData={winrateChampions}
+        matches={championMatches / CHAMPIONS_PER_MATCH}
+        previousMatches={previousChampionMatches / CHAMPIONS_PER_MATCH}
+        rolePlayrateData={playrateRoles}
+        type="CHAMPION"
+      />
 
-      <h2 className="font-header text-4xl mb-2 mt-8">Items</h2>
-      <h2 className="font-header text-2xl mb-2">Biggest winrate changes</h2>
-      <div className="flex space-x-2 w-full overflow-x-auto pb-2">
-        {winrateItems.map((i) => (
-          <DifferenceCard key={i.id} item={i} />
-        ))}
-      </div>
-      <h2 className="font-header text-2xl mb-2 mt-8">
-        Biggest playrate changes
-      </h2>
-      <div className="flex space-x-2 w-full overflow-x-auto pb-2">
-        {playrateItems.map((i) => (
-          <DifferenceCard
-            key={i.id}
-            item={i}
-            type="playrate"
-            matches={championMatches / CHAMPIONS_PER_MATCH}
-            previousMatches={previousChampionMatches / CHAMPIONS_PER_MATCH}
-          />
-        ))}
-      </div>
+      <PatchEntityChanges
+        playrateData={playrateItems}
+        winrateData={winrateItems}
+        matches={championMatches / CHAMPIONS_PER_MATCH}
+        previousMatches={previousChampionMatches / CHAMPIONS_PER_MATCH}
+        type="ITEM"
+      />
 
-      <h2 className="font-header text-4xl mb-2 mt-8">Runes</h2>
-      <h2 className="font-header text-2xl mb-2">Biggest winrate changes</h2>
-      <div className="flex space-x-2 w-full overflow-x-auto pb-2">
-        {winrateRunes.map((i) => (
-          <DifferenceCard key={i.id} rune={i} />
-        ))}
-      </div>
-      <h2 className="font-header text-2xl mb-2 mt-8">
-        Biggest playrate changes
-      </h2>
-      <div className="flex space-x-2 w-full overflow-x-auto pb-2">
-        {playrateRunes.map((i) => (
-          <DifferenceCard
-            key={i.id}
-            rune={i}
-            type="playrate"
-            matches={runeMatches}
-            previousMatches={previousRuneMatches}
-          />
-        ))}
-      </div>
+      <PatchEntityChanges
+        playrateData={playrateRunes}
+        winrateData={winrateRunes}
+        matches={runeMatches}
+        previousMatches={previousRuneMatches}
+        type="RUNE"
+      />
     </div>
   );
 }
+
+const PatchEntityChanges = ({
+  playrateData,
+  winrateData,
+  matches,
+  previousMatches,
+  rolePlayrateData = [],
+  type,
+}) => {
+  const title = {
+    RUNE: "Runes",
+    CHAMPION: "Champions",
+    ITEM: "Items",
+  }[type];
+
+  const dataKey = type.toLowerCase(); // ITEM => item.
+
+  return (
+    <div>
+      <h2 className="font-header text-4xl mb-2 mt-8">{title}</h2>
+      <h2 className="font-header text-2xl mb-2">Biggest playrate changes</h2>
+      <div className="flex space-x-2 w-full overflow-x-auto pb-2">
+        {playrateData.map((d) => (
+          <DifferenceCard
+            key={d.id}
+            {...{ [dataKey]: d }}
+            type="playrate"
+            matches={matches}
+            previousMatches={previousMatches}
+          />
+        ))}
+      </div>
+      <h2 className="font-header text-2xl mt-4 mb-2">
+        Biggest winrate changes
+      </h2>
+      <div className="flex space-x-2 w-full overflow-x-auto pb-2">
+        {winrateData.map((d) => (
+          <DifferenceCard key={d.id} {...{ [dataKey]: d }} />
+        ))}
+      </div>
+      {rolePlayrateData.length > 0 && (
+        <>
+          <h2 className="font-header text-2xl mt-4 mb-2">
+            Role playrate increases
+          </h2>
+          <div className="flex space-x-2 w-full overflow-x-auto pb-2">
+            {rolePlayrateData.map((d) => {
+              const data = { ...d, id: d.championId };
+
+              return (
+                <DifferenceCard
+                  key={d.championId + "-" + d.role}
+                  champion={data}
+                  type="playrate"
+                  matches={d.totalMatches}
+                  previousMatches={d.previousTotalMatches}
+                />
+              );
+            })}
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
 
 const DifferenceCard = ({
   champion = null,
@@ -129,6 +162,7 @@ const DifferenceCard = ({
   type = "winrate",
   matches = 0,
   previousMatches = 0,
+  role = null,
 }) => {
   const isWinrate = type === "winrate";
 
@@ -148,10 +182,21 @@ const DifferenceCard = ({
 
   const TrendingIcon = increase > 0 ? TrendingUpIcon : TrendingDownIcon;
 
+  const RoleIcon = {
+    [Role.Top]: TopIcon,
+    [Role.Jungle]: JungleIcon,
+    [Role.Mid]: MidIcon,
+    [Role.Adc]: BottomIcon,
+    [Role.Supp]: SupportIcon,
+  }[entity.role];
+
   return (
     <div className="flex flex-col items-center bg-white rounded shadow dark:text-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50">
-      <div className="h-32 w-32 flex justify-center items-center rounded-t overflow-hidden">
+      <div className="relative h-32 w-32 flex justify-center items-center rounded-t overflow-hidden">
         {champion && <ChampionGridCell id={champion.id} />}
+        {RoleIcon && (
+          <RoleIcon className="absolute right-0 bottom-0 w-10 pointer-events-none bg-gray-900/75 rounded-tl-lg" />
+        )}
         {item && <ItemGridCell id={item.id} />}
         {rune && (
           <RuneGridCell

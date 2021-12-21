@@ -49,6 +49,7 @@ export default function Home({
   playrateRunes,
   runeMatches,
   previousRuneMatches,
+  playrateRoles,
 }) {
   const numberFormatter = new Intl.NumberFormat("us-US");
 
@@ -73,7 +74,7 @@ export default function Home({
 
           <PopularSection popularPages={popularPages} />
 
-          <div className="my-16 h-[3px] bg-white dark:bg-gray-900"/>
+          <div className="my-16" />
 
           <PatchSection
             dataset={dataset}
@@ -89,6 +90,7 @@ export default function Home({
             playrateRunes={playrateRunes}
             runeMatches={runeMatches}
             previousRuneMatches={previousRuneMatches}
+            playrateRoles={playrateRoles}
           />
         </div>
         <HomeSidebar
@@ -120,6 +122,7 @@ export async function getStaticProps() {
   const winrateBuilds = await BuildsApi.getByWinrate()
     .filter((b) => !BuildStats.isSmallRune(b, keystones))
     .slice(0, 10);
+  console.log(winrateBuilds)
   const playrateBuilds = await BuildsApi.getByPlayrate()
     .filter((b) => !BuildStats.isSmallRune(b, keystones))
     .slice(0, 10);
@@ -130,6 +133,11 @@ export async function getStaticProps() {
   );
   const playrateChampions =
     ChampionApi.getChampionsByPlayRateDifference().slice(0, 20);
+
+  const playrateRoles = ChampionApi.getChampionRolesByPlayrateIncrease().slice(
+    0,
+    20
+  );
 
   const winrateItems = ItemApi.getByWinRateDifference().slice(0, 20);
   const playrateItems = ItemApi.getByPlayRateDifference().slice(0, 20);
@@ -156,6 +164,7 @@ export async function getStaticProps() {
       playrateRunes,
       runeMatches,
       previousRuneMatches,
+      playrateRoles,
     },
   };
 }

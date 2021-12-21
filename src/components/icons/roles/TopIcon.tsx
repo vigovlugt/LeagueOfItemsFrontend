@@ -1,6 +1,6 @@
 export default function TopIcon({ className }) {
   return (
-    <svg viewBox="0 0 31 31" className={`w-[46px] ${className}`}>
+    <svg viewBox="0 0 31 31" className={className}>
       <g
         fill="currentColor"
         fillRule="evenodd"
