@@ -24,10 +24,6 @@ export default function PatchSection({
   playrateRunes,
   championMatches,
   previousChampionMatches,
-  itemMatches,
-  previousItemMatches,
-  runeMatches,
-  previousRuneMatches,
   playrateRoles,
 }) {
   return (
@@ -82,8 +78,8 @@ export default function PatchSection({
       <PatchEntityChanges
         playrateData={playrateRunes}
         winrateData={winrateRunes}
-        matches={runeMatches}
-        previousMatches={previousRuneMatches}
+        matches={championMatches / CHAMPIONS_PER_MATCH}
+        previousMatches={previousChampionMatches / CHAMPIONS_PER_MATCH}
         type="RUNE"
       />
     </div>
@@ -195,7 +191,7 @@ const DifferenceCard = ({
       <div className="relative h-32 w-32 flex justify-center items-center rounded-t overflow-hidden">
         {champion && <ChampionGridCell id={champion.id} />}
         {RoleIcon && (
-          <RoleIcon className="absolute right-0 bottom-0 w-10 pointer-events-none bg-gray-900/75 rounded-tl-lg" />
+          <RoleIcon className="absolute right-0 bottom-0 w-11 pointer-events-none bg-gray-900 pt-[4px] pl-[4px] rounded-tl-lg" />
         )}
         {item && <ItemGridCell id={item.id} />}
         {rune && (

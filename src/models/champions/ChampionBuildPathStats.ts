@@ -1,5 +1,7 @@
-export default class ChampionRuneStats {
-  public runeId: number;
+export default class ChampionBuildPathStats {
+  public item1Id: number;
+  public item2Id: number;
+  public item3Id: number;
   public wins: number;
   public matches: number;
   public previousWins: number;
