@@ -2,10 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import Table from "../table/Table";
 import { useRouter } from "next/router";
 import { useTable, useSortBy, usePagination } from "react-table";
-import {
-  getPlayrateIncreaseFromPlayRate,
-  getWinrateIncrease,
-} from "../../utils/stats";
+import { getPlayrateIncrease, getWinrateIncrease } from "../../utils/stats";
 import { percentage, winrate, winrateClass } from "../../utils/format";
 import {
   ArrowSmRightIcon,
@@ -32,11 +29,19 @@ export default function BuildsTable({ builds, type = "winrate", size = "md" }) {
       accessor: (row) =>
         isWinrate
           ? getWinrateIncrease(row)
-          : getPlayrateIncreaseFromPlayRate(row),
+          : getPlayrateIncrease(
+              row,
+              row.totalMatches,
+              row.previousTotalMatches
+            ),
       Cell: ({ row }) => {
         const increase = isWinrate
           ? getWinrateIncrease(row.original)
-          : getPlayrateIncreaseFromPlayRate(row.original);
+          : getPlayrateIncrease(
+              row.original,
+              row.original.totalMatches,
+              row.original.previousTotalMatches
+            );
 
         const TrendingIcon = increase > 0 ? TrendingUpIcon : TrendingDownIcon;
 
@@ -65,10 +70,12 @@ export default function BuildsTable({ builds, type = "winrate", size = "md" }) {
       Cell: ({ row }) => {
         const value = isWinrate
           ? winrate(row.original.wins, row.original.matches)
-          : percentage(row.original.playRate);
+          : percentage(row.original.matches / row.original.totalMatches);
         const previousValue = isWinrate
           ? winrate(row.original.previousWins, row.original.previousMatches)
-          : percentage(row.original.previousPlayRate);
+          : percentage(
+              row.original.previousMatches / row.original.previousTotalMatches
+            );
 
         return (
           <div className="flex items-end flex-col">
@@ -87,9 +94,14 @@ export default function BuildsTable({ builds, type = "winrate", size = "md" }) {
   const columns = useMemo(
     () => [
       {
-        Header: "Combo",
+        Header: "Build",
         headerClass: "text-left",
-        accessor: (row) => row.championId + "-" + row.buildTypeId,
+        accessor: (row) =>
+          row.championId +
+          "-" +
+          (row.buildType === "RUNE"
+            ? row.runeId
+            : row.item1Id + "-" + row.item2Id + "-" + row.item3Id),
         Cell: ({ row }) => (
           <div className="flex items-center">
             <img
@@ -103,29 +115,52 @@ export default function BuildsTable({ builds, type = "winrate", size = "md" }) {
               className="mr-2"
               alt="Champion image"
             />
-            <div className="relative">
-              <img
-                src={`/images/${
-                  row.original.buildType === "ITEM" ? "items" : "runes"
-                }/32/${row.original.buildTypeId}.webp`}
-                style={{
-                  width: "32px",
-                  height: "32px",
-                  minHeight: "32px",
-                  minWidth: "32px",
-                }}
-                alt="BuildType image"
-              />
-              {row.original.order != null && (
-                <div
-                  className="ml-2 font-header absolute text-white right-[1px] bottom-0"
+            <div>
+              {row.original.buildType === "RUNE" ? (
+                <img
+                  src={`/images/runes/32/${row.original.runeId}.webp`}
                   style={{
-                    lineHeight: "0.75rem",
-                    textShadow:
-                      "-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black",
+                    width: "32px",
+                    height: "32px",
+                    minHeight: "32px",
+                    minWidth: "32px",
                   }}
-                >
-                  {row.original.order + 1}
+                  alt="BuildType image"
+                />
+              ) : (
+                <div className="flex">
+                  <img
+                    src={`/images/items/32/${row.original.item1Id}.webp`}
+                    className="mr-1"
+                    style={{
+                      width: "32px",
+                      height: "32px",
+                      minHeight: "32px",
+                      minWidth: "32px",
+                    }}
+                    alt="Item 1 image"
+                  />
+                  <img
+                    src={`/images/items/32/${row.original.item2Id}.webp`}
+                    className="mr-1"
+                    style={{
+                      width: "32px",
+                      height: "32px",
+                      minHeight: "32px",
+                      minWidth: "32px",
+                    }}
+                    alt="Item 2 image"
+                  />
+                  <img
+                    src={`/images/items/32/${row.original.item3Id}.webp`}
+                    style={{
+                      width: "32px",
+                      height: "32px",
+                      minHeight: "32px",
+                      minWidth: "32px",
+                    }}
+                    alt="Item 3 image"
+                  />
                 </div>
               )}
             </div>
@@ -171,11 +206,11 @@ export default function BuildsTable({ builds, type = "winrate", size = "md" }) {
       <Table table={table} onClick={gotoBuild} size={size} />
       {!isFull && (
         <Link
-          href={`/combos?sortby=${isPickrate ? "playrate" : "winrate"}`}
+          href={`/builds?sortby=${isPickrate ? "playrate" : "winrate"}`}
           passHref
         >
           <a className="flex justify-center items-center w-full rounded-b p-2 text-lg shadow bg-gray-50 dark:text-gray-50 dark:bg-gray-800">
-            <h2 className="font-header">View all combos</h2>
+            <h2 className="font-header">View all builds</h2>
             <ArrowSmRightIcon className="w-8 inline text-gray-600 dark:text-gray-400" />
           </a>
         </Link>

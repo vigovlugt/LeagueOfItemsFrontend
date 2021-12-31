@@ -12,7 +12,7 @@ import classNames from "classnames";
 import getSearchResults from "../lib/search";
 import useOuterClick from "../hooks/useOuterClick";
 
-export default function ComboPage({ builds }) {
+export default function BuildsPage({ builds }) {
   const [filteredBuilds, setFilteredBuilds] = useState(builds);
 
   const [showSmallRunes, setShowSmallRunes] = useState(false);
@@ -265,16 +265,10 @@ export async function getStaticProps() {
     .map((r) => new RuneStats(r))
     .filter((r) => r.isKeystone())
     .map((r) => r.id);
-  const mythics = items
-    .map((i) => new ItemStats(i))
-    .filter((i) => i.isMythic())
-    .map((i) => i.id);
 
   const builds = await BuildsApi.getByWinrate().map((b) => ({
     ...b,
     isSmallRune: BuildStats.isSmallRune(b, keystones),
-    isMythic: BuildStats.isMythic(b, mythics),
-    isNonMythics: BuildStats.isNonMythic(b, mythics),
     isKeystone: BuildStats.isKeystone(b, keystones),
   }));
 
@@ -285,4 +279,4 @@ export async function getStaticProps() {
   };
 }
 
-ComboPage.pageName = "Combos";
+BuildsPage.pageName = "Builds";

@@ -43,12 +43,8 @@ export default function Home({
   playrateChampions = [],
   winrateItems = [],
   playrateItems = [],
-  itemMatches,
-  previousItemMatches,
   winrateRunes,
   playrateRunes,
-  runeMatches,
-  previousRuneMatches,
   playrateRoles,
 }) {
   const numberFormatter = new Intl.NumberFormat("us-US");
@@ -84,12 +80,8 @@ export default function Home({
             previousChampionMatches={previousChampionMatches}
             winrateItems={winrateItems}
             playrateItems={playrateItems}
-            itemMatches={itemMatches}
-            previousItemMatches={previousItemMatches}
             winrateRunes={winrateRunes}
             playrateRunes={playrateRunes}
-            runeMatches={runeMatches}
-            previousRuneMatches={previousRuneMatches}
             playrateRoles={playrateRoles}
           />
         </div>
@@ -109,12 +101,12 @@ export async function getStaticProps() {
     .map((r) => new RuneStats(r))
     .filter((r) => r.isKeystone())
     .map((r) => r.id);
+
   const totalMatches = MatchApi.getTotalMatches();
   const championMatches = MatchApi.getChampionMatches();
   const previousChampionMatches = MatchApi.getPreviousChampionMatches();
   const itemMatches = ItemApi.getTotalMatches();
   const previousItemMatches = ItemApi.getPreviousTotalMatches();
-  const runeMatches = RuneApi.getTotalMatches();
   const previousRuneMatches = RuneApi.getPreviousTotalMatches();
 
   const popularPages = await PageViewApi.getPopularPages();
@@ -122,7 +114,7 @@ export async function getStaticProps() {
   const winrateBuilds = await BuildsApi.getByWinrate()
     .filter((b) => !BuildStats.isSmallRune(b, keystones))
     .slice(0, 10);
-  console.log(winrateBuilds)
+
   const playrateBuilds = await BuildsApi.getByPlayrate()
     .filter((b) => !BuildStats.isSmallRune(b, keystones))
     .slice(0, 10);
@@ -162,7 +154,6 @@ export async function getStaticProps() {
       previousItemMatches,
       winrateRunes,
       playrateRunes,
-      runeMatches,
       previousRuneMatches,
       playrateRoles,
     },

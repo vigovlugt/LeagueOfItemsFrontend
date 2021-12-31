@@ -2,9 +2,6 @@ const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
-  experimental: {
-    scrollRestoration: true,
-  },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     config.plugins.push(
       new CopyPlugin({
@@ -29,6 +26,6 @@ module.exports = {
       })
     );
 
-    return config
-  }
-}
+    return config;
+  },
+};

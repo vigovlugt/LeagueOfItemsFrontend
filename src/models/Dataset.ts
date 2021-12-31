@@ -7,18 +7,15 @@ export default class Dataset {
   public runes: RuneStats[];
   public date: string;
   public version: string;
-  public builds: BuildStats[];
 
   constructor({
                 items,
                 runes,
                 date,
-                version,
-                builds
+                version
               }) {
     this.items = items.map(i => new ItemStats(i));
     this.runes = runes.map(r => new RuneStats(r));
-    this.builds = builds.map(b => new BuildStats(b))
     this.date = date;
     this.version = version;
   }
