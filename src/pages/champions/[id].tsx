@@ -15,7 +15,6 @@ import usePageView from "../../hooks/usePageView";
 
 export default function ChampionPage({ champion, runes, items, totalMatches }) {
   champion = new ChampionStats(champion);
-  console.log(champion);
 
   const [modalIsOpen, setModalOpen] = useState(false);
 

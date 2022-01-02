@@ -11,7 +11,11 @@ import {
 } from "@heroicons/react/solid";
 import Link from "next/link";
 
-export default function BuildsTable({ builds, type = "winrate", size = "md" }) {
+export default function BuildsTable({
+  builds,
+  type = "pickrate",
+  size = "md",
+}) {
   const router = useRouter();
 
   const data = useMemo(() => builds, [builds]);
@@ -66,7 +70,8 @@ export default function BuildsTable({ builds, type = "winrate", size = "md" }) {
     {
       Header: isWinrate ? "Winrate" : "Playrate",
       headerClass: "text-right",
-      accessor: (row) => (isWinrate ? row.wins / row.matches : row.playRate),
+      accessor: (row) =>
+        isWinrate ? row.wins / row.matches : row.matches / row.totalMatches,
       Cell: ({ row }) => {
         const value = isWinrate
           ? winrate(row.original.wins, row.original.matches)
@@ -185,7 +190,7 @@ export default function BuildsTable({ builds, type = "winrate", size = "md" }) {
   );
 
   useEffect(() => {
-    const id = router.query.sortby ? router.query.sortby.toString() : "winrate";
+    const id = router.query.sortby?.toString() ?? "playrate";
 
     if (table.setSortBy) {
       table.setSortBy([{ id, desc: true }]);

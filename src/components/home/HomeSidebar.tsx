@@ -3,7 +3,6 @@ import BuildsTable from "./BuildsTable";
 import RuneGridCell from "../runes/RuneGridCell";
 
 export default function HomeSidebar({ playrateBuilds, winrateBuilds }) {
-  console.log(playrateBuilds);
   return (
     <div className="flex flex-col">
       <h3 className="font-header text-xl mb-1 mt-4">New content</h3>
@@ -26,7 +25,7 @@ export default function HomeSidebar({ playrateBuilds, winrateBuilds }) {
       <h3 className="font-header mt-4 my-1 text-xl">
         Biggest winrate increases
       </h3>
-      <BuildsTable builds={winrateBuilds} size="sm" />
+      <BuildsTable builds={winrateBuilds} size="sm" type="winrate" />
     </div>
   );
 }

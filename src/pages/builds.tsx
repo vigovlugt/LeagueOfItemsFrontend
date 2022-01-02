@@ -1,6 +1,6 @@
 import ItemApi from "../api/ItemApi";
 import BuildsApi from "../api/BuildsApi";
-import ComboTable from "../components/home/BuildsTable";
+import BuildsTable from "../components/home/BuildsTable";
 import RuneApi from "../api/RuneApi";
 import RuneStats from "../models/runes/RuneStats";
 import BuildStats from "../models/builds/BuildStats";
@@ -19,10 +19,8 @@ export default function BuildsPage({ builds }) {
   const toggleShowSmallRunes = () => setShowSmallRunes(!showSmallRunes);
   const [showKeyStones, setShowKeyStones] = useState(true);
   const toggleShowKeyStones = () => setShowKeyStones(!showKeyStones);
-  const [showMythics, setShowMythics] = useState(true);
-  const toggleShowMythics = () => setShowMythics(!showMythics);
-  const [showNonMythics, setShowNonMythics] = useState(true);
-  const toggleShowNonMythics = () => setShowNonMythics(!showNonMythics);
+  const [showBuildPaths, setShowBuildPaths] = useState(true);
+  const toggleShowBuildPaths = () => setShowBuildPaths(!showBuildPaths);
 
   const [championFilter, setChampionFilter] = useState(null);
 
@@ -47,11 +45,7 @@ export default function BuildsPage({ builds }) {
             return false;
           }
 
-          if (!showMythics && b.isMythic) {
-            return false;
-          }
-
-          if (!showNonMythics && b.isNonMythics) {
+          if (!showBuildPaths && b.buildType === "BUILD_PATH") {
             return false;
           }
 
@@ -66,7 +60,7 @@ export default function BuildsPage({ builds }) {
           return true;
         })
       ),
-    [showMythics, showNonMythics, showKeyStones, showSmallRunes, championFilter]
+    [showBuildPaths, showKeyStones, showSmallRunes, championFilter]
   );
 
   const [query, setQuery] = useState("");
@@ -127,7 +121,7 @@ export default function BuildsPage({ builds }) {
           {({}) => (
             <>
               <Popover.Button className="px-3 py-2 rounded-md inline-flex items-center font-medium dark:text-white">
-                <span>Combos</span>
+                <span>Filters</span>
                 <ChevronDownIcon className="ml-1 h-5 w-5" />
               </Popover.Button>
               <Popover.Panel className="absolute z-10 w-96 px-4 -left-4">
@@ -138,19 +132,10 @@ export default function BuildsPage({ builds }) {
                       <input
                         type="checkbox"
                         className="mr-1"
-                        checked={showMythics}
-                        onChange={toggleShowMythics}
+                        checked={showBuildPaths}
+                        onChange={toggleShowBuildPaths}
                       />{" "}
-                      Mythics
-                    </label>
-                    <label>
-                      <input
-                        type="checkbox"
-                        className="mr-1"
-                        checked={showNonMythics}
-                        onChange={toggleShowNonMythics}
-                      />{" "}
-                      Non-mythics
+                      Build Paths
                     </label>
                     <span className="pt-4">Runes</span>
                     <label>
@@ -232,7 +217,7 @@ export default function BuildsPage({ builds }) {
         </div>
       </div>
 
-      <ComboTable builds={filteredBuilds} type="full" />
+      <BuildsTable builds={filteredBuilds} type="full" />
     </div>
   );
 }
@@ -259,7 +244,6 @@ function SearchResult({ name, id, onClick }) {
 }
 
 export async function getStaticProps() {
-  const items = ItemApi.getAllItems();
   const runes = RuneApi.getAllRunes();
   const keystones = runes
     .map((r) => new RuneStats(r))

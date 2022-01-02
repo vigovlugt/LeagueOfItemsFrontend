@@ -48,8 +48,8 @@ export default class BuildStats {
     return new BuildStats({
       buildType: "BUILD_PATH",
       championId: champion.id,
-      totalMatches: champion.matches,
-      previousTotalMatches: champion.previousMatches,
+      totalMatches: champion.buildPathStats.reduce((sum, s) => sum + s.matches, 0),
+      previousTotalMatches: champion.buildPathStats.reduce((sum, s) => sum + s.previousMatches, 0),
       ...championBuildPathStats,
     });
   }
