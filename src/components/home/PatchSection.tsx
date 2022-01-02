@@ -37,7 +37,7 @@ export default function PatchSection({
       >
         <a
           target="_blank"
-          className="flex justify-center items-center w-full bg-white rounded-lg p-8 py-32 shadow mb-8 dark:text-gray-50 dark:bg-dark relative overflow-hidden"
+          className="flex justify-center items-center w-full bg-white rounded-lg p-8 py-32 mt-32 shadow mb-8 dark:text-gray-50 dark:bg-dark relative overflow-hidden"
         >
           <img
             src="https://images.contentstack.io/v3/assets/blt731acb42bb3d1659/blt2161d99d433ee6fd/6189caf9cc735f786653bb6e/patch-10-24-banner.jpg"

@@ -1,15 +1,31 @@
 import dataset from "../../../data/dataset.json";
+import { addDays, differenceInCalendarDays, formatDistance } from "date-fns";
 
-export default function SummaryBar({ dataset, numberFormatter, totalMatches }) {
+export default function SummaryBar({
+  dataset,
+  numberFormatter,
+  totalMatches,
+  nextPatch,
+}) {
+  const daysToNextPatch = differenceInCalendarDays(
+    new Date(nextPatch.scheduledDate),
+    new Date()
+  );
   return (
     <div className="flex md:bg-white rounded py-6 text-lg md:shadow dark:text-gray-50 dark:bg-gray-900">
       <div className="hidden md:flex flex-col justify-center items-center w-1/2">
         <h2 className="text-base text-gray-600 font-semibold tracking-wide uppercase dark:text-gray-400">
           Current patch
         </h2>
-        <p className="mt-1 text-4xl leading-8 font-extrabold tracking-tight text-gray-900 dark:text-gray-50">
+        <p className="mb-2 text-4xl leading-8 font-extrabold tracking-tight text-gray-900 dark:text-gray-50">
           {dataset.version}
         </p>
+        {daysToNextPatch >= 0 && (
+          <p className="text-xs text-gray-600 font-semibold tracking-wide uppercase dark:text-gray-400">
+            Next patch{" "}
+            {daysToNextPatch > 0 ? "in " + daysToNextPatch + " days" : "today"}
+          </p>
+        )}
       </div>
 
       <div className="hidden md:block h-100 border border-r-1 border-gray-300 dark:border-gray-600" />

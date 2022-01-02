@@ -34,9 +34,9 @@ export default function RoleCard({ role, wins, matches, totalMatches }) {
       {/*</p>*/}
       <p
         className="text-center font-bold text-lg"
-        title={pickrate(matches, totalMatches)}
+        title={matches}
       >
-        {matches}
+        {pickrate(matches, totalMatches)}
       </p>
     </div>
   );

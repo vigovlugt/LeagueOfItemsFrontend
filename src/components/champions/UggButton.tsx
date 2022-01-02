@@ -18,6 +18,10 @@ const MENU_ITEMS = [
     title: "Runes",
     link: (name) => `${UGG_BASE_URL}/lol/champions/${name}/runes-table`,
   },
+  {
+    title: "Build Paths",
+    link: (name) => `${UGG_BASE_URL}/lol/champions/${name}/item-paths`,
+  },
 ];
 
 export default function UggButton({ name }) {

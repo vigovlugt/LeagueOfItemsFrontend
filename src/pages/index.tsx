@@ -31,6 +31,7 @@ import { TrendingDownIcon } from "@heroicons/react/solid";
 import RuneApi from "../api/RuneApi";
 import RuneStats from "../models/runes/RuneStats";
 import PatchSection from "../components/home/PatchSection";
+import PatchScheduleApi from "../api/PatchScheduleApi";
 
 export default function Home({
   totalMatches = 0,
@@ -46,6 +47,7 @@ export default function Home({
   winrateRunes,
   playrateRunes,
   playrateRoles,
+  nextPatch
 }) {
   const numberFormatter = new Intl.NumberFormat("us-US");
 
@@ -60,6 +62,7 @@ export default function Home({
         dataset={dataset}
         totalMatches={totalMatches}
         numberFormatter={numberFormatter}
+        nextPatch={nextPatch}
       />
 
       <div
@@ -69,8 +72,6 @@ export default function Home({
           <CategoryPreviews />
 
           <PopularSection popularPages={popularPages} />
-
-          <div className="my-16" />
 
           <PatchSection
             dataset={dataset}
@@ -112,7 +113,7 @@ export async function getStaticProps() {
   const popularPages = await PageViewApi.getPopularPages();
 
   const winrateBuilds = await BuildsApi.getByWinrate()
-    .filter((b) => !BuildStats.isSmallRune(b, keystones))
+    .filter((b) => !BuildStats.isSmallRune(b, keystones) && b.matches > 500 && b.previousMatches > 500)
     .slice(0, 10);
 
   const playrateBuilds = await BuildsApi.getByPlayrate()
@@ -137,6 +138,8 @@ export async function getStaticProps() {
   const winrateRunes = RuneApi.getByWinRateDifference().slice(0, 20);
   const playrateRunes = RuneApi.getByPlayRateDifference().slice(0, 20);
 
+  const nextPatch = PatchScheduleApi.getNextPatch();
+
   return {
     props: {
       items,
@@ -156,6 +159,7 @@ export async function getStaticProps() {
       playrateRunes,
       previousRuneMatches,
       playrateRoles,
+      nextPatch
     },
   };
 }

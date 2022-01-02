@@ -61,10 +61,19 @@ export default function StatsByOrder({
         id: "winrate",
       },
       {
-        Header: "Matches",
+        Header: "Pickrate",
         headerClass: "text-right",
         cellClass: "text-right",
         accessor: "matches",
+        Cell: ({
+                 row: {
+                   original: { matches },
+                 },
+               }) => (
+          <div className="text-right w-full" title={matches}>
+            {pickrate(matches, orderStats.matches)}
+          </div>
+        ),
       },
     ],
     []

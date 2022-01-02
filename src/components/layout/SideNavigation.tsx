@@ -12,7 +12,7 @@ import {
   QuestionMarkCircleIcon,
   XIcon,
   HomeIcon,
-  ViewListIcon,
+  ViewListIcon, BookOpenIcon,
 } from "@heroicons/react/outline";
 import SearchBar from "./SearchBar";
 
@@ -53,9 +53,9 @@ const MENU_ITEMS = [
     icon: () => <ViewListIcon className="w-7" />,
   },
   {
-    name: "Combos",
-    href: "/combos",
-    icon: () => <LinkIcon className="w-7 transform rotate-45" />,
+    name: "Builds",
+    href: "/builds",
+    icon: () => <BookOpenIcon className="w-7" />,
   },
   {
     name: "FAQ",
