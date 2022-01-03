@@ -11,6 +11,11 @@ export default function SummaryBar({
     new Date(nextPatch.scheduledDate),
     new Date()
   );
+
+  let daysText = `in ${daysToNextPatch} days`;
+  if(daysToNextPatch == 0) daysText = "today";
+  if(daysToNextPatch == 1) daysText = "tomorrow";
+
   return (
     <div className="flex md:bg-white rounded py-6 text-lg md:shadow dark:text-gray-50 dark:bg-gray-900">
       <div className="hidden md:flex flex-col justify-center items-center w-1/2">
@@ -23,7 +28,7 @@ export default function SummaryBar({
         {daysToNextPatch >= 0 && (
           <p className="text-xs text-gray-600 font-semibold tracking-wide uppercase dark:text-gray-400">
             Next patch{" "}
-            {daysToNextPatch > 0 ? "in " + daysToNextPatch + " days" : "today"}
+            {daysText}
           </p>
         )}
       </div>

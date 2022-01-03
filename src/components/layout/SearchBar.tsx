@@ -90,7 +90,7 @@ export default function SearchBar({ onSubmit = null }) {
         </svg>
       </button>
       {results.length > 0 && isFocussed && (
-        <div className="absolute rounded-md border py-2 w-full z-10 rounded-t-none bg-white border-gray-300 dark:bg-dark dark:border-gray-600">
+        <div className="absolute rounded-md border py-2 w-full z-10 rounded-t-none bg-white border-gray-300 dark:bg-dark dark:border-gray-600 dark:text-white">
           {results.slice(0, 5).map((result) => (
             <SearchResult {...result} key={result.id} onClick={reset} />
           ))}

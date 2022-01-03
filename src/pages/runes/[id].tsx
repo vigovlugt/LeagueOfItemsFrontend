@@ -74,6 +74,26 @@ export default function RunePage({ rune, totalMatches }) {
             ))}
         </div>
       </div>
+
+      {/* Highest pickrate champions */}
+      <div>
+        <h2 className="text-2xl font-header font-medium mb-1 mt-4">
+          Highest pickrate champions
+        </h2>
+        <div className="flex space-x-2 w-full overflow-x-auto pb-2">
+          {rune.championStats
+            .sort((a, b) => b.matches - a.matches)
+            .map((championStats) => (
+              <Card
+                key={championStats.championId}
+                type={"champion"}
+                {...championStats}
+                totalMatches={rune.matches}
+                id={championStats.championId}
+              />
+            ))}
+        </div>
+      </div>
     </div>
   );
 }

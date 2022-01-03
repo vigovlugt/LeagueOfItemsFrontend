@@ -83,52 +83,6 @@ export default function ChampionPage({ champion, runes, items, totalMatches }) {
         </div>
       </PageHeader>
 
-      {/* Highest winrate items */}
-      <h2 className="text-2xl font-header font-medium mb-1">
-        Highest winrate items
-      </h2>
-      <div className="flex flex-col lg:flex-row lg:space-x-8 mb-4">
-        <div className="lg:max-w-1/2">
-          <div className="flex space-x-2 w-full overflow-x-auto pb-2">
-            {champion.itemStats
-              .filter(
-                (stats) =>
-                  items.find((item) => item.id == stats.itemId).isMythic
-              )
-              .sort((a, b) => b.wins / b.matches - a.wins / a.matches)
-              .map((itemStats) => (
-                <Card
-                  key={itemStats.itemId}
-                  type={"item"}
-                  {...itemStats}
-                  totalMatches={champion.matches}
-                  id={itemStats.itemId}
-                />
-              ))}
-          </div>
-        </div>
-
-        <div className="flex-1 overflow-auto">
-          <div className="flex space-x-2 w-full overflow-x-auto pb-2">
-            {champion.itemStats
-              .filter(
-                (stats) =>
-                  !items.find((item) => item.id == stats.itemId).isMythic
-              )
-              .sort((a, b) => b.wins / b.matches - a.wins / a.matches)
-              .map((itemStats) => (
-                <Card
-                  key={itemStats.itemId}
-                  type={"item"}
-                  {...itemStats}
-                  totalMatches={champion.matches}
-                  id={itemStats.itemId}
-                />
-              ))}
-          </div>
-        </div>
-      </div>
-
       {/* Highest winrate runes */}
       <h2 className="text-2xl font-header font-medium mb-1">
         Highest winrate runes
@@ -178,7 +132,7 @@ export default function ChampionPage({ champion, runes, items, totalMatches }) {
       {/* Winrate by order */}
       <div>
         <h2 className="text-2xl font-header font-medium mb-1">
-          Stats by order
+          Item stats by order
         </h2>
         <div
           className="grid grid-cols-1 grid-flow-row xl:grid-flow-col xl:grid-cols-5 gap-2"
