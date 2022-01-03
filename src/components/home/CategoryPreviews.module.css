@@ -1,30 +1,34 @@
 .categoryImageItems, .categoryImageRunes, .categoryImageChampions {
     object-fit: cover;
     object-position: center;
+    transition: filter ease-out 500ms, transform ease-out 500ms;
 }
 
 .categoryImageItems {
-    filter: opacity(.4) contrast(1.5);
+    filter: grayscale(1) opacity(.4) contrast(1.5);
 }
 
 :global(.dark) .categoryImageItems{
-    filter: opacity(.4);
+    filter: grayscale(1) opacity(.4);
 }
 
 .categoryImageRunes {
-    filter: opacity(.4) brightness(1.5);
-    object-position: right;
+    filter: grayscale(1) opacity(.4) contrast(1.3);
 }
 
 :global(.dark) .categoryImageRunes {
-    filter: opacity(.4) brightness(1.5) contrast(1.2);
+    filter: grayscale(1) opacity(.4) brightness(1.2) contrast(1.2);
 }
 
 .categoryImageChampions {
-    filter: opacity(.4) contrast(1) brightness(2);
+    filter: grayscale(1) opacity(.4) contrast(1.3);
 }
 
 :global(.dark) .categoryImageChampions {
-    filter: opacity(.4) contrast(1) brightness(2);
+    filter: grayscale(1) opacity(.4) contrast(1.2);
 }
 
+.categoryImageItems:hover, .categoryImageRunes:hover, .categoryImageChampions:hover {
+    filter: none;
+    transform: scale(1.05);
+}

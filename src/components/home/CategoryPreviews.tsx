@@ -16,30 +16,39 @@ export default function CategoryPreviews() {
             alt=""
             className={`${styles.categoryImageItems} absolute inset-0 h-full`}
           />
-          <h2 className="font-header text-4xl absolute bottom-4">Items</h2>
+          <h2 className="font-header text-4xl absolute bottom-9 pointer-events-none">Items</h2>
+          <span className="font-header absolute bottom-4 text-sm text-gray-500 pointer-events-none">
+            View all
+          </span>
         </a>
       </Link>
       <div className="flex flex-col w-full space-y-4">
         <Link href="/runes" passHref>
           <a className="h-full bg-white dark:bg-dark rounded-lg mt-4 p-4 relative overflow-hidden min-h-[300px] sm:min-h-0 sm:mt-0 ">
             <img
-              src="/images/runes/runekeystone.webp"
+              src="/images/runes/runes-reforged.webp"
               alt=""
               className={`${styles.categoryImageRunes} absolute inset-0 h-full`}
             />
-            <h2 className="font-header text-2xl absolute bottom-4">Runes</h2>
+            <h2 className="font-header text-2xl absolute bottom-9 pointer-events-none">Runes</h2>
+            <span className="font-header absolute bottom-4  text-sm text-gray-500 pointer-events-none">
+              View all
+            </span>
           </a>
         </Link>
         <Link href="/champions" passHref>
           <a className="h-full bg-white dark:bg-dark rounded-lg mt-4 p-4 relative overflow-hidden min-h-[300px] sm:min-h-0 sm:mt-0">
             <img
-              src="/images/champions/splashart.webp"
+              src="/images/champions/champions.webp"
               alt=""
               className={`${styles.categoryImageChampions} absolute inset-0 h-full`}
             />
-            <h2 className="font-header text-2xl absolute bottom-4">
+            <h2 className="font-header text-2xl absolute bottom-9 pointer-events-none">
               Champions
             </h2>
+            <span className="font-header absolute bottom-4 text-sm text-gray-500 pointer-events-none">
+              View all
+            </span>
           </a>
         </Link>
       </div>

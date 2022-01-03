@@ -7,12 +7,12 @@ import SideNavFooter from "./SideNavFooter";
 import ChampionIcon from "../icons/ChampionIcon";
 import Logo from "../Logo";
 import {
-  LinkIcon,
   MailIcon,
   QuestionMarkCircleIcon,
   XIcon,
   HomeIcon,
-  ViewListIcon, BookOpenIcon,
+  ViewListIcon,
+  BookOpenIcon,
 } from "@heroicons/react/outline";
 import SearchBar from "./SearchBar";
 

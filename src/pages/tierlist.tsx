@@ -7,6 +7,8 @@ import { useRouter } from "next/router";
 import { pickrate, winrate, winrateClass } from "../utils/format";
 import { NextSeo } from "next-seo";
 import MatchApi from "../api/MatchApi";
+import HelpHover from "../components/HelpHover";
+import {ITEM_PICKRATE_HELPER_TEXT, ITEM_WINRATE_HELPER_TEXT} from "../constants/constants";
 
 export default function Tierlist({ items, totalMatches }) {
   const router = useRouter();
@@ -36,7 +38,7 @@ export default function Tierlist({ items, totalMatches }) {
         ),
       },
       {
-        Header: "Winrate",
+        Header: () => <>Winrate<HelpHover text={ITEM_WINRATE_HELPER_TEXT}/></>,
         headerClass: "text-right",
         cellClass: "text-right",
         Cell: ({
@@ -55,7 +57,7 @@ export default function Tierlist({ items, totalMatches }) {
         id: "winrate",
       },
       {
-        Header: "Pickrate",
+        Header: () => <>Pickrate<HelpHover text={ITEM_PICKRATE_HELPER_TEXT}/></>,
         headerClass: "text-right",
         cellClass: "text-right",
         Cell: ({
@@ -91,7 +93,7 @@ export default function Tierlist({ items, totalMatches }) {
       initialState: {
         sortBy: [
           {
-            id: "winrate",
+            id: "pickrate",
             desc: true,
           },
         ],

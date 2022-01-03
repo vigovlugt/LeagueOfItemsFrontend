@@ -9,6 +9,8 @@ import ItemModal from "../../components/items/ItemModal";
 import PageHeader from "../../components/PageHeader";
 import MatchApi from "../../api/MatchApi";
 import usePageView from "../../hooks/usePageView";
+import HelpHover from "../../components/HelpHover";
+import {ITEM_PICKRATE_HELPER_TEXT, ITEM_WINRATE_HELPER_TEXT} from "../../constants/constants";
 
 export default function ItemPage({ item, totalMatches }) {
   item = new ItemStats(item);
@@ -40,7 +42,7 @@ export default function ItemPage({ item, totalMatches }) {
               <span className={winrateClass(item.wins, item.matches)}>
                 {winrate(item.wins, item.matches)}
               </span>{" "}
-              Winrate
+              Winrate<HelpHover text={ITEM_WINRATE_HELPER_TEXT}/>
             </p>
             {/*<p className="text-sm text-gray-500">*/}
             {/*  <span>{winrate(item.previousWins, item.previousMatches)}</span>{" "}*/}
@@ -51,7 +53,7 @@ export default function ItemPage({ item, totalMatches }) {
             <span className="text-gray-900 dark:text-white">
               {pickrate(item.matches, totalMatches)}
             </span>{" "}
-            Pickrate
+            Pickrate<HelpHover text={ITEM_PICKRATE_HELPER_TEXT}/>
           </div>
           <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
             <span className="text-gray-900 dark:text-white">
@@ -82,10 +84,30 @@ export default function ItemPage({ item, totalMatches }) {
         </div>
       </div>
 
+      {/* Highest pickrate champions */}
+      <div>
+        <h2 className="text-2xl font-header font-medium mb-1 mt-4">
+          Highest pickrate champions
+        </h2>
+        <div className="flex space-x-2 w-full overflow-x-auto pb-2">
+          {item.championStats
+            .sort((a, b) => b.matches - a.matches)
+            .map((championStats) => (
+              <Card
+                key={championStats.championId}
+                type={"champion"}
+                {...championStats}
+                totalMatches={item.matches}
+                id={championStats.championId}
+              />
+            ))}
+        </div>
+      </div>
+
       {/* Winrate by order */}
       <div className="mt-4">
         <h2 className="text-2xl font-header font-medium mb-1">
-          Stats by order
+          Champion stats by order
         </h2>
         <div
           className="grid grid-cols-1 grid-flow-row xl:grid-flow-col xl:grid-cols-5 gap-2"

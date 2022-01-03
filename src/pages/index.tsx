@@ -37,7 +37,7 @@ export default function Home({
   totalMatches = 0,
   championMatches = 0,
   previousChampionMatches = 0,
-  popularPages = [],
+  pageViewDataset = [],
   winrateBuilds = [],
   playrateBuilds = [],
   winrateChampions = [],
@@ -47,7 +47,7 @@ export default function Home({
   winrateRunes,
   playrateRunes,
   playrateRoles,
-  nextPatch
+  nextPatch,
 }) {
   const numberFormatter = new Intl.NumberFormat("us-US");
 
@@ -71,7 +71,7 @@ export default function Home({
         <div className="w-full overflow-hidden">
           <CategoryPreviews />
 
-          <PopularSection popularPages={popularPages} />
+          <PopularSection pageViewDataset={pageViewDataset} />
 
           <PatchSection
             dataset={dataset}
@@ -110,10 +110,15 @@ export async function getStaticProps() {
   const previousItemMatches = ItemApi.getPreviousTotalMatches();
   const previousRuneMatches = RuneApi.getPreviousTotalMatches();
 
-  const popularPages = await PageViewApi.getPopularPages();
+  const pageViewDataset = await PageViewApi.getDataset();
 
   const winrateBuilds = await BuildsApi.getByWinrate()
-    .filter((b) => !BuildStats.isSmallRune(b, keystones) && b.matches > 500 && b.previousMatches > 500)
+    .filter(
+      (b) =>
+        !BuildStats.isSmallRune(b, keystones) &&
+        b.matches > 500 &&
+        b.previousMatches > 500
+    )
     .slice(0, 10);
 
   const playrateBuilds = await BuildsApi.getByPlayrate()
@@ -146,7 +151,7 @@ export async function getStaticProps() {
       totalMatches,
       championMatches,
       previousChampionMatches,
-      popularPages,
+      pageViewDataset,
       winrateBuilds,
       playrateBuilds,
       winrateChampions,
@@ -159,7 +164,7 @@ export async function getStaticProps() {
       playrateRunes,
       previousRuneMatches,
       playrateRoles,
-      nextPatch
+      nextPatch,
     },
   };
 }

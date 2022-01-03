@@ -13,6 +13,7 @@ import JungleIcon from "../icons/roles/JungleIcon";
 import MidIcon from "../icons/roles/MidIcon";
 import BottomIcon from "../icons/roles/BottomIcon";
 import SupportIcon from "../icons/roles/SupportIcon";
+import styles from "./PatchSection.module.css";
 
 export default function PatchSection({
   dataset,
@@ -27,7 +28,7 @@ export default function PatchSection({
   playrateRoles,
 }) {
   return (
-    <div>
+    <div className="rounded p-4 mt-24 bg-white dark:bg-gray-900">
       <Link
         href={`https://www.leagueoflegends.com/en-us/news/game-updates/patch-${dataset.version.replace(
           ".",
@@ -37,20 +38,17 @@ export default function PatchSection({
       >
         <a
           target="_blank"
-          className="flex justify-center items-center w-full bg-white rounded-lg p-8 py-32 mt-32 shadow mb-8 dark:text-gray-50 dark:bg-dark relative overflow-hidden"
+          className="flex justify-center items-center w-full bg-white rounded-lg p-8 py-32 shadow mb-8 dark:text-gray-50 dark:bg-dark relative overflow-hidden"
         >
           <img
-            src="https://images.contentstack.io/v3/assets/blt731acb42bb3d1659/blt2161d99d433ee6fd/6189caf9cc735f786653bb6e/patch-10-24-banner.jpg"
+            src="/images/patches/patch-banner.webp"
             alt={""}
-            style={{
-              objectFit: "cover",
-              objectPosition: "center",
-              filter: "saturate(0) opacity(0.3)",
-            }}
-            className="absolute inset-0 w-full h-full"
+            className={
+              "absolute inset-0 w-full h-full " + styles.patchOverviewImage
+            }
           />
-          <div className="absolute inset-0 flex flex-col justify-center items-center font-header">
-            <h2 className="text-4xl mt-8">Patch {dataset.version}</h2>
+          <div className="absolute inset-0 flex flex-col justify-center items-center font-header pointer-events-none">
+            <h2 className="text-4xl mt-8">Patch {dataset.version} overview</h2>
             <p className="text-gray-600 dark:text-gray-400 text-sm mt-4">
               Patch notes <ArrowSmRightIcon className="w-6 inline" />
             </p>
@@ -105,7 +103,9 @@ const PatchEntityChanges = ({
   return (
     <div>
       <h2 className="font-header text-4xl mb-2 mt-8">{title}</h2>
-      <h2 className="font-header text-2xl mb-2">Biggest playrate changes</h2>
+      <h2 className="font-header text-2xl mb-2">
+        Biggest playrate changes since last patch
+      </h2>
       <div className="flex space-x-2 w-full overflow-x-auto pb-2">
         {playrateData.map((d) => (
           <DifferenceCard
@@ -118,7 +118,7 @@ const PatchEntityChanges = ({
         ))}
       </div>
       <h2 className="font-header text-2xl mt-4 mb-2">
-        Biggest winrate changes
+        Biggest winrate changes since last patch
       </h2>
       <div className="flex space-x-2 w-full overflow-x-auto pb-2">
         {winrateData.map((d) => (
@@ -128,7 +128,7 @@ const PatchEntityChanges = ({
       {rolePlayrateData.length > 0 && (
         <>
           <h2 className="font-header text-2xl mt-4 mb-2">
-            Role playrate increases
+            Role playrate increases since last patch
           </h2>
           <div className="flex space-x-2 w-full overflow-x-auto pb-2">
             {rolePlayrateData.map((d) => {
@@ -187,11 +187,11 @@ const DifferenceCard = ({
   }[entity.role];
 
   return (
-    <div className="flex flex-col items-center bg-white rounded shadow dark:text-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-50">
+    <div className="flex flex-col items-center bg-white rounded shadow text-gray-900 dark:text-gray-50 dark:bg-gray-800">
       <div className="relative h-32 w-32 flex justify-center items-center rounded-t overflow-hidden">
         {champion && <ChampionGridCell id={champion.id} />}
         {RoleIcon && (
-          <RoleIcon className="absolute right-0 bottom-0 w-11 pointer-events-none bg-gray-900 pt-[4px] pl-[4px] rounded-tl-lg" />
+          <RoleIcon className="absolute right-0 bottom-0 w-11 pointer-events-none bg-gray-800 pt-[4px] pl-[4px] rounded-tl-lg" />
         )}
         {item && <ItemGridCell id={item.id} />}
         {rune && (
