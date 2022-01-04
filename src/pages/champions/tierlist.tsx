@@ -4,15 +4,16 @@ import Table from "../../components/table/Table";
 import { useRouter } from "next/router";
 import { pickrate, winrate, winrateClass } from "../../utils/format";
 import { NextSeo } from "next-seo";
-import ChampionStats from "../../models/champions/ChampionStats";
 import ChampionApi from "../../api/ChampionApi";
 import MatchApi from "../../api/MatchApi";
+import HelpHover from "../../components/HelpHover";
+import {CHAMPION_PICKRATE_HELPER_TEXT} from "../../constants/constants";
 
 export default function ChampionTierlist({ champions, totalMatches }) {
   const router = useRouter();
 
   const data = useMemo(
-    () => champions.map((i) => new ChampionStats(i)),
+    () => champions,
     [champions]
   );
 
@@ -58,7 +59,7 @@ export default function ChampionTierlist({ champions, totalMatches }) {
         id: "winrate",
       },
       {
-        Header: "Pickrate",
+        Header: () =>  <>Pickrate<HelpHover text={CHAMPION_PICKRATE_HELPER_TEXT}/></>,
         headerClass: "text-right",
         cellClass: "text-right",
         Cell: ({
@@ -74,21 +75,21 @@ export default function ChampionTierlist({ champions, totalMatches }) {
         Header: "Items",
         headerClass: "text-right",
         cellClass: "text-right",
-        accessor: (original) => original.itemStats.length,
+        accessor: (original) => original.items,
         id: "items",
       },
       {
         Header: "Runes",
         headerClass: "text-right",
         cellClass: "text-right",
-        accessor: (original) => original.runeStats.length,
+        accessor: (original) => original.runes,
         id: "runes",
       },
       {
         Header: "Roles",
         headerClass: "text-right",
         cellClass: "text-right",
-        accessor: (original) => original.roleStats.length,
+        accessor: (original) => original.roles,
         id: "roles",
       },
       {
@@ -132,7 +133,17 @@ export default function ChampionTierlist({ champions, totalMatches }) {
 }
 
 export async function getStaticProps(context) {
-  const champions = ChampionApi.getAllChampions();
+  const champions = ChampionApi.getAllChampions().map(
+    ({ id, name, matches, wins, roleStats, itemStats, runeStats }) => ({
+      id,
+      name,
+      wins,
+      matches,
+      roles: roleStats.length,
+      items: itemStats.length,
+      runes: runeStats.length
+    })
+  );
   const totalMatches = MatchApi.getTotalMatches();
 
   return {
