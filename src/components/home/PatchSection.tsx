@@ -38,7 +38,7 @@ export default function PatchSection({
       >
         <a
           target="_blank"
-          className="flex justify-center items-center w-full bg-white rounded-lg p-8 py-32 shadow mb-8 dark:text-gray-50 dark:bg-dark relative overflow-hidden"
+          className="flex justify-center items-center w-full bg-white rounded-lg p-8 py-24 sm:py-32 shadow mb-8 dark:text-gray-50 dark:bg-dark relative overflow-hidden"
         >
           <img
             src="/images/patches/patch-banner.webp"
@@ -47,7 +47,7 @@ export default function PatchSection({
               "absolute inset-0 w-full h-full " + styles.patchOverviewImage
             }
           />
-          <div className="absolute inset-0 flex flex-col justify-center items-center font-header pointer-events-none">
+          <div className="absolute inset-0 flex flex-col justify-center items-center font-header pointer-events-none text-center">
             <h2 className="text-4xl mt-8">Patch {dataset.version} overview</h2>
             <p className="text-gray-600 dark:text-gray-400 text-sm mt-4">
               Patch notes <ArrowSmRightIcon className="w-6 inline" />
@@ -103,7 +103,7 @@ const PatchEntityChanges = ({
   return (
     <div>
       <h2 className="font-header text-4xl mb-2 mt-8">{title}</h2>
-      <h2 className="font-header text-2xl mb-2">
+      <h2 className="font-header text-xl lg:text-2xl mb-2">
         Biggest playrate changes since last patch
       </h2>
       <div className="flex space-x-2 w-full overflow-x-auto pb-2">
@@ -117,7 +117,7 @@ const PatchEntityChanges = ({
           />
         ))}
       </div>
-      <h2 className="font-header text-2xl mt-4 mb-2">
+      <h2 className="font-header text-xl lg:text-2xl mt-4 mb-2">
         Biggest winrate changes since last patch
       </h2>
       <div className="flex space-x-2 w-full overflow-x-auto pb-2">
@@ -127,7 +127,7 @@ const PatchEntityChanges = ({
       </div>
       {rolePlayrateData.length > 0 && (
         <>
-          <h2 className="font-header text-2xl mt-4 mb-2">
+          <h2 className="font-header text-xl lg:text-2xl mt-4 mb-2">
             Role playrate increases since last patch
           </h2>
           <div className="flex space-x-2 w-full overflow-x-auto pb-2">
