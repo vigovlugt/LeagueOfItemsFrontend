@@ -12,6 +12,8 @@ import { useState } from "react";
 import PageHeader from "../../components/PageHeader";
 import MatchApi from "../../api/MatchApi";
 import usePageView from "../../hooks/usePageView";
+import {CHAMPION_PICKRATE_HELPER_TEXT} from "../../constants/constants";
+import HelpHover from "../../components/HelpHover";
 
 export default function ChampionPage({ champion, runes, items, totalMatches }) {
   champion = new ChampionStats(champion);
@@ -61,7 +63,7 @@ export default function ChampionPage({ champion, runes, items, totalMatches }) {
               <span className="text-gray-900 dark:text-white mr-1">
                 {pickrate(champion.matches, totalMatches)}
               </span>{" "}
-              Pickrate
+              Pickrate<HelpHover text={CHAMPION_PICKRATE_HELPER_TEXT}/>
             </div>
             <div className="flex items-center justify-center bg-white rounded p-4 text-lg font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
               <span className="text-gray-900 dark:text-white mr-1">
