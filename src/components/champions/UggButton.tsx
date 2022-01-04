@@ -28,7 +28,7 @@ export default function UggButton({ name }) {
   name = name.toLowerCase().replace(/[^\w]/g, "");
 
   return (
-    <div className="flex bg-ugg-dark rounded-md px-3 py-2 text-white shadow focus:outline-none dark:bg-ugg">
+    <div className="hidden lg:flex bg-ugg-dark rounded-md px-3 py-2 text-white shadow focus:outline-none dark:bg-ugg">
       <a href={`${UGG_BASE_URL}/lol/champions/${name}/build`} target="_blank">
         <UggLogoIcon />
       </a>

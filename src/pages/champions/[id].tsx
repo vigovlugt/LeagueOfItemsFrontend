@@ -88,7 +88,7 @@ export default function ChampionPage({ champion, runes, items, totalMatches }) {
         Highest winrate runes
       </h2>
       <div className="flex flex-col lg:flex-row lg:space-x-8 mb-4">
-        <div className="lg:max-w-1/2">
+        <div className="mb-4 lg:mb-0 lg:max-w-1/2">
           <div className="flex space-x-2 w-full overflow-x-auto pb-2">
             {champion.runeStats
               .filter(

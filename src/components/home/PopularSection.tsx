@@ -5,7 +5,7 @@ import { ArrowSmRightIcon } from "@heroicons/react/solid";
 export default function PopularSection({ pageViewDataset }) {
   return (
     <div>
-      <h2 className="font-header text-4xl mb-2">Most viewed items</h2>
+      <h2 className="font-header text-3xl lg:text-4xl mb-2">Most viewed items</h2>
       <div className="flex w-full overflow-x-auto pb-2 space-x-4">
         {pageViewDataset.items
           .map((p) => (
@@ -20,9 +20,9 @@ export default function PopularSection({ pageViewDataset }) {
         </a>
       </Link>
 
-      <div className="flex">
-        <div className="w-1/2 pr-4">
-          <h2 className="font-header text-4xl mb-2">Most viewed runes</h2>
+      <div className="lg:flex">
+        <div className="lg:w-1/2 pr-4">
+          <h2 className="font-header text-3xl lg:text-4xl mb-2">Most viewed runes</h2>
           <div className="flex w-full overflow-x-auto pb-2 space-x-4">
             {pageViewDataset.runes
               .map((p) => (
@@ -38,8 +38,8 @@ export default function PopularSection({ pageViewDataset }) {
           </Link>
         </div>
 
-        <div className="w-1/2 pl-4">
-          <h2 className="font-header text-4xl mb-2">Most viewed champions</h2>
+        <div className="mt-8 lg:mt-0 lg:w-1/2 lg:pl-4">
+          <h2 className="font-header text-3xl lg:text-4xl mb-2">Most viewed champions</h2>
           <div className="flex w-full overflow-x-auto pb-2 space-x-4">
             {pageViewDataset.champions
               .map((p) => (

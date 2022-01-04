@@ -55,7 +55,7 @@ export default function Home({
   playrateBuilds = playrateBuilds.map((b) => new BuildStats(b));
 
   return (
-    <div className="-mt-3">
+    <div className="lg:-mt-3">
       <NextSeo />
 
       <SummaryBar
@@ -66,9 +66,9 @@ export default function Home({
       />
 
       <div
-        className={`${styles.homePageGrid} grid w-full max-w-full pt-6 gap-8 mb-16`}
+        className={`${styles.homePageGrid} w-full max-w-full pt-6 gap-8 mb-16`}
       >
-        <div className="w-full overflow-hidden">
+        <div className="overflow-hidden">
           <CategoryPreviews />
 
           <PopularSection pageViewDataset={pageViewDataset} />
