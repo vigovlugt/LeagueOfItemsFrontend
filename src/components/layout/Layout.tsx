@@ -3,7 +3,13 @@ import SideNavigation from "./SideNavigation";
 import NavBar from "../NavBar";
 import { useState } from "react";
 
-export default function Layout({ children, pageName, pageContainer }) {
+export default function Layout({
+  children,
+  pageName,
+  pageContainer,
+  favouriteType = null,
+  favouriteId = null,
+}) {
   const [sideNavOpen, setSideNavOpen] = useState(false);
 
   return (
@@ -16,6 +22,8 @@ export default function Layout({ children, pageName, pageContainer }) {
         <div className="flex flex-col h-screen bg-gray-100 dark:bg-darker flex-shrink flex-grow min-w-0">
           <NavBar
             title={pageName || ""}
+            favouriteType={favouriteType}
+            favouriteId={favouriteId}
             onClickMenu={() => setSideNavOpen(true)}
           />
           <div

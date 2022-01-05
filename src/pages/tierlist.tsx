@@ -2,18 +2,20 @@ import ItemApi from "../api/ItemApi";
 import { useMemo } from "react";
 import { useTable, useSortBy } from "react-table";
 import Table from "../components/table/Table";
-import ItemStats from "../models/items/ItemStats";
 import { useRouter } from "next/router";
 import { pickrate, winrate, winrateClass } from "../utils/format";
 import { NextSeo } from "next-seo";
 import MatchApi from "../api/MatchApi";
 import HelpHover from "../components/HelpHover";
-import {ITEM_PICKRATE_HELPER_TEXT, ITEM_WINRATE_HELPER_TEXT} from "../constants/constants";
+import {
+  ITEM_PICKRATE_HELPER_TEXT,
+  ITEM_WINRATE_HELPER_TEXT,
+} from "../constants/constants";
 
 export default function Tierlist({ items, totalMatches }) {
   const router = useRouter();
 
-  const data = useMemo(() => items.map((i) => new ItemStats(i)), [items]);
+  const data = useMemo(() => items, [items]);
 
   const columns = useMemo(
     () => [
@@ -38,7 +40,12 @@ export default function Tierlist({ items, totalMatches }) {
         ),
       },
       {
-        Header: () => <>Winrate<HelpHover text={ITEM_WINRATE_HELPER_TEXT}/></>,
+        Header: () => (
+          <>
+            Winrate
+            <HelpHover text={ITEM_WINRATE_HELPER_TEXT} />
+          </>
+        ),
         headerClass: "text-right",
         cellClass: "text-right",
         Cell: ({
@@ -57,7 +64,12 @@ export default function Tierlist({ items, totalMatches }) {
         id: "winrate",
       },
       {
-        Header: () => <>Pickrate<HelpHover text={ITEM_PICKRATE_HELPER_TEXT}/></>,
+        Header: () => (
+          <>
+            Pickrate
+            <HelpHover text={ITEM_PICKRATE_HELPER_TEXT} />
+          </>
+        ),
         headerClass: "text-right",
         cellClass: "text-right",
         Cell: ({
@@ -73,7 +85,7 @@ export default function Tierlist({ items, totalMatches }) {
         Header: "Champions",
         headerClass: "text-right",
         cellClass: "text-right",
-        accessor: (original) => original.championStats.length,
+        accessor: (original) => original.champions,
         id: "champions",
       },
       {
@@ -117,7 +129,15 @@ export default function Tierlist({ items, totalMatches }) {
 }
 
 export async function getStaticProps(context) {
-  const items = ItemApi.getAllItems();
+  const items = ItemApi.getAllItems().map(
+    ({ id, name, matches, wins, championStats }) => ({
+      id,
+      name,
+      matches,
+      wins,
+      champions: championStats.length,
+    })
+  );
 
   const totalMatches = MatchApi.getTotalMatches();
 

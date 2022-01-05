@@ -12,11 +12,12 @@ export default function RuneTierlist({ runes, totalMatches }) {
   const router = useRouter();
 
   const data = useMemo(
-    () => runes.map((r) => new RuneStats(r)).filter((r) => r.isKeystone()),
+    () => runes.filter((r) => RuneStats.isKeystone(r)),
     [runes]
   );
+
   const data2 = useMemo(
-    () => runes.map((r) => new RuneStats(r)).filter((r) => !r.isKeystone()),
+    () => runes.filter((r) => !RuneStats.isKeystone(r)),
     [runes]
   );
 
@@ -78,7 +79,7 @@ export default function RuneTierlist({ runes, totalMatches }) {
         Header: "Champions",
         headerClass: "text-right",
         cellClass: "text-right",
-        accessor: (original) => original.championStats.length,
+        accessor: (original) => original.champions,
         id: "champions",
       },
       {
@@ -145,7 +146,16 @@ export default function RuneTierlist({ runes, totalMatches }) {
 }
 
 export async function getStaticProps(context) {
-  const runes = RuneApi.getAllRunes();
+  const runes = RuneApi.getAllRunes().map(
+    ({ id, name, matches, wins, championStats, tier }) => ({
+      id,
+      name,
+      matches,
+      wins,
+      tier,
+      champions: championStats.length,
+    })
+  );
 
   const totalMatches = MatchApi.getTotalMatches();
 

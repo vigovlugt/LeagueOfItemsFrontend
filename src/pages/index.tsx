@@ -32,6 +32,7 @@ import RuneApi from "../api/RuneApi";
 import RuneStats from "../models/runes/RuneStats";
 import PatchSection from "../components/home/PatchSection";
 import PatchScheduleApi from "../api/PatchScheduleApi";
+import FavouritesSection from "../components/home/FavouritesSection";
 
 export default function Home({
   totalMatches = 0,
@@ -72,6 +73,8 @@ export default function Home({
           <CategoryPreviews />
 
           <PopularSection pageViewDataset={pageViewDataset} />
+
+          <FavouritesSection />
 
           <PatchSection
             dataset={dataset}

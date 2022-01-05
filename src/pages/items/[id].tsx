@@ -178,3 +178,5 @@ export async function getStaticProps({ params }) {
 }
 
 ItemPage.pageName = ({ item }) => item.name;
+ItemPage.favouriteType = () => "ITEM";
+ItemPage.favouriteId = ({item}) => item.id;
