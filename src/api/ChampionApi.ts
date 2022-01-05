@@ -95,4 +95,17 @@ export default class ChampionApi {
         previousTotalMatches: champ.previousMatches,
       }));
   }
+
+  static getMatchesByChampion() {
+    return this.getAllChampions().reduce(
+      (agg, c) => ({ ...agg, [c.id]: c.matches }),
+      {}
+    );
+  }
+  static getOrderMatchesByChampion() {
+    return this.getAllChampions().reduce(
+      (agg, c) => ({ ...agg, [c.id]: c.orderStats.map(s => s.matches) }),
+      {}
+    );
+  }
 }

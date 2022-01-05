@@ -191,7 +191,7 @@ const DifferenceCard = ({
       <div className="relative h-32 w-32 flex justify-center items-center rounded-t overflow-hidden">
         {champion && <ChampionGridCell id={champion.id} />}
         {RoleIcon && (
-          <RoleIcon className="absolute right-0 bottom-0 w-11 pointer-events-none bg-gray-800 pt-[4px] pl-[4px] rounded-tl-lg" />
+          <RoleIcon className="absolute right-0 bottom-0 w-11 pointer-events-none bg-gray-800 pt-[2px] pl-[2px] rounded-tl-lg rounded-tr-lg" />
         )}
         {item && <ItemGridCell id={item.id} />}
         {rune && (

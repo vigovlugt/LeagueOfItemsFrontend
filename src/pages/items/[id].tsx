@@ -10,9 +10,18 @@ import PageHeader from "../../components/PageHeader";
 import MatchApi from "../../api/MatchApi";
 import usePageView from "../../hooks/usePageView";
 import HelpHover from "../../components/HelpHover";
-import {ITEM_PICKRATE_HELPER_TEXT, ITEM_WINRATE_HELPER_TEXT} from "../../constants/constants";
+import {
+  ITEM_PICKRATE_HELPER_TEXT,
+  ITEM_WINRATE_HELPER_TEXT,
+} from "../../constants/constants";
+import ChampionApi from "../../api/ChampionApi";
 
-export default function ItemPage({ item, totalMatches }) {
+export default function ItemPage({
+  item,
+  totalMatches,
+  matchesByChampion,
+  orderMatchesByChampion,
+}) {
   item = new ItemStats(item);
 
   const [modalIsOpen, setModalOpen] = useState(false);
@@ -42,7 +51,8 @@ export default function ItemPage({ item, totalMatches }) {
               <span className={winrateClass(item.wins, item.matches)}>
                 {winrate(item.wins, item.matches)}
               </span>{" "}
-              Winrate<HelpHover text={ITEM_WINRATE_HELPER_TEXT}/>
+              Winrate
+              <HelpHover text={ITEM_WINRATE_HELPER_TEXT} />
             </p>
             {/*<p className="text-sm text-gray-500">*/}
             {/*  <span>{winrate(item.previousWins, item.previousMatches)}</span>{" "}*/}
@@ -53,7 +63,8 @@ export default function ItemPage({ item, totalMatches }) {
             <span className="text-gray-900 dark:text-white">
               {pickrate(item.matches, totalMatches)}
             </span>{" "}
-            Pickrate<HelpHover text={ITEM_PICKRATE_HELPER_TEXT}/>
+            Pickrate
+            <HelpHover text={ITEM_PICKRATE_HELPER_TEXT} />
           </div>
           <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
             <span className="text-gray-900 dark:text-white">
@@ -77,7 +88,7 @@ export default function ItemPage({ item, totalMatches }) {
                 key={championStats.championId}
                 type={"champion"}
                 {...championStats}
-                totalMatches={item.matches}
+                totalMatches={matchesByChampion[championStats.championId]}
                 id={championStats.championId}
               />
             ))}
@@ -91,13 +102,17 @@ export default function ItemPage({ item, totalMatches }) {
         </h2>
         <div className="flex space-x-2 w-full overflow-x-auto pb-2">
           {item.championStats
-            .sort((a, b) => b.matches - a.matches)
+            .sort(
+              (a, b) =>
+                b.matches / matchesByChampion[b.championId] -
+                a.matches / matchesByChampion[a.championId]
+            )
             .map((championStats) => (
               <Card
                 key={championStats.championId}
                 type={"champion"}
                 {...championStats}
-                totalMatches={item.matches}
+                totalMatches={matchesByChampion[championStats.championId]}
                 id={championStats.championId}
               />
             ))}
@@ -113,11 +128,20 @@ export default function ItemPage({ item, totalMatches }) {
           className="grid grid-cols-1 grid-flow-row xl:grid-flow-col xl:grid-cols-5 gap-2"
           style={{ gridTemplateRows: "auto auto" }}
         >
-          {item.orderStats.map((stats) => (
+          {item.orderStats.map((stats, i) => (
             <StatsByOrder
               key={Math.random()}
               totalMatches={item.matches}
               orderStats={stats}
+              orderMatchesByChampion={Object.keys(
+                orderMatchesByChampion
+              ).reduce(
+                (agg, key) => ({
+                  ...agg,
+                  [key]: orderMatchesByChampion[key][i],
+                }),
+                {}
+              )}
             />
           ))}
         </div>
@@ -140,10 +164,15 @@ export async function getStaticProps({ params }) {
 
   const totalMatches = MatchApi.getTotalMatches();
 
+  const matchesByChampion = ChampionApi.getMatchesByChampion();
+  const orderMatchesByChampion = ChampionApi.getOrderMatchesByChampion();
+
   return {
     props: {
       item,
       totalMatches,
+      matchesByChampion,
+      orderMatchesByChampion,
     },
   };
 }
