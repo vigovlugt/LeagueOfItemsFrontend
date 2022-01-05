@@ -28,6 +28,13 @@ export default function App({ Component, pageProps }) {
       ? Component.pageName(pageProps)
       : Component.pageName;
 
+  const favouriteType = Component.favouriteType
+    ? Component.favouriteType(pageProps)
+    : null;
+  const favouriteId = Component.favouriteId
+    ? Component.favouriteId(pageProps)
+    : null;
+
   return (
     <ThemeProvider attribute="class" defaultTheme="dark">
       <DefaultSeo
@@ -35,7 +42,12 @@ export default function App({ Component, pageProps }) {
         defaultTitle="League of Items"
         description="League of Items analyses U.GG data to provide you with an overview of the best League of Legends Items and Runes."
       />
-      <Layout pageName={pageName} pageContainer={pageContainer}>
+      <Layout
+        pageName={pageName}
+        pageContainer={pageContainer}
+        favouriteType={favouriteType}
+        favouriteId={favouriteId}
+      >
         <Component {...pageProps} />
       </Layout>
     </ThemeProvider>

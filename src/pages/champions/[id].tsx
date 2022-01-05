@@ -230,3 +230,5 @@ export async function getStaticProps({ params }) {
 }
 
 ChampionPage.pageName = ({champion}) => champion.name;
+ChampionPage.favouriteType = () => "CHAMPION";
+ChampionPage.favouriteId = ({champion}) => champion.id;

@@ -1,11 +1,8 @@
 import { NextSeo } from "next-seo";
 import ChampionApi from "../../api/ChampionApi";
 import ChampionGridCell from "../../components/champions/ChampionGridCell";
-import ChampionStats from "../../models/champions/ChampionStats";
 
 export default function ChampionIndex({ champions }) {
-  champions = champions.map((i) => new ChampionStats(i));
-
   return (
     <div>
       <NextSeo
@@ -24,7 +21,7 @@ export default function ChampionIndex({ champions }) {
 }
 
 export async function getStaticProps(context) {
-  const champions = ChampionApi.getAllChampions();
+  const champions = ChampionApi.getAllChampions().map(({ id }) => ({ id }));
 
   return {
     props: {

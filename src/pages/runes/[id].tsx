@@ -129,3 +129,5 @@ export async function getStaticProps({ params }) {
 }
 
 RunePage.pageName = ({rune}) => rune.name;
+RunePage.favouriteType = () => "RUNE";
+RunePage.favouriteId = ({rune}) => rune.id;

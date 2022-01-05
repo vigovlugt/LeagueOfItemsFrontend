@@ -6,10 +6,8 @@ import { NextSeo } from "next-seo";
 
 export default function RuneIndex({ runes }) {
   const { keystones, normalRunes } = useMemo(() => {
-    runes = runes.map((i) => new RuneStats(i));
-
-    const keystones = runes.filter((i) => i.isKeystone());
-    const normalRunes = runes.filter((i) => !i.isKeystone());
+    const keystones = runes.filter((r) => RuneStats.isKeystone(r));
+    const normalRunes = runes.filter((r) => !RuneStats.isKeystone(r));
 
     return { keystones, normalRunes };
   }, [runes]);
@@ -31,7 +29,12 @@ export default function RuneIndex({ runes }) {
       <h2 className="font-header text-4xl mb-2">Runes</h2>
       <div className="flex flex-wrap">
         {normalRunes.map((i) => (
-          <RuneGridCell {...i} key={i.id} className="mr-[6px] mb-[6px]" size="sm" />
+          <RuneGridCell
+            {...i}
+            key={i.id}
+            className="mr-[6px] mb-[6px]"
+            size="sm"
+          />
         ))}
       </div>
     </div>
@@ -39,7 +42,7 @@ export default function RuneIndex({ runes }) {
 }
 
 export async function getStaticProps(context) {
-  const runes = RuneApi.getAllRunes();
+  const runes = RuneApi.getAllRunes().map(({ id, tier }) => ({ id, tier }));
 
   return {
     props: {

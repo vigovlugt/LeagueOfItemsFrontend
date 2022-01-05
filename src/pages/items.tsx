@@ -6,10 +6,8 @@ import { NextSeo } from "next-seo";
 
 export default function Items({ items }) {
   const { mythic, legendary } = useMemo(() => {
-    items = items.map((i) => new ItemStats(i));
-
-    const mythic = items.filter((i) => i.isMythic());
-    const legendary = items.filter((i) => !i.isMythic());
+    const mythic = items.filter((i) => ItemStats.isMythic(i));
+    const legendary = items.filter((i) => !ItemStats.isMythic(i));
 
     return { mythic, legendary };
   }, [items]);
@@ -36,7 +34,10 @@ export default function Items({ items }) {
 }
 
 export async function getStaticProps(context) {
-  const items = ItemApi.getAllItems();
+  const items = ItemApi.getAllItems().map(({ id, description }) => ({
+    id,
+    description,
+  }));
 
   return {
     props: {

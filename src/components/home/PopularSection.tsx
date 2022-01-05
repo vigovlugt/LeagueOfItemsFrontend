@@ -38,7 +38,7 @@ export default function PopularSection({ pageViewDataset }) {
           </Link>
         </div>
 
-        <div className="mt-8 lg:mt-0 lg:w-1/2 lg:pl-4">
+        <div className="mt-8 lg:mt-0 lg:w-1/2 lg:pl-4 mb-8">
           <h2 className="font-header text-3xl lg:text-4xl mb-2">Most viewed champions</h2>
           <div className="flex w-full overflow-x-auto pb-2 space-x-4">
             {pageViewDataset.champions

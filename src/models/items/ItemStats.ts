@@ -14,17 +14,17 @@ export default class ItemStats {
   public orderStats: ItemOrderStats[];
 
   constructor({
-                id,
-                name,
-                description,
-                plaintext,
-                wins,
-                matches,
-                previousWins,
-                previousMatches,
-                championStats,
-                orderStats,
-              }) {
+    id,
+    name,
+    description,
+    plaintext,
+    wins,
+    matches,
+    previousWins,
+    previousMatches,
+    championStats,
+    orderStats,
+  }) {
     this.id = id;
     this.name = name;
     this.description = description;
@@ -38,6 +38,10 @@ export default class ItemStats {
   }
 
   isMythic() {
-    return this.description.includes("rarityMythic");
+    return ItemStats.isMythic(this);
+  }
+
+  static isMythic(item) {
+    return item.description.includes("rarityMythic");
   }
 }
