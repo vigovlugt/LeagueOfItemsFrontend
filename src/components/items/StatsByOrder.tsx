@@ -10,6 +10,7 @@ export default function StatsByOrder({
   orderStats,
   totalMatches,
   type = "champion",
+  orderMatchesByChampion = null,
 }) {
   const router = useRouter();
 
@@ -50,7 +51,10 @@ export default function StatsByOrder({
             original: { wins, matches },
           },
         }) => (
-          <div className={`${winrateClass(wins, matches)} text-right w-full`} title={wins}>
+          <div
+            className={`${winrateClass(wins, matches)} text-right w-full`}
+            title={wins}
+          >
             {winrate(wins, matches)}
           </div>
         ),
@@ -64,14 +68,26 @@ export default function StatsByOrder({
         Header: "Pickrate",
         headerClass: "text-right",
         cellClass: "text-right",
-        accessor: "matches",
+        accessor: "pickrate",
+        sortType: orderMatchesByChampion
+          ? (rowA, rowB) =>
+              rowA.original.matches /
+                orderMatchesByChampion[rowA.original.championId] -
+              rowB.original.matches /
+                orderMatchesByChampion[rowB.original.championId]
+          : (rowA, rowB) => rowA.original.matches - rowB.original.matches,
         Cell: ({
-                 row: {
-                   original: { matches },
-                 },
-               }) => (
+          row: {
+            original: { matches, championId },
+          },
+        }) => (
           <div className="text-right w-full" title={matches}>
-            {pickrate(matches, orderStats.matches)}
+            {pickrate(
+              matches,
+              orderMatchesByChampion
+                ? orderMatchesByChampion[championId]
+                : orderStats.matches
+            )}
           </div>
         ),
       },
@@ -86,7 +102,7 @@ export default function StatsByOrder({
       initialState: {
         sortBy: [
           {
-            id: "winrate",
+            id: "pickrate",
             desc: true,
           },
         ],
@@ -108,20 +124,30 @@ export default function StatsByOrder({
           {nameByOrder[orderStats.order]} item
         </h3>
         <div className="flex justify-around">
-          <p
-            className={`text-center font-bold text-lg ${winrateClass(
-              orderStats.wins,
-              orderStats.matches
-            )}`}
-          >
-            {winrate(orderStats.wins, orderStats.matches)}
-          </p>
-          <p
-            className="text-center font-bold text-lg"
-            title={orderStats.matches}
-          >
-            {pickrate(orderStats.matches, totalMatches)}
-          </p>
+          <span className="text-center">
+            <span className="text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400 whitespace-nowrap block">
+              Winrate
+            </span>
+            <span
+              className={`font-bold text-lg ${winrateClass(
+                orderStats.wins,
+                orderStats.matches
+              )}`}
+            >
+              {winrate(orderStats.wins, orderStats.matches)}
+            </span>
+          </span>
+          <span className="text-center">
+            <span className="text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400 whitespace-nowrap block">
+              Games
+            </span>
+            <span
+              className="text-center font-bold text-lg"
+              title={orderStats.matches}
+            >
+              {pickrate(orderStats.matches, totalMatches)}
+            </span>
+          </span>
         </div>
       </div>
 

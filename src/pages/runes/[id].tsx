@@ -11,8 +11,9 @@ import { NextSeo } from "next-seo";
 import PageHeader from "../../components/PageHeader";
 import MatchApi from "../../api/MatchApi";
 import usePageView from "../../hooks/usePageView";
+import ChampionApi from "../../api/ChampionApi";
 
-export default function RunePage({ rune, totalMatches }) {
+export default function RunePage({ rune, totalMatches, matchesByChampion }) {
   rune = new RuneStats(rune);
 
   usePageView("RUNE", rune.id);
@@ -68,7 +69,7 @@ export default function RunePage({ rune, totalMatches }) {
                 key={championStats.championId}
                 type={"champion"}
                 {...championStats}
-                totalMatches={rune.matches}
+                totalMatches={matchesByChampion[championStats.championId]}
                 id={championStats.championId}
               />
             ))}
@@ -82,13 +83,17 @@ export default function RunePage({ rune, totalMatches }) {
         </h2>
         <div className="flex space-x-2 w-full overflow-x-auto pb-2">
           {rune.championStats
-            .sort((a, b) => b.matches - a.matches)
+            .sort(
+              (a, b) =>
+                b.matches / matchesByChampion[b.championId] -
+                a.matches / matchesByChampion[a.championId]
+            )
             .map((championStats) => (
               <Card
                 key={championStats.championId}
                 type={"champion"}
                 {...championStats}
-                totalMatches={rune.matches}
+                totalMatches={matchesByChampion[championStats.championId]}
                 id={championStats.championId}
               />
             ))}
@@ -112,12 +117,15 @@ export async function getStaticProps({ params }) {
 
   const totalMatches = MatchApi.getTotalMatches();
 
+  const matchesByChampion = ChampionApi.getMatchesByChampion();
+
   return {
     props: {
       rune,
       totalMatches,
+      matchesByChampion,
     },
   };
 }
 
-RunePage.pageName = ({ rune }) => rune.name;
+RunePage.pageName = ({rune}) => rune.name;

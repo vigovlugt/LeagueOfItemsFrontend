@@ -131,6 +131,52 @@ export default function ChampionPage({ champion, runes, items, totalMatches }) {
         </div>
       </div>
 
+      {/* Highest pickrate runes */}
+      <h2 className="text-2xl font-header font-medium mb-1">
+        Highest pickrate runes
+      </h2>
+      <div className="flex flex-col lg:flex-row lg:space-x-8 mb-4">
+        <div className="mb-4 lg:mb-0 lg:max-w-1/2">
+          <div className="flex space-x-2 w-full overflow-x-auto pb-2">
+            {champion.runeStats
+              .filter(
+                (stats) =>
+                  runes.find((rune) => rune.id == stats.runeId).tier === 0
+              )
+              .sort((a, b) => b.matches - a.matches)
+              .map((runeStats) => (
+                <Card
+                  key={runeStats.runeId}
+                  type={"rune"}
+                  {...runeStats}
+                  totalMatches={champion.matches}
+                  id={runeStats.runeId}
+                />
+              ))}
+          </div>
+        </div>
+
+        <div className="flex-1 overflow-auto">
+          <div className="flex space-x-2 w-full overflow-x-auto pb-2">
+            {champion.runeStats
+              .filter(
+                (stats) =>
+                  runes.find((rune) => rune.id == stats.runeId).tier !== 0
+              )
+              .sort((a, b) => b.matches - a.matches)
+              .map((runeStats) => (
+                <Card
+                  key={runeStats.runeId}
+                  type={"rune"}
+                  {...runeStats}
+                  totalMatches={champion.matches}
+                  id={runeStats.runeId}
+                />
+              ))}
+          </div>
+        </div>
+      </div>
+
       {/* Winrate by order */}
       <div>
         <h2 className="text-2xl font-header font-medium mb-1">
