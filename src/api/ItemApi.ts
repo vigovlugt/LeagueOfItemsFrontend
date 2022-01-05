@@ -1,5 +1,5 @@
 import Api from "./DatasetApi";
-import { getPlayrateIncrease, getWinrateIncrease } from "../utils/stats";
+import { getPickrateIncrease, getWinrateIncrease } from "../utils/stats";
 import MatchApi from "./MatchApi";
 
 export default class ItemApi {
@@ -47,8 +47,8 @@ export default class ItemApi {
       .filter((i) => i.matches && i.previousMatches)
       .sort(
         (a, b) =>
-          Math.abs(getPlayrateIncrease(b, matches, previousMatches)) -
-          Math.abs(getPlayrateIncrease(a, matches, previousMatches))
+          Math.abs(getPickrateIncrease(b, matches, previousMatches)) -
+          Math.abs(getPickrateIncrease(a, matches, previousMatches))
       )
       .map(({ id, previousMatches, matches }) => ({
         id,

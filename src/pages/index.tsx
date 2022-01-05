@@ -23,8 +23,8 @@ import {
 } from "../utils/format";
 import ChampionGridCell from "../components/champions/ChampionGridCell";
 import {
-  getPlayrateIncrease,
-  getPlayrateIncreaseFromPlayRate,
+  getPickrateIncrease,
+  getPickrateIncreaseFromPlayRate,
   getWinrateIncrease,
 } from "../utils/stats";
 import { TrendingDownIcon } from "@heroicons/react/solid";
@@ -39,20 +39,20 @@ export default function Home({
   previousChampionMatches = 0,
   pageViewDataset = [],
   winrateBuilds = [],
-  playrateBuilds = [],
+  pickrateBuilds = [],
   winrateChampions = [],
-  playrateChampions = [],
+  pickrateChampions = [],
   winrateItems = [],
-  playrateItems = [],
+  pickrateItems = [],
   winrateRunes,
-  playrateRunes,
-  playrateRoles,
+  pickrateRunes,
+  pickrateRoles,
   nextPatch,
 }) {
   const numberFormatter = new Intl.NumberFormat("us-US");
 
   winrateBuilds = winrateBuilds.map((b) => new BuildStats(b));
-  playrateBuilds = playrateBuilds.map((b) => new BuildStats(b));
+  pickrateBuilds = pickrateBuilds.map((b) => new BuildStats(b));
 
   return (
     <div className="lg:-mt-3">
@@ -76,18 +76,18 @@ export default function Home({
           <PatchSection
             dataset={dataset}
             winrateChampions={winrateChampions}
-            playrateChampions={playrateChampions}
+            pickrateChampions={pickrateChampions}
             championMatches={championMatches}
             previousChampionMatches={previousChampionMatches}
             winrateItems={winrateItems}
-            playrateItems={playrateItems}
+            pickrateItems={pickrateItems}
             winrateRunes={winrateRunes}
-            playrateRunes={playrateRunes}
-            playrateRoles={playrateRoles}
+            pickrateRunes={pickrateRunes}
+            pickrateRoles={pickrateRoles}
           />
         </div>
         <HomeSidebar
-          playrateBuilds={playrateBuilds}
+          pickrateBuilds={pickrateBuilds}
           winrateBuilds={winrateBuilds}
         />
       </div>
@@ -121,7 +121,7 @@ export async function getStaticProps() {
     )
     .slice(0, 10);
 
-  const playrateBuilds = await BuildsApi.getByPlayrate()
+  const pickrateBuilds = await BuildsApi.getByPickrate()
     .filter((b) => !BuildStats.isSmallRune(b, keystones))
     .slice(0, 10);
 
@@ -129,19 +129,19 @@ export async function getStaticProps() {
     0,
     20
   );
-  const playrateChampions =
+  const pickrateChampions =
     ChampionApi.getChampionsByPlayRateDifference().slice(0, 20);
 
-  const playrateRoles = ChampionApi.getChampionRolesByPlayrateIncrease().slice(
+  const pickrateRoles = ChampionApi.getChampionRolesByPickrateIncrease().slice(
     0,
     20
   );
 
   const winrateItems = ItemApi.getByWinRateDifference().slice(0, 20);
-  const playrateItems = ItemApi.getByPlayRateDifference().slice(0, 20);
+  const pickrateItems = ItemApi.getByPlayRateDifference().slice(0, 20);
 
   const winrateRunes = RuneApi.getByWinRateDifference().slice(0, 20);
-  const playrateRunes = RuneApi.getByPlayRateDifference().slice(0, 20);
+  const pickrateRunes = RuneApi.getByPlayRateDifference().slice(0, 20);
 
   const nextPatch = PatchScheduleApi.getNextPatch();
 
@@ -153,17 +153,17 @@ export async function getStaticProps() {
       previousChampionMatches,
       pageViewDataset,
       winrateBuilds,
-      playrateBuilds,
+      pickrateBuilds,
       winrateChampions,
-      playrateChampions,
+      pickrateChampions,
       winrateItems,
-      playrateItems,
+      pickrateItems,
       itemMatches,
       previousItemMatches,
       winrateRunes,
-      playrateRunes,
+      pickrateRunes,
       previousRuneMatches,
-      playrateRoles,
+      pickrateRoles,
       nextPatch,
     },
   };

@@ -1,9 +1,9 @@
 import Api from "./DatasetApi";
-import { getPlayrateIncrease, getWinrateIncrease } from "../utils/stats";
+import { getPickrateIncrease, getWinrateIncrease } from "../utils/stats";
 
 export default class RuneApi {
   static getAllRunes() {
-    return Api.getDataset().runes.filter(r => r.matches);
+    return Api.getDataset().runes.filter((r) => r.matches);
   }
 
   static getRune(id) {
@@ -47,8 +47,8 @@ export default class RuneApi {
       .filter((i) => i.matches && i.previousMatches)
       .sort(
         (a, b) =>
-          Math.abs(getPlayrateIncrease(b, matches, previousMatches)) -
-          Math.abs(getPlayrateIncrease(a, matches, previousMatches))
+          Math.abs(getPickrateIncrease(b, matches, previousMatches)) -
+          Math.abs(getPickrateIncrease(a, matches, previousMatches))
       )
       .map(({ id, previousMatches, matches, tier }) => ({
         id,

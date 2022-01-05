@@ -2,7 +2,7 @@ import ItemGridCell from "../items/ItemGridCell";
 import BuildsTable from "./BuildsTable";
 import RuneGridCell from "../runes/RuneGridCell";
 
-export default function HomeSidebar({ playrateBuilds, winrateBuilds }) {
+export default function HomeSidebar({ pickrateBuilds, winrateBuilds }) {
   return (
     <div className="flex flex-col">
       <h3 className="font-header text-xl mb-1 mt-4">New content</h3>
@@ -18,9 +18,9 @@ export default function HomeSidebar({ playrateBuilds, winrateBuilds }) {
       </div>
 
       <h3 className="font-header mt-4 mb-1 text-xl">
-        Biggest playrate increases
+        Biggest pickrate increases
       </h3>
-      <BuildsTable builds={playrateBuilds} type="pickrate" size="sm" />
+      <BuildsTable builds={pickrateBuilds} type="pickrate" size="sm" />
 
       <h3 className="font-header mt-4 my-1 text-xl">
         Biggest winrate increases
