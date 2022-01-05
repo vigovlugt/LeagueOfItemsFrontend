@@ -2,8 +2,8 @@ import * as path from "path";
 import * as fs from "fs";
 import Api from "./DatasetApi";
 import {
-  getPlayrateIncrease,
-  getPlayrateIncreaseFromPlayRate,
+  getPickrateIncrease,
+  getPickrateIncreaseFromPlayRate,
   getWinrateIncrease,
 } from "../utils/stats";
 
@@ -44,14 +44,14 @@ export default class ChampionApi {
       .sort(
         (a, b) =>
           Math.abs(
-            getPlayrateIncrease(
+            getPickrateIncrease(
               b,
               dataset.championMatches,
               dataset.previousChampionMatches
             )
           ) -
           Math.abs(
-            getPlayrateIncrease(
+            getPickrateIncrease(
               a,
               dataset.championMatches,
               dataset.previousChampionMatches
@@ -65,7 +65,7 @@ export default class ChampionApi {
       }));
   }
 
-  static getChampionRolesByPlayrateIncrease() {
+  static getChampionRolesByPickrateIncrease() {
     const dataset = Api.getDataset();
 
     const roleStats = dataset.champions
@@ -75,12 +75,12 @@ export default class ChampionApi {
     return roleStats
       .sort(
         ([aChampion, aRoleStats], [bChampion, bRoleStats]) =>
-          getPlayrateIncrease(
+          getPickrateIncrease(
             bRoleStats,
             bChampion.matches,
             bChampion.previousMatches
           ) -
-          getPlayrateIncrease(
+          getPickrateIncrease(
             aRoleStats,
             aChampion.matches,
             aChampion.previousMatches
@@ -102,9 +102,10 @@ export default class ChampionApi {
       {}
     );
   }
+
   static getOrderMatchesByChampion() {
     return this.getAllChampions().reduce(
-      (agg, c) => ({ ...agg, [c.id]: c.orderStats.map(s => s.matches) }),
+      (agg, c) => ({ ...agg, [c.id]: c.orderStats.map((s) => s.matches) }),
       {}
     );
   }

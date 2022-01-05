@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getPlayrateIncrease, getWinrateIncrease } from "../../utils/stats";
+import { getPickrateIncrease, getWinrateIncrease } from "../../utils/stats";
 import { TrendingUpIcon } from "@heroicons/react/outline";
 import { ArrowSmRightIcon, TrendingDownIcon } from "@heroicons/react/solid";
 import ChampionGridCell from "../champions/ChampionGridCell";
@@ -18,14 +18,14 @@ import styles from "./PatchSection.module.css";
 export default function PatchSection({
   dataset,
   winrateChampions,
-  playrateChampions,
+  pickrateChampions,
   winrateItems,
-  playrateItems,
+  pickrateItems,
   winrateRunes,
-  playrateRunes,
+  pickrateRunes,
   championMatches,
   previousChampionMatches,
-  playrateRoles,
+  pickrateRoles,
 }) {
   return (
     <div className="rounded p-4 mt-24 bg-white dark:bg-gray-900">
@@ -48,7 +48,9 @@ export default function PatchSection({
             }
           />
           <div className="absolute inset-0 flex flex-col justify-center items-center font-header pointer-events-none text-center">
-            <h2 className="text-4xl mt-8 group-hover:text-white">Patch {dataset.version} overview</h2>
+            <h2 className="text-4xl mt-8 group-hover:text-white">
+              Patch {dataset.version} overview
+            </h2>
             <p className="text-gray-600 dark:text-gray-400 text-sm mt-4 group-hover:text-white">
               Patch notes <ArrowSmRightIcon className="w-6 inline" />
             </p>
@@ -57,16 +59,16 @@ export default function PatchSection({
       </Link>
 
       <PatchEntityChanges
-        playrateData={playrateChampions}
+        pickrateData={pickrateChampions}
         winrateData={winrateChampions}
         matches={championMatches / CHAMPIONS_PER_MATCH}
         previousMatches={previousChampionMatches / CHAMPIONS_PER_MATCH}
-        rolePlayrateData={playrateRoles}
+        rolePickrateData={pickrateRoles}
         type="CHAMPION"
       />
 
       <PatchEntityChanges
-        playrateData={playrateItems}
+        pickrateData={pickrateItems}
         winrateData={winrateItems}
         matches={championMatches / CHAMPIONS_PER_MATCH}
         previousMatches={previousChampionMatches / CHAMPIONS_PER_MATCH}
@@ -74,7 +76,7 @@ export default function PatchSection({
       />
 
       <PatchEntityChanges
-        playrateData={playrateRunes}
+        pickrateData={pickrateRunes}
         winrateData={winrateRunes}
         matches={championMatches / CHAMPIONS_PER_MATCH}
         previousMatches={previousChampionMatches / CHAMPIONS_PER_MATCH}
@@ -85,11 +87,11 @@ export default function PatchSection({
 }
 
 const PatchEntityChanges = ({
-  playrateData,
+  pickrateData,
   winrateData,
   matches,
   previousMatches,
-  rolePlayrateData = [],
+  rolePickrateData = [],
   type,
 }) => {
   const title = {
@@ -104,14 +106,14 @@ const PatchEntityChanges = ({
     <div>
       <h2 className="font-header text-4xl mb-2 mt-8">{title}</h2>
       <h2 className="font-header text-xl lg:text-2xl mb-2">
-        Biggest playrate changes since last patch
+        Biggest pickrate changes since last patch
       </h2>
       <div className="flex space-x-2 w-full overflow-x-auto pb-2">
-        {playrateData.map((d) => (
+        {pickrateData.map((d) => (
           <DifferenceCard
             key={d.id}
             {...{ [dataKey]: d }}
-            type="playrate"
+            type="pickrate"
             matches={matches}
             previousMatches={previousMatches}
           />
@@ -125,20 +127,20 @@ const PatchEntityChanges = ({
           <DifferenceCard key={d.id} {...{ [dataKey]: d }} />
         ))}
       </div>
-      {rolePlayrateData.length > 0 && (
+      {rolePickrateData.length > 0 && (
         <>
           <h2 className="font-header text-xl lg:text-2xl mt-4 mb-2">
-            Role playrate increases since last patch
+            Role pickrate increases since last patch
           </h2>
           <div className="flex space-x-2 w-full overflow-x-auto pb-2">
-            {rolePlayrateData.map((d) => {
+            {rolePickrateData.map((d) => {
               const data = { ...d, id: d.championId };
 
               return (
                 <DifferenceCard
                   key={d.championId + "-" + d.role}
                   champion={data}
-                  type="playrate"
+                  type="pickrate"
                   matches={d.totalMatches}
                   previousMatches={d.previousTotalMatches}
                 />
@@ -166,7 +168,7 @@ const DifferenceCard = ({
 
   const increase = isWinrate
     ? getWinrateIncrease(entity)
-    : getPlayrateIncrease(entity, matches, previousMatches);
+    : getPickrateIncrease(entity, matches, previousMatches);
 
   const current = isWinrate
     ? entity.wins / entity.matches

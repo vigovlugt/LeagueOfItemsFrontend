@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import Table from "../table/Table";
 import { useRouter } from "next/router";
 import { useTable, useSortBy, usePagination } from "react-table";
-import { getPlayrateIncrease, getWinrateIncrease } from "../../utils/stats";
+import { getPickrateIncrease, getWinrateIncrease } from "../../utils/stats";
 import { percentage, winrate, winrateClass } from "../../utils/format";
 import {
   ArrowSmRightIcon,
@@ -29,11 +29,11 @@ export default function BuildsTable({
     {
       Header: isWinrate ? "WR increase" : "PR increase",
       headerClass: "text-right",
-      id: isWinrate ? "winrate" : "playrate",
+      id: isWinrate ? "winrate" : "pickrate",
       accessor: (row) =>
         isWinrate
           ? getWinrateIncrease(row)
-          : getPlayrateIncrease(
+          : getPickrateIncrease(
               row,
               row.totalMatches,
               row.previousTotalMatches
@@ -41,7 +41,7 @@ export default function BuildsTable({
       Cell: ({ row }) => {
         const increase = isWinrate
           ? getWinrateIncrease(row.original)
-          : getPlayrateIncrease(
+          : getPickrateIncrease(
               row.original,
               row.original.totalMatches,
               row.original.previousTotalMatches
@@ -68,7 +68,7 @@ export default function BuildsTable({
       sortType: "basic",
     },
     {
-      Header: isWinrate ? "Winrate" : "Playrate",
+      Header: isWinrate ? "Winrate" : "Pickrate",
       headerClass: "text-right",
       accessor: (row) =>
         isWinrate ? row.wins / row.matches : row.matches / row.totalMatches,
@@ -190,7 +190,7 @@ export default function BuildsTable({
   );
 
   useEffect(() => {
-    const id = router.query.sortby?.toString() ?? "playrate";
+    const id = router.query.sortby?.toString() ?? "pickrate";
 
     if (table.setSortBy) {
       table.setSortBy([{ id, desc: true }]);
@@ -211,7 +211,7 @@ export default function BuildsTable({
       <Table table={table} onClick={gotoBuild} size={size} />
       {!isFull && (
         <Link
-          href={`/builds?sortby=${isPickrate ? "playrate" : "winrate"}`}
+          href={`/builds?sortby=${isPickrate ? "pickrate" : "winrate"}`}
           passHref
         >
           <a className="flex justify-center items-center w-full rounded-b p-2 text-lg shadow bg-gray-50 dark:text-gray-50 dark:bg-gray-800">
