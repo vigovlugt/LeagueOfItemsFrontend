@@ -1,6 +1,7 @@
 import ItemGridCell from "../items/ItemGridCell";
 import BuildsTable from "./BuildsTable";
 import RuneGridCell from "../runes/RuneGridCell";
+import HelpHover from "../HelpHover";
 
 export default function HomeSidebar({ pickrateBuilds, winrateBuilds }) {
   return (
@@ -23,7 +24,7 @@ export default function HomeSidebar({ pickrateBuilds, winrateBuilds }) {
       <BuildsTable builds={pickrateBuilds} type="pickrate" size="sm" />
 
       <h3 className="font-header mt-4 my-1 text-xl">
-        Biggest winrate increases
+        Biggest winrate increases<HelpHover text="500 Match minimum"/>
       </h3>
       <BuildsTable builds={winrateBuilds} size="sm" type="winrate" />
     </div>

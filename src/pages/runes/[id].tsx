@@ -40,7 +40,7 @@ export default function RunePage({ rune, totalMatches, matchesByChampion }) {
           </div>
           <div
             className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-300 dark:bg-gray-800"
-            title={rune.matches}
+            title={rune.matches + " matches"}
           >
             <span className="text-gray-900 dark:text-white">
               {pickrate(rune.matches, totalMatches)}
@@ -128,6 +128,6 @@ export async function getStaticProps({ params }) {
   };
 }
 
-RunePage.pageName = ({rune}) => rune.name;
+RunePage.pageName = ({ rune }) => rune.name;
 RunePage.favouriteType = () => "RUNE";
-RunePage.favouriteId = ({rune}) => rune.id;
+RunePage.favouriteId = ({ rune }) => rune.id;

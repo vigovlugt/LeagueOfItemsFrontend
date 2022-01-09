@@ -1,11 +1,7 @@
 import ItemApi from "../api/ItemApi";
 import { NextSeo } from "next-seo";
 import BuildsApi from "../api/BuildsApi";
-import GridCell from "../components/GridCell";
-import Link from "next/link";
-import dataset from "../../data/dataset.json";
 import MatchApi from "../api/MatchApi";
-import { TrendingUpIcon } from "@heroicons/react/outline";
 import HomeSidebar from "../components/home/HomeSidebar";
 import BuildStats from "../models/builds/BuildStats";
 import SummaryBar from "../components/home/SummaryBar";
@@ -14,25 +10,14 @@ import PopularSection from "../components/home/PopularSection";
 import PageViewApi from "../api/PageViewApi";
 import styles from "../styles/pages/index.module.css";
 import ChampionApi from "../api/ChampionApi";
-import {
-  percentage,
-  pickrate,
-  winrate,
-  winrateClass,
-  winrateIncrease,
-} from "../utils/format";
-import ChampionGridCell from "../components/champions/ChampionGridCell";
-import {
-  getPickrateIncrease,
-  getPickrateIncreaseFromPlayRate,
-  getWinrateIncrease,
-} from "../utils/stats";
-import { TrendingDownIcon } from "@heroicons/react/solid";
 import RuneApi from "../api/RuneApi";
 import RuneStats from "../models/runes/RuneStats";
-import PatchSection from "../components/home/PatchSection";
+import PatchOverview from "../components/home/PatchOverview";
 import PatchScheduleApi from "../api/PatchScheduleApi";
 import FavouritesSection from "../components/home/FavouritesSection";
+import DatasetApi from "../api/DatasetApi";
+import PatchRundown from "../components/home/PatchRundown";
+import PatchNotesApi from "../api/PatchNotesApi";
 
 export default function Home({
   totalMatches = 0,
@@ -49,6 +34,9 @@ export default function Home({
   pickrateRunes,
   pickrateRoles,
   nextPatch,
+  patch,
+  patchNotes,
+  patchNotesStats,
 }) {
   const numberFormatter = new Intl.NumberFormat("us-US");
 
@@ -60,7 +48,7 @@ export default function Home({
       <NextSeo />
 
       <SummaryBar
-        dataset={dataset}
+        patch={patch}
         totalMatches={totalMatches}
         numberFormatter={numberFormatter}
         nextPatch={nextPatch}
@@ -76,8 +64,8 @@ export default function Home({
 
           <FavouritesSection />
 
-          <PatchSection
-            dataset={dataset}
+          <PatchOverview
+            patch={patch}
             winrateChampions={winrateChampions}
             pickrateChampions={pickrateChampions}
             championMatches={championMatches}
@@ -87,6 +75,15 @@ export default function Home({
             winrateRunes={winrateRunes}
             pickrateRunes={pickrateRunes}
             pickrateRoles={pickrateRoles}
+            patchNotes={patchNotes}
+          />
+
+          <PatchRundown
+            patch={patch}
+            patchNotes={patchNotes}
+            patchNotesStats={patchNotesStats}
+            championMatches={championMatches}
+            previousChampionMatches={previousChampionMatches}
           />
         </div>
         <HomeSidebar
@@ -113,9 +110,9 @@ export async function getStaticProps() {
   const previousItemMatches = ItemApi.getPreviousTotalMatches();
   const previousRuneMatches = RuneApi.getPreviousTotalMatches();
 
-  const pageViewDataset = await PageViewApi.getDataset();
+  const pageViewDataset = PageViewApi.getDataset();
 
-  const winrateBuilds = await BuildsApi.getByWinrate()
+  const winrateBuilds = BuildsApi.getByWinrate()
     .filter(
       (b) =>
         !BuildStats.isSmallRune(b, keystones) &&
@@ -124,7 +121,7 @@ export async function getStaticProps() {
     )
     .slice(0, 10);
 
-  const pickrateBuilds = await BuildsApi.getByPickrate()
+  const pickrateBuilds = BuildsApi.getByPickrate()
     .filter((b) => !BuildStats.isSmallRune(b, keystones))
     .slice(0, 10);
 
@@ -147,6 +144,9 @@ export async function getStaticProps() {
   const pickrateRunes = RuneApi.getByPlayRateDifference().slice(0, 20);
 
   const nextPatch = PatchScheduleApi.getNextPatch();
+  const patch = DatasetApi.getPatch();
+  const patchNotes = PatchNotesApi.getPatchNotes();
+  const patchNotesStats = PatchNotesApi.getPatchNotesStats();
 
   return {
     props: {
@@ -168,6 +168,9 @@ export async function getStaticProps() {
       previousRuneMatches,
       pickrateRoles,
       nextPatch,
+      patch,
+      patchNotes,
+      patchNotesStats,
     },
   };
 }

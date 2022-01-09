@@ -61,7 +61,7 @@ export default function SearchBar({ onSubmit = null }) {
     setResults(results);
   }, [query, dataset]);
 
-  const outerClickRef = useOuterClick((e) => {
+  const outerClickRef = useOuterClick(() => {
     setIsFocussed(false);
   });
 

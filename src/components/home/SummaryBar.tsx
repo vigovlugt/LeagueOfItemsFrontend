@@ -2,7 +2,7 @@ import dataset from "../../../data/dataset.json";
 import { addDays, differenceInCalendarDays, formatDistance } from "date-fns";
 
 export default function SummaryBar({
-  dataset,
+  patch,
   numberFormatter,
   totalMatches,
   nextPatch,
@@ -13,8 +13,8 @@ export default function SummaryBar({
   );
 
   let daysText = `in ${daysToNextPatch} days`;
-  if(daysToNextPatch == 0) daysText = "today";
-  if(daysToNextPatch == 1) daysText = "tomorrow";
+  if (daysToNextPatch == 0) daysText = "today";
+  if (daysToNextPatch == 1) daysText = "tomorrow";
 
   return (
     <div className="flex md:bg-white rounded py-6 text-lg md:shadow dark:text-gray-50 dark:bg-gray-900">
@@ -23,12 +23,11 @@ export default function SummaryBar({
           Current patch
         </h2>
         <p className="mb-2 text-4xl leading-8 font-extrabold tracking-tight text-gray-900 dark:text-gray-50">
-          {dataset.version}
+          {patch}
         </p>
         {daysToNextPatch >= 0 && (
-          <p className="text-xs text-gray-600 font-semibold tracking-wide uppercase dark:text-gray-400">
-            Next patch{" "}
-            {daysText}
+          <p className="text-xs text-gray-500 font-semibold tracking-wide uppercase">
+            Next patch {daysText}
           </p>
         )}
       </div>
@@ -47,8 +46,11 @@ export default function SummaryBar({
         <h2 className="text-base text-gray-600 font-semibold tracking-wide uppercase dark:text-gray-400">
           Matches analyzed
         </h2>
-        <p className="mt-1 text-4xl leading-8 font-extrabold tracking-tight text-gray-900 dark:text-gray-50">
+        <p className="mb-2 text-4xl leading-8 font-extrabold tracking-tight text-gray-900 dark:text-gray-50">
           {numberFormatter.format(totalMatches)}
+        </p>
+        <p className="text-xs text-gray-500 font-semibold tracking-wide uppercase">
+          World, Platinum+
         </p>
       </div>
     </div>

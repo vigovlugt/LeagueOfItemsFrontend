@@ -13,10 +13,10 @@ import JungleIcon from "../icons/roles/JungleIcon";
 import MidIcon from "../icons/roles/MidIcon";
 import BottomIcon from "../icons/roles/BottomIcon";
 import SupportIcon from "../icons/roles/SupportIcon";
-import styles from "./PatchSection.module.css";
+import styles from "./PatchOverview.module.css";
 
-export default function PatchSection({
-  dataset,
+export default function PatchOverview({
+  patch,
   winrateChampions,
   pickrateChampions,
   winrateItems,
@@ -26,11 +26,12 @@ export default function PatchSection({
   championMatches,
   previousChampionMatches,
   pickrateRoles,
+  patchNotes,
 }) {
   return (
     <div className="rounded p-4 mt-24 bg-white dark:bg-gray-900">
       <Link
-        href={`https://www.leagueoflegends.com/en-us/news/game-updates/patch-${dataset.version.replace(
+        href={`https://www.leagueoflegends.com/en-us/news/game-updates/patch-${patch.replace(
           ".",
           "-"
         )}-notes/`}
@@ -41,15 +42,16 @@ export default function PatchSection({
           className="flex justify-center items-center w-full bg-white rounded-lg p-8 py-24 sm:py-32 shadow mb-8 dark:text-gray-50 dark:bg-dark relative overflow-hidden group"
         >
           <img
-            src="/images/patches/patch-banner.webp"
+            src={patchNotes.bannerImageUrl}
             alt={""}
+            loading="lazy"
             className={
               "absolute inset-0 w-full h-full " + styles.patchOverviewImage
             }
           />
           <div className="absolute inset-0 flex flex-col justify-center items-center font-header pointer-events-none text-center">
             <h2 className="text-4xl mt-8 group-hover:text-white">
-              Patch {dataset.version} overview
+              Patch {patch} overview
             </h2>
             <p className="text-gray-600 dark:text-gray-400 text-sm mt-4 group-hover:text-white">
               Patch notes <ArrowSmRightIcon className="w-6 inline" />
@@ -160,7 +162,6 @@ const DifferenceCard = ({
   type = "winrate",
   matches = 0,
   previousMatches = 0,
-  role = null,
 }) => {
   const isWinrate = type === "winrate";
 

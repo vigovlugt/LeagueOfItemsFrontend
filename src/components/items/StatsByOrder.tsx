@@ -81,7 +81,7 @@ export default function StatsByOrder({
             original: { matches, championId },
           },
         }) => (
-          <div className="text-right w-full" title={matches}>
+          <div className="text-right w-full" title={matches + " matches"}>
             {pickrate(
               matches,
               orderMatchesByChampion
@@ -143,7 +143,7 @@ export default function StatsByOrder({
             </span>
             <span
               className="text-center font-bold text-lg"
-              title={orderStats.matches}
+              title={orderStats.matches + "  matches"}
             >
               {pickrate(orderStats.matches, totalMatches)}
             </span>
