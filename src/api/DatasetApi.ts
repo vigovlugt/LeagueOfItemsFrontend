@@ -17,6 +17,10 @@ class DatasetApi {
 
     return json;
   }
+
+  getPatch() {
+    return this.getDataset().version;
+  }
 }
 
 const api = new DatasetApi();

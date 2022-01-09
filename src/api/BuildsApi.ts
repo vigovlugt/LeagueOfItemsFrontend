@@ -4,11 +4,17 @@ import {
   getPickrateIncreaseFromPlayRate,
   getWinrateIncrease,
 } from "../utils/stats";
-import BuildStats from "../models/builds/BuildStats";
+import BuildStats, {IBuildStats} from "../models/builds/BuildStats";
 
 export default class BuildsApi {
-  static getAllBuilds() {
-    return Api.getDataset()
+  private static _builds;
+
+  static getAllBuilds(): IBuildStats[] {
+    if(BuildsApi._builds){
+      return BuildsApi._builds;
+    }
+
+    const builds = Api.getDataset()
       .champions.map((c) => {
         return [
           ...c.runeStats.map((s) =>
@@ -20,6 +26,9 @@ export default class BuildsApi {
         ];
       })
       .flat();
+
+    BuildsApi._builds = builds;
+    return builds;
   }
 
   static getByWinrate() {

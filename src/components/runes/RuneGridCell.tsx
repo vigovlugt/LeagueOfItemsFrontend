@@ -12,6 +12,7 @@ export default function RuneGridCell({ id, size = "md", className = "" }) {
             minWidth: `${size == "md" ? 128 : 64}px`,
             minHeight: `${size == "md" ? 128 : 64}px`,
           }}
+          loading="lazy"
           alt="Rune image"
         />
       </a>

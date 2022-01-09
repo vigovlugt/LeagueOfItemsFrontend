@@ -17,6 +17,9 @@ module.exports = {
       body: ["Open Sans"],
     },
     extend: {
+      screens: {
+        "3xl": "1700px",
+      },
       colors: {
         gray: colors.neutral,
         winrate: {
@@ -27,6 +30,11 @@ module.exports = {
           good: "#7ea4f4",
           great: "#3273fa",
           volxd: "#ff9b00",
+        },
+        patchnotes: {
+          updated: "#0BC6E3",
+          new: "#4EA64E",
+          removed: "#BF302A",
         },
         "ugg-dark": "#0B0B23",
         ugg: "#191937",

@@ -3,7 +3,25 @@ import ChampionBuildPathStats from "../champions/ChampionBuildPathStats";
 import Champion from "../champions/Champion";
 import ChampionStats from "../champions/ChampionStats";
 
-export default class BuildStats {
+export interface IBuildStats {
+  buildType: string;
+
+  championId: number;
+  runeId?: number;
+  item1Id?: number;
+  item2Id?: number;
+  item3Id?: number;
+
+  wins: number;
+  matches: number;
+  totalMatches: number;
+
+  previousWins: number;
+  previousMatches: number;
+  previousTotalMatches: number;
+}
+
+export default class BuildStats implements IBuildStats {
   public buildType: string;
 
   public championId: number;

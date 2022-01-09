@@ -32,10 +32,7 @@ export default function RoleCard({ role, wins, matches, totalMatches }) {
       {/*<p className="text-center text-xs font-medium uppercase tracking-wider -mb-1 text-gray-500 dark:text-gray-400 whitespace-nowrap">*/}
       {/*  Matches*/}
       {/*</p>*/}
-      <p
-        className="text-center font-bold text-lg"
-        title={matches}
-      >
+      <p className="text-center font-bold text-lg" title={matches + " matches"}>
         {pickrate(matches, totalMatches)}
       </p>
     </div>

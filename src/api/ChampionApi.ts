@@ -6,13 +6,14 @@ import {
   getPickrateIncreaseFromPlayRate,
   getWinrateIncrease,
 } from "../utils/stats";
+import {IChampionStats} from "../models/champions/ChampionStats";
 
 export default class ChampionApi {
   static getAllChampions() {
     return Api.getDataset().champions;
   }
 
-  static getChampion(id) {
+  static getChampion(id): IChampionStats {
     return Api.getDataset().champions.find((i) => i.id == id);
   }
 

@@ -12,6 +12,7 @@ export default function ItemGridCell({ id, className="", size = "md" }) {
             minWidth: `${size == "md" ? 128 : 64}px`,
             minHeight: `${size == "md" ? 128 : 64}px`,
           }}
+          loading="lazy"
           alt="Item image"
         />
       </a>

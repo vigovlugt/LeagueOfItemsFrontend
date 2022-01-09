@@ -3,7 +3,7 @@
     grid-template-columns: auto 370px;
 }
 
-@media (max-width: 1500px) {
+@media (max-width: 1535px) {
     .homePageGrid {
         display: block;
     }

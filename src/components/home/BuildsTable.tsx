@@ -10,11 +10,15 @@ import {
   TrendingUpIcon,
 } from "@heroicons/react/solid";
 import Link from "next/link";
+import { createQueryString } from "../../utils/query";
 
 export default function BuildsTable({
   builds,
   type = "pickrate",
   size = "md",
+  filterId = null,
+  filterType = null,
+  filterName = null,
 }) {
   const router = useRouter();
 
@@ -82,9 +86,11 @@ export default function BuildsTable({
               row.original.previousMatches / row.original.previousTotalMatches
             );
 
+        const title = isWinrate ? undefined : row.original.matches + " matches";
+
         return (
           <div className="flex items-end flex-col">
-            <div>{value}</div>
+            <div title={title}>{value}</div>
             <div className="text-xs text-gray-600 dark:text-gray-400">
               {previousValue}
             </div>
@@ -200,6 +206,15 @@ export default function BuildsTable({
   const gotoBuild = (row) =>
     router.push(`/champions/${row.original.championId}`);
 
+  const linkHref =
+    "/builds" +
+    createQueryString({
+      sortby: isPickrate ? "pickrate" : "winrate",
+      filterType,
+      filterId,
+      filterName,
+    });
+
   return (
     <div
       className={
@@ -210,12 +225,9 @@ export default function BuildsTable({
     >
       <Table table={table} onClick={gotoBuild} size={size} />
       {!isFull && (
-        <Link
-          href={`/builds?sortby=${isPickrate ? "pickrate" : "winrate"}`}
-          passHref
-        >
+        <Link href={linkHref} passHref>
           <a className="flex justify-center items-center w-full rounded-b p-2 text-lg shadow bg-gray-50 dark:text-gray-50 dark:bg-gray-800">
-            <h2 className="font-header">View all builds</h2>
+            <h2 className="font-header">{filterName ? `View all ${filterName} builds` : "View all builds"}</h2>
             <ArrowSmRightIcon className="w-8 inline text-gray-600 dark:text-gray-400" />
           </a>
         </Link>
