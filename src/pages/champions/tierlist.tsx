@@ -2,20 +2,34 @@ import { useMemo } from "react";
 import { useTable, useSortBy } from "react-table";
 import Table from "../../components/table/Table";
 import { useRouter } from "next/router";
-import { pickrate, winrate, winrateClass } from "../../utils/format";
+import {
+  percentage,
+  pickrate,
+  winrate,
+  winrateClass,
+} from "../../utils/format";
 import { NextSeo } from "next-seo";
 import ChampionApi from "../../api/ChampionApi";
 import MatchApi from "../../api/MatchApi";
 import HelpHover from "../../components/HelpHover";
-import {CHAMPION_PICKRATE_HELPER_TEXT} from "../../constants/constants";
+import { CHAMPION_PICKRATE_HELPER_TEXT } from "../../constants/constants";
+import { IChampionStats } from "../../models/champions/ChampionStats";
+import { getPickrateIncrease } from "../../utils/stats";
 
-export default function ChampionTierlist({ champions, totalMatches }) {
+interface IProps {
+  champions: IChampionStats[];
+  totalMatches: number;
+  previousTotalMatches: number;
+}
+
+export default function ChampionTierlist({
+  champions,
+  totalMatches,
+  previousTotalMatches,
+}: IProps) {
   const router = useRouter();
 
-  const data = useMemo(
-    () => champions,
-    [champions]
-  );
+  const data = useMemo(() => champions, [champions]);
 
   const columns = useMemo(
     () => [
@@ -45,12 +59,17 @@ export default function ChampionTierlist({ champions, totalMatches }) {
         cellClass: "text-right",
         Cell: ({
           row: {
-            original: { wins, matches },
+            original: { wins, matches, previousWins, previousMatches },
           },
         }) => (
-          <span className={`${winrateClass(wins, matches)}`}>
-            {winrate(wins, matches)}
-          </span>
+          <div className="flex flex-col">
+            <span className={`${winrateClass(wins, matches)}`}>
+              {winrate(wins, matches)}
+            </span>
+            <span className="text-gray-600 dark:text-gray-400 text-xs">
+              {winrate(previousWins, previousMatches)}
+            </span>
+          </div>
         ),
         accessor: "wins",
         sortType: (rowA, rowB) =>
@@ -59,17 +78,79 @@ export default function ChampionTierlist({ champions, totalMatches }) {
         id: "winrate",
       },
       {
-        Header: () =>  <>Pickrate<HelpHover text={CHAMPION_PICKRATE_HELPER_TEXT}/></>,
+        Header: "WR increase",
         headerClass: "text-right",
         cellClass: "text-right",
         Cell: ({
           row: {
-            original: { matches },
+            original: { wins, matches, previousWins, previousMatches },
           },
-        }) => <span>{pickrate(matches, totalMatches)}</span>,
+        }) => (
+          <span className="text-gray-600 dark:text-gray-400">
+            {percentage(wins / matches - previousWins / previousMatches)}
+          </span>
+        ),
+        accessor: "wins",
+        sortType: (rowA, rowB) =>
+          rowA.original.wins / rowA.original.matches -
+          rowA.original.previousWins / rowA.original.previousMatches -
+          (rowB.original.wins / rowB.original.matches -
+            rowB.original.previousWins / rowB.original.previousMatches),
+        id: "winrateIncrease",
+      },
+      {
+        Header: () => (
+          <>
+            Pickrate
+            <HelpHover text={CHAMPION_PICKRATE_HELPER_TEXT} />
+          </>
+        ),
+        headerClass: "text-right",
+        cellClass: "text-right",
+        Cell: ({
+          row: {
+            original: { matches, previousMatches },
+          },
+        }) => (
+          <div className="flex flex-col">
+            <span>{pickrate(matches, totalMatches)}</span>
+            <span className="text-gray-600 dark:text-gray-400 text-xs">
+              {pickrate(previousMatches, previousTotalMatches)}
+            </span>
+          </div>
+        ),
         accessor: "matches",
         sortType: (rowA, rowB) => rowA.original.matches - rowB.original.matches,
         id: "pickrate",
+      },
+      {
+        Header: "PR increase",
+        headerClass: "text-right",
+        cellClass: "text-right",
+        Cell: ({
+          row: {
+            original: { matches, previousMatches },
+          },
+        }) => (
+          <span className="text-gray-600 dark:text-gray-400">
+            {percentage(
+              matches / totalMatches - previousMatches / previousTotalMatches
+            )}
+          </span>
+        ),
+        accessor: "matches",
+        sortType: (rowA, rowB) =>
+          getPickrateIncrease(
+            rowA.original,
+            totalMatches,
+            previousTotalMatches
+          ) -
+          getPickrateIncrease(
+            rowB.original,
+            totalMatches,
+            previousTotalMatches
+          ),
+        id: "previousPickrate",
       },
       {
         Header: "Items",
@@ -134,22 +215,36 @@ export default function ChampionTierlist({ champions, totalMatches }) {
 
 export async function getStaticProps(context) {
   const champions = ChampionApi.getAllChampions().map(
-    ({ id, name, matches, wins, roleStats, itemStats, runeStats }) => ({
+    ({
+      id,
+      name,
+      matches,
+      previousMatches,
+      wins,
+      previousWins,
+      roleStats,
+      itemStats,
+      runeStats,
+    }) => ({
       id,
       name,
       wins,
+      previousWins,
       matches,
+      previousMatches,
       roles: roleStats.length,
       items: itemStats.length,
-      runes: runeStats.length
+      runes: runeStats.length,
     })
   );
   const totalMatches = MatchApi.getTotalMatches();
+  const previousTotalMatches = MatchApi.getPreviousTotalMatches();
 
   return {
     props: {
       champions,
       totalMatches,
+      previousTotalMatches,
     },
   };
 }

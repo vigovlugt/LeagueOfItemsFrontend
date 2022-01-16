@@ -3,12 +3,22 @@ import { useTable, useSortBy } from "react-table";
 import Table from "../../components/table/Table";
 import RuneStats from "../../models/runes/RuneStats";
 import { useRouter } from "next/router";
-import { pickrate, winrate, winrateClass } from "../../utils/format";
+import {
+  percentage,
+  pickrate,
+  winrate,
+  winrateClass,
+} from "../../utils/format";
 import RuneApi from "../../api/RuneApi";
 import { NextSeo } from "next-seo";
 import MatchApi from "../../api/MatchApi";
+import { getPickrateIncrease } from "../../utils/stats";
 
-export default function RuneTierlist({ runes, totalMatches }) {
+export default function RuneTierlist({
+  runes,
+  totalMatches,
+  previousTotalMatches,
+}) {
   const router = useRouter();
 
   const data = useMemo(
@@ -49,12 +59,17 @@ export default function RuneTierlist({ runes, totalMatches }) {
         cellClass: "text-right",
         Cell: ({
           row: {
-            original: { wins, matches },
+            original: { wins, matches, previousWins, previousMatches },
           },
         }) => (
-          <span className={`${winrateClass(wins, matches)}`}>
-            {winrate(wins, matches)}
-          </span>
+          <div className="flex flex-col">
+            <span className={`${winrateClass(wins, matches)}`}>
+              {winrate(wins, matches)}
+            </span>
+            <span className="text-gray-600 dark:text-gray-400 text-xs">
+              {winrate(previousWins, previousMatches)}
+            </span>
+          </div>
         ),
         accessor: "wins",
         sortType: (rowA, rowB) =>
@@ -63,17 +78,74 @@ export default function RuneTierlist({ runes, totalMatches }) {
         id: "winrate",
       },
       {
+        Header: "WR increase",
+        headerClass: "text-right",
+        cellClass: "text-right",
+        Cell: ({
+          row: {
+            original: { wins, matches, previousWins, previousMatches },
+          },
+        }) => (
+          <span className="text-gray-600 dark:text-gray-400">
+            {percentage(wins / matches - previousWins / previousMatches)}
+          </span>
+        ),
+        accessor: "wins",
+        sortType: (rowA, rowB) =>
+          rowA.original.wins / rowA.original.matches -
+          rowA.original.previousWins / rowA.original.previousMatches -
+          (rowB.original.wins / rowB.original.matches -
+            rowB.original.previousWins / rowB.original.previousMatches),
+        id: "winrateIncrease",
+      },
+      {
         Header: "Pickrate",
         headerClass: "text-right",
         cellClass: "text-right",
         Cell: ({
           row: {
-            original: { matches },
+            original: { matches, previousMatches },
           },
-        }) => <span>{pickrate(matches, totalMatches)}</span>,
+        }) => (
+          <div className="flex flex-col">
+            <span>{pickrate(matches, totalMatches)}</span>
+            <span className="text-gray-600 dark:text-gray-400 text-xs">
+              {pickrate(previousMatches, previousTotalMatches)}
+            </span>
+          </div>
+        ),
         accessor: "matches",
         sortType: (rowA, rowB) => rowA.original.matches - rowB.original.matches,
         id: "pickrate",
+      },
+      {
+        Header: "PR increase",
+        headerClass: "text-right",
+        cellClass: "text-right",
+        Cell: ({
+          row: {
+            original: { matches, previousMatches },
+          },
+        }) => (
+          <span className="text-gray-600 dark:text-gray-400">
+            {percentage(
+              matches / totalMatches - previousMatches / previousTotalMatches
+            )}
+          </span>
+        ),
+        accessor: "matches",
+        sortType: (rowA, rowB) =>
+          getPickrateIncrease(
+            rowA.original,
+            totalMatches,
+            previousTotalMatches
+          ) -
+          getPickrateIncrease(
+            rowB.original,
+            totalMatches,
+            previousTotalMatches
+          ),
+        id: "previousPickrate",
       },
       {
         Header: "Champions",
@@ -147,22 +219,35 @@ export default function RuneTierlist({ runes, totalMatches }) {
 
 export async function getStaticProps(context) {
   const runes = RuneApi.getAllRunes().map(
-    ({ id, name, matches, wins, championStats, tier }) => ({
+    ({
       id,
       name,
       matches,
       wins,
+      previousMatches,
+      previousWins,
+      championStats,
+      tier,
+    }) => ({
+      id,
+      name,
+      matches,
+      wins,
+      previousMatches,
+      previousWins,
       tier,
       champions: championStats.length,
     })
   );
 
   const totalMatches = MatchApi.getTotalMatches();
+  const previousTotalMatches = MatchApi.getPreviousTotalMatches();
 
   return {
     props: {
       runes,
       totalMatches,
+      previousTotalMatches,
     },
   };
 }
