@@ -2,7 +2,7 @@ import BuildsApi from "../api/BuildsApi";
 import BuildsTable from "../components/home/BuildsTable";
 import RuneApi from "../api/RuneApi";
 import RuneStats from "../models/runes/RuneStats";
-import BuildStats from "../models/builds/BuildStats";
+import BuildStats, {IBuildStats} from "../models/builds/BuildStats";
 import { useEffect, useState } from "react";
 import { Popover } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
@@ -10,7 +10,7 @@ import FilterSelector from "../components/builds/FilterSelector";
 import { useRouter } from "next/router";
 import useFavourites from "../hooks/useFavourites";
 
-export default function BuildsPage({ builds }) {
+export default function BuildsPage({ builds } : {builds: (IBuildStats & {isKeystone: boolean, isSmallRune: boolean})[]}) {
   const router = useRouter();
 
   const [filteredBuilds, setFilteredBuilds] = useState(builds);
@@ -23,6 +23,8 @@ export default function BuildsPage({ builds }) {
   const toggleShowBuildPaths = () => setShowBuildPaths(!showBuildPaths);
   const [onlyFavourites, setOnlyFavourites] = useState(false);
   const toggleOnlyFavourites = () => setOnlyFavourites(!onlyFavourites);
+  const [only500Matches, setOnly500Matches] = useState(false);
+  const toggleOnly500Matches = () => setOnly500Matches(!only500Matches);
 
   const [championFilter, setChampionFilter] = useState(null);
   const [itemFilter, setItemFilter] = useState(null);
@@ -97,6 +99,10 @@ export default function BuildsPage({ builds }) {
             return false;
           }
 
+          if (only500Matches && (b.matches < 500 || b.previousMatches < 500)) {
+            return false;
+          }
+
           return true;
         })
       ),
@@ -109,6 +115,7 @@ export default function BuildsPage({ builds }) {
       itemFilter,
       runeFilter,
       onlyFavourites,
+      only500Matches
     ]
   );
 
@@ -163,6 +170,16 @@ export default function BuildsPage({ builds }) {
                         onChange={toggleOnlyFavourites}
                       />{" "}
                       Only favourites
+                    </label>
+                    <span className="pt-4">Matches</span>
+                    <label>
+                      <input
+                        type="checkbox"
+                        className="mr-1"
+                        checked={only500Matches}
+                        onChange={toggleOnly500Matches}
+                      />{" "}
+                      Only 500+ matches
                     </label>
                   </div>
                 </div>
