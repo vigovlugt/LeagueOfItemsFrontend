@@ -3,7 +3,7 @@ import { getChampions, getImage, getVersion, saveBuffer } from "./utils.mjs";
 const saveTileForChampion = async (c) => {
   const id = c.id === "Fiddlesticks" ? "FiddleSticks" : c.id;
 
-  const imageUrl = `http://ddragon.leagueoflegends.com/cdn/img/champion/tiles/${id}_0.jpg`;
+  const imageUrl = `https://ddragon.leagueoflegends.com/cdn/img/champion/tiles/${id}_0.jpg`;
 
   const image = await getImage(imageUrl);
 
@@ -11,7 +11,7 @@ const saveTileForChampion = async (c) => {
 };
 
 const saveImgForChampion = async (version, c) => {
-  const imageUrl = `http://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${c.id}.png`;
+  const imageUrl = `https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${c.id}.png`;
 
   const image = await getImage(imageUrl);
 

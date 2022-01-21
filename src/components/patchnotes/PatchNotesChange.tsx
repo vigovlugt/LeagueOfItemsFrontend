@@ -8,10 +8,7 @@ import IPatchNotesStats, {
   IPatchNotesBaseStats,
   IPatchNotesChampionStats,
 } from "../../models/patchnotes/IPatchNotesStats";
-import { IBuildStats } from "../../models/builds/BuildStats";
 import BuildsTable from "../home/BuildsTable";
-import { IChampionRoleStats } from "../../models/champions/ChampionRoleStats";
-import { getPickrateIncrease, getWinrateIncrease } from "../../utils/stats";
 import Role from "../../models/roles/Role";
 import TopIcon from "../icons/roles/TopIcon";
 import JungleIcon from "../icons/roles/JungleIcon";
@@ -19,6 +16,7 @@ import MidIcon from "../icons/roles/MidIcon";
 import BottomIcon from "../icons/roles/BottomIcon";
 import SupportIcon from "../icons/roles/SupportIcon";
 import HelpHover from "../HelpHover";
+import {decode} from "html-entities";
 
 export default function PatchNotesChange({
   patchNotesChange,
@@ -58,7 +56,7 @@ export default function PatchNotesChange({
           </h3>
           {patchNotesChange.summary && (
             <p className="font-medium max-w-[65ch] mb-2">
-              {patchNotesChange.summary}
+              {decode(patchNotesChange.summary)}
             </p>
           )}
           {/*{patchNotesChange.quote && (*/}
@@ -70,7 +68,7 @@ export default function PatchNotesChange({
       </div>
       {patchNotesChange.quote && (
         <p className="font-medium mb-2 italic text-gray-600 dark:text-gray-400">
-          “{patchNotesChange.quote}”
+          “{decode(patchNotesChange.quote)}”
         </p>
       )}
       <div>
