@@ -1,3 +1,5 @@
+import {decode} from "html-entities";
+
 export default function PatchNotesAttributeChange({
   attribute,
   changeType,
@@ -18,11 +20,11 @@ export default function PatchNotesAttributeChange({
           {changeType}
         </span>
       )}
-      <span className="uppercase mr-2">{attribute}:</span>
-      {before && <span className="line-through">{before}</span>}
+      <span className="uppercase mr-2">{decode(attribute)}:</span>
+      {before && <span className="line-through">{decode(before)}</span>}
       {before && <span className="text-white mx-2">⇒</span>}
-      {after && <span className="text-white">{after}</span>}
-      {removed && <span className="line-through">{removed}</span>}
+      {after && <span className="text-white">{decode(after)}</span>}
+      {removed && <span className="line-through">{decode(removed)}</span>}
     </div>
   );
 }
