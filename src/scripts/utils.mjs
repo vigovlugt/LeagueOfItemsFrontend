@@ -15,7 +15,7 @@ const items = (version) => `http://ddragon.leagueoflegends.com/cdn/${version}/da
 export const getImage = async (url) => {
   const res = await fetch(url);
 
-  return await res.buffer();
+  return await res.arrayBuffer();
 }
 
 export const getVersion = async () => {
@@ -47,5 +47,5 @@ export const getRunes = async (version) => {
 }
 
 export const saveBuffer = (file, buffer) => {
-  fs.writeFileSync(path.join(__dirname, file), buffer);
+  fs.writeFileSync(path.join(__dirname, file), Buffer.from(buffer));
 }
