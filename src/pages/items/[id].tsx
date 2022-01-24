@@ -15,10 +15,12 @@ import {
   ITEM_WINRATE_HELPER_TEXT,
 } from "../../constants/constants";
 import ChampionApi from "../../api/ChampionApi";
+import StatsCard from "../../components/StatsCard";
 
 export default function ItemPage({
   item,
   totalMatches,
+  previousTotalMatches,
   matchesByChampion,
   orderMatchesByChampion,
 }) {
@@ -46,19 +48,15 @@ export default function ItemPage({
         description={item.plaintext}
       >
         <div className="grid grid-cols-2 gap-3 mb-4 xl:w-1/2">
-          <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
-            <p>
-              <span className={winrateClass(item.wins, item.matches)}>
-                {winrate(item.wins, item.matches)}
-              </span>{" "}
-              Winrate
-              <HelpHover text={ITEM_WINRATE_HELPER_TEXT} />
-            </p>
-            {/*<p className="text-sm text-gray-500">*/}
-            {/*  <span>{winrate(item.previousWins, item.previousMatches)}</span>{" "}*/}
-            {/*  Last patch*/}
-            {/*</p>*/}
-          </div>
+          <StatsCard {...item} entityType="item" />
+          <StatsCard
+            {...item}
+            totalMatches={totalMatches}
+            previousTotalMatches={previousTotalMatches}
+            type="pickrate"
+            entityType="item"
+          />
+
           <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
             <span className="text-gray-900 dark:text-white">
               {pickrate(item.matches, totalMatches)}
@@ -163,6 +161,7 @@ export async function getStaticProps({ params }) {
   const item = ItemApi.getItem(params.id);
 
   const totalMatches = MatchApi.getTotalMatches();
+  const previousTotalMatches = MatchApi.getPreviousTotalMatches();
 
   const matchesByChampion = ChampionApi.getMatchesByChampion();
   const orderMatchesByChampion = ChampionApi.getOrderMatchesByChampion();
@@ -171,6 +170,7 @@ export async function getStaticProps({ params }) {
     props: {
       item,
       totalMatches,
+      previousTotalMatches,
       matchesByChampion,
       orderMatchesByChampion,
     },
@@ -179,4 +179,4 @@ export async function getStaticProps({ params }) {
 
 ItemPage.pageName = ({ item }) => item.name;
 ItemPage.favouriteType = () => "ITEM";
-ItemPage.favouriteId = ({item}) => item.id;
+ItemPage.favouriteId = ({ item }) => item.id;

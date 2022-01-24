@@ -9,6 +9,8 @@ export default class RuneStats {
 
   public wins: number;
   public matches: number;
+  public previousWins: number;
+  public previousMatches: number;
 
   public championStats: RuneChampionStats[];
 
@@ -20,6 +22,8 @@ export default class RuneStats {
     longDescription,
     wins,
     matches,
+    previousWins,
+    previousMatches,
     championStats,
   }) {
     this.id = id;
@@ -31,6 +35,8 @@ export default class RuneStats {
 
     this.wins = wins;
     this.matches = matches;
+    this.previousWins = previousWins;
+    this.previousMatches = previousMatches;
     this.championStats = championStats.map((s) => new RuneChampionStats(s));
   }
 

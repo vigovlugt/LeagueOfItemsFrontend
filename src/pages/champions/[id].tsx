@@ -14,8 +14,14 @@ import MatchApi from "../../api/MatchApi";
 import usePageView from "../../hooks/usePageView";
 import { CHAMPION_PICKRATE_HELPER_TEXT } from "../../constants/constants";
 import HelpHover from "../../components/HelpHover";
+import StatsCard from "../../components/StatsCard";
 
-export default function ChampionPage({ champion, runes, items, totalMatches }) {
+export default function ChampionPage({
+  champion,
+  runes,
+  totalMatches,
+  previousTotalMatches,
+}) {
   champion = new ChampionStats(champion);
 
   const [modalIsOpen, setModalOpen] = useState(false);
@@ -45,27 +51,14 @@ export default function ChampionPage({ champion, runes, items, totalMatches }) {
       >
         <div className="flex flex-col lg:flex-row">
           <div className="grid grid-cols-2 gap-3 lg:w-1/2 mr-3 mb-4 lg:mb-0">
-            <div className="flex items-center justify-center bg-white rounded p-4 text-lg font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
-              <span
-                className={`${winrateClass(
-                  champion.wins,
-                  champion.matches
-                )} mr-1`}
-              >
-                {winrate(champion.wins, champion.matches)}
-              </span>
-              Winrate
-            </div>
-            <div
-              className="flex items-center justify-center bg-white rounded p-4 text-lg font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800"
-              title={champion.matches + " matches"}
-            >
-              <span className="text-gray-900 dark:text-white mr-1">
-                {pickrate(champion.matches, totalMatches)}
-              </span>{" "}
-              Pickrate
-              <HelpHover text={CHAMPION_PICKRATE_HELPER_TEXT} />
-            </div>
+            <StatsCard {...champion} />
+            <StatsCard
+              {...champion}
+              totalMatches={totalMatches}
+              previousTotalMatches={previousTotalMatches}
+              type="pickrate"
+            />
+
             <div className="flex items-center justify-center bg-white rounded p-4 text-lg font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
               <span className="text-gray-900 dark:text-white mr-1">
                 {champion.itemStats.length}
@@ -216,11 +209,13 @@ export async function getStaticProps({ params }) {
   const items = ItemApi.getAllItems();
 
   const totalMatches = MatchApi.getTotalMatches();
+  const previousTotalMatches = MatchApi.getPreviousTotalMatches();
 
   return {
     props: {
       champion,
       totalMatches,
+      previousTotalMatches,
       runes: runes.map(({ id, tier }) => ({ id, tier })),
       items: items.map(({ id, description }) => ({
         id,
@@ -230,6 +225,6 @@ export async function getStaticProps({ params }) {
   };
 }
 
-ChampionPage.pageName = ({champion}) => champion.name;
+ChampionPage.pageName = ({ champion }) => champion.name;
 ChampionPage.favouriteType = () => "CHAMPION";
-ChampionPage.favouriteId = ({champion}) => champion.id;
+ChampionPage.favouriteId = ({ champion }) => champion.id;
