@@ -29,7 +29,10 @@ export default function PatchOverview({
   patchNotes,
 }) {
   return (
-    <div className="rounded p-4 mt-24 bg-white dark:bg-gray-900">
+    <div
+      id="patch-overview"
+      className="rounded p-4 mt-24 bg-white dark:bg-gray-900"
+    >
       <Link
         href={`https://www.leagueoflegends.com/en-us/news/game-updates/patch-${patch.replace(
           ".",

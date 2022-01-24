@@ -12,8 +12,14 @@ import PageHeader from "../../components/PageHeader";
 import MatchApi from "../../api/MatchApi";
 import usePageView from "../../hooks/usePageView";
 import ChampionApi from "../../api/ChampionApi";
+import StatsCard from "../../components/StatsCard";
 
-export default function RunePage({ rune, totalMatches, matchesByChampion }) {
+export default function RunePage({
+  rune,
+  totalMatches,
+  previousTotalMatches,
+  matchesByChampion,
+}) {
   rune = new RuneStats(rune);
 
   usePageView("RUNE", rune.id);
@@ -32,21 +38,15 @@ export default function RunePage({ rune, totalMatches, matchesByChampion }) {
         description={removeTags(rune.shortDescription)}
       >
         <div className="grid grid-cols-2 gap-3 mb-4 xl:w-1/2">
-          <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-300 dark:bg-gray-800">
-            <span className={winrateClass(rune.wins, rune.matches)}>
-              {winrate(rune.wins, rune.matches)}
-            </span>{" "}
-            Winrate
-          </div>
-          <div
-            className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-300 dark:bg-gray-800"
-            title={rune.matches + " matches"}
-          >
-            <span className="text-gray-900 dark:text-white">
-              {pickrate(rune.matches, totalMatches)}
-            </span>{" "}
-            Pickrate
-          </div>
+          <StatsCard {...rune} entityType="rune" />
+          <StatsCard
+            {...rune}
+            totalMatches={totalMatches}
+            previousTotalMatches={previousTotalMatches}
+            entityType="rune"
+            type="pickrate"
+          />
+
           <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-300 dark:bg-gray-800">
             <span className="text-gray-900 dark:text-white">
               {rune.championStats.length}
@@ -116,6 +116,7 @@ export async function getStaticProps({ params }) {
   const rune = RuneApi.getRune(params.id);
 
   const totalMatches = MatchApi.getTotalMatches();
+  const previousTotalMatches = MatchApi.getPreviousTotalMatches();
 
   const matchesByChampion = ChampionApi.getMatchesByChampion();
 
@@ -123,6 +124,7 @@ export async function getStaticProps({ params }) {
     props: {
       rune,
       totalMatches,
+      previousTotalMatches,
       matchesByChampion,
     },
   };

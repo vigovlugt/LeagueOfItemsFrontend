@@ -140,8 +140,12 @@ export async function getStaticProps() {
   const winrateItems = ItemApi.getByWinRateDifference().slice(0, 20);
   const pickrateItems = ItemApi.getByPlayRateDifference().slice(0, 20);
 
-  const winrateRunes = RuneApi.getByWinRateDifference().slice(0, 20);
-  const pickrateRunes = RuneApi.getByPlayRateDifference().slice(0, 20);
+  const winrateRunes = RuneApi.getByWinRateDifference()
+    .filter((r) => r.isKeystone)
+    .slice(0, 20);
+  const pickrateRunes = RuneApi.getByPlayRateDifference()
+    .filter((r) => r.isKeystone)
+    .slice(0, 20);
 
   const nextPatch = PatchScheduleApi.getNextPatch();
   const patch = DatasetApi.getPatch();

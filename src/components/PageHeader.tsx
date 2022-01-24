@@ -63,7 +63,7 @@ export default function PageHeader({
 
           <p
             className={classNames(
-              `text-lg font-header mb-4 text-left overflow-ellipsis overflow-hidden max-h-[56px] cursor-pointer text-gray-600 dark:text-gray-400`,
+              `font-header mb-3 text-left overflow-ellipsis overflow-hidden max-h-[56px] cursor-pointer text-gray-600 dark:text-gray-400`,
               {
                 "cursor-pointer": hasModal,
               }
