@@ -59,8 +59,15 @@ export default class PatchNotesApi {
     keystones: string[],
     buildStats: IBuildStats[]
   ): IPatchNotesChampionStats {
-    let { wins, matches, previousWins, previousMatches, roleStats } =
-      ChampionApi.getChampion(championId);
+    let {
+      wins,
+      bans,
+      matches,
+      previousWins,
+      previousBans,
+      previousMatches,
+      roleStats,
+    } = ChampionApi.getChampion(championId);
 
     buildStats = buildStats
       .filter(
@@ -85,8 +92,10 @@ export default class PatchNotesApi {
 
     return {
       wins,
+      bans,
       matches,
       previousWins,
+      previousBans,
       previousMatches,
       buildStats,
       roleStats,
@@ -108,7 +117,15 @@ export default class PatchNotesApi {
             getPickrateIncrease(s, s.totalMatches, s.previousTotalMatches)
           ) > 0.05
       )
-      .sort((a,b) => Math.abs(getPickrateIncrease(b, b.totalMatches, b.previousTotalMatches)) - Math.abs(getPickrateIncrease(a, a.totalMatches, a.previousTotalMatches)))
+      .sort(
+        (a, b) =>
+          Math.abs(
+            getPickrateIncrease(b, b.totalMatches, b.previousTotalMatches)
+          ) -
+          Math.abs(
+            getPickrateIncrease(a, a.totalMatches, a.previousTotalMatches)
+          )
+      )
       .slice(0, 5);
 
     return {
@@ -135,7 +152,15 @@ export default class PatchNotesApi {
             getPickrateIncrease(s, s.totalMatches, s.previousTotalMatches)
           ) > 0.05
       )
-      .sort((a,b) => Math.abs(getPickrateIncrease(b, b.totalMatches, b.previousTotalMatches)) - Math.abs(getPickrateIncrease(a, a.totalMatches, a.previousTotalMatches)))
+      .sort(
+        (a, b) =>
+          Math.abs(
+            getPickrateIncrease(b, b.totalMatches, b.previousTotalMatches)
+          ) -
+          Math.abs(
+            getPickrateIncrease(a, a.totalMatches, a.previousTotalMatches)
+          )
+      )
       .slice(0, 5);
 
     return {

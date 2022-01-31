@@ -14,7 +14,7 @@ import MatchApi from "../../api/MatchApi";
 import HelpHover from "../../components/HelpHover";
 import { CHAMPION_PICKRATE_HELPER_TEXT } from "../../constants/constants";
 import { IChampionStats } from "../../models/champions/ChampionStats";
-import { getPickrateIncrease } from "../../utils/stats";
+import { getIncrease, getPickrateIncrease } from "../../utils/stats";
 
 interface IProps {
   champions: IChampionStats[];
@@ -35,6 +35,7 @@ export default function ChampionTierlist({
     () => [
       {
         Header: "Champion",
+        headerClass: "w-full",
         accessor: "champion",
         Cell: ({ row }) => (
           <div className="flex items-center">
@@ -153,6 +154,57 @@ export default function ChampionTierlist({
         id: "previousPickrate",
       },
       {
+        Header: "Banrate",
+        headerClass: "text-right",
+        cellClass: "text-right",
+        Cell: ({
+          row: {
+            original: { bans, previousBans },
+          },
+        }) => (
+          <div className="flex flex-col">
+            <span>{pickrate(bans, totalMatches)}</span>
+            <span className="text-gray-600 dark:text-gray-400 text-xs">
+              {pickrate(previousBans, previousTotalMatches)}
+            </span>
+          </div>
+        ),
+        accessor: "bans",
+        sortType: (rowA, rowB) => rowA.original.bans - rowB.original.bans,
+        id: "bans",
+      },
+      {
+        Header: "BR increase",
+        headerClass: "text-right",
+        cellClass: "text-right",
+        Cell: ({
+          row: {
+            original: { bans, previousBans },
+          },
+        }) => (
+          <span className="text-gray-600 dark:text-gray-400">
+            {percentage(
+              bans / totalMatches - previousBans / previousTotalMatches
+            )}
+          </span>
+        ),
+        accessor: "bans",
+        sortType: (rowA, rowB) =>
+          getIncrease(
+            rowA.original.bans,
+            rowA.original.previousBans,
+            totalMatches,
+            previousTotalMatches
+          ) -
+          getIncrease(
+            rowB.original.bans,
+            rowB.original.previousBans,
+            totalMatches,
+            previousTotalMatches
+          ),
+        id: "previousBanrate",
+      },
+      {
         Header: "Items",
         headerClass: "text-right",
         cellClass: "text-right",
@@ -222,6 +274,8 @@ export async function getStaticProps(context) {
       previousMatches,
       wins,
       previousWins,
+      bans,
+      previousBans,
       roleStats,
       itemStats,
       runeStats,
@@ -230,6 +284,8 @@ export async function getStaticProps(context) {
       name,
       wins,
       previousWins,
+      bans,
+      previousBans,
       matches,
       previousMatches,
       roles: roleStats.length,

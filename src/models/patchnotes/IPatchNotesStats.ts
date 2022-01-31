@@ -17,6 +17,8 @@ export interface IPatchNotesBaseStats {
 
 export interface IPatchNotesChampionStats extends IPatchNotesBaseStats {
   roleStats: IChampionRoleStats[];
+  bans: number;
+  previousBans: number;
 }
 
 export interface IPatchNotesItemStats extends IPatchNotesBaseStats {}

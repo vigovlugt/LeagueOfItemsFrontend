@@ -2,7 +2,7 @@ import BuildsApi from "../api/BuildsApi";
 import BuildsTable from "../components/home/BuildsTable";
 import RuneApi from "../api/RuneApi";
 import RuneStats from "../models/runes/RuneStats";
-import BuildStats, {IBuildStats} from "../models/builds/BuildStats";
+import BuildStats, { IBuildStats } from "../models/builds/BuildStats";
 import { useEffect, useState } from "react";
 import { Popover } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
@@ -10,7 +10,11 @@ import FilterSelector from "../components/builds/FilterSelector";
 import { useRouter } from "next/router";
 import useFavourites from "../hooks/useFavourites";
 
-export default function BuildsPage({ builds } : {builds: (IBuildStats & {isKeystone: boolean, isSmallRune: boolean})[]}) {
+export default function BuildsPage({
+  builds,
+}: {
+  builds: (IBuildStats & { isKeystone: boolean; isSmallRune: boolean })[];
+}) {
   const router = useRouter();
 
   const [filteredBuilds, setFilteredBuilds] = useState(builds);
@@ -115,12 +119,12 @@ export default function BuildsPage({ builds } : {builds: (IBuildStats & {isKeyst
       itemFilter,
       runeFilter,
       onlyFavourites,
-      only500Matches
+      only500Matches,
     ]
   );
 
   return (
-    <div>
+    <div className="w-">
       <div className="flex rounded shadow bg-white p-3 mb-4 dark:bg-gray-900">
         <Popover className="relative">
           {({}) => (

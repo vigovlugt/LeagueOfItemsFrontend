@@ -10,9 +10,18 @@ export const getWinrateIncrease = (s) => {
 };
 
 export const getPickrateIncrease = (c, totalMatches, previousTotalMatches) => {
-  if (totalMatches == 0 || previousTotalMatches == 0) {
+  return getIncrease(
+    c.matches,
+    c.previousMatches,
+    totalMatches,
+    previousTotalMatches
+  );
+};
+
+export const getIncrease = (value, previousValue, total, previousTotal) => {
+  if (total == 0 || previousTotal == 0) {
     return 0;
   }
 
-  return c.matches / totalMatches - c.previousMatches / previousTotalMatches;
+  return value / total - previousValue / previousTotal;
 };

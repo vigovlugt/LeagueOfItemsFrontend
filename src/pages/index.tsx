@@ -28,6 +28,7 @@ export default function Home({
   pickrateBuilds = [],
   winrateChampions = [],
   pickrateChampions = [],
+  banrateChampions = [],
   winrateItems = [],
   pickrateItems = [],
   winrateRunes,
@@ -68,6 +69,7 @@ export default function Home({
             patch={patch}
             winrateChampions={winrateChampions}
             pickrateChampions={pickrateChampions}
+            banrateChampions={banrateChampions}
             championMatches={championMatches}
             previousChampionMatches={previousChampionMatches}
             winrateItems={winrateItems}
@@ -130,7 +132,12 @@ export async function getStaticProps() {
     20
   );
   const pickrateChampions =
-    ChampionApi.getChampionsByPlayRateDifference().slice(0, 20);
+    ChampionApi.getChampionsByPickrateDifference().slice(0, 20);
+
+  const banrateChampions = ChampionApi.getChampionsByBanrateDifference().slice(
+    0,
+    20
+  );
 
   const pickrateRoles = ChampionApi.getChampionRolesByPickrateIncrease().slice(
     0,
@@ -163,6 +170,7 @@ export async function getStaticProps() {
       pickrateBuilds,
       winrateChampions,
       pickrateChampions,
+      banrateChampions,
       winrateItems,
       pickrateItems,
       itemMatches,

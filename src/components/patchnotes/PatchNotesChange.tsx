@@ -16,7 +16,7 @@ import MidIcon from "../icons/roles/MidIcon";
 import BottomIcon from "../icons/roles/BottomIcon";
 import SupportIcon from "../icons/roles/SupportIcon";
 import HelpHover from "../HelpHover";
-import {decode} from "html-entities";
+import { decode } from "html-entities";
 
 export default function PatchNotesChange({
   patchNotesChange,
@@ -41,6 +41,7 @@ export default function PatchNotesChange({
     patchNotesChange.type === "CHAMPION"
       ? championMatches
       : championMatches / 10;
+
   const previousMatches =
     patchNotesChange.type === "CHAMPION"
       ? previousChampionMatches
@@ -77,7 +78,7 @@ export default function PatchNotesChange({
         ))}
       </div>
 
-      <div className="flex mt-8 mb-4 space-x-4">
+      <div className="flex flex-col md:flex-row mt-8 mb-4 space-y-4 md:space-y-0 md:space-x-4">
         <DifferenceCard
           current={entity.wins / entity.matches}
           previous={entity.previousWins / entity.previousMatches}
@@ -88,12 +89,27 @@ export default function PatchNotesChange({
           previous={entity.previousMatches / previousMatches}
           text="Pickrate"
         />
+        {patchNotesChange.type === "CHAMPION" && (
+          <DifferenceCard
+            current={(entity as IPatchNotesChampionStats).bans / matches * 10}
+            previous={(entity as IPatchNotesChampionStats).previousBans / previousMatches * 10}
+            text="Banrate"
+          />
+        )}
       </div>
 
       {entity.buildStats.length > 0 && (
         <div className="mb-4 max-w-[512px]">
           <h4 className="font-header text-xl mb-2">
-            Build pickrate {patchNotesChange.type === "CHAMPION" ? "increase" : "change"} <HelpHover text={patchNotesChange.type === "CHAMPION" ? "Increase >5%" : "Change >5%"} />
+            Build pickrate{" "}
+            {patchNotesChange.type === "CHAMPION" ? "increase" : "change"}{" "}
+            <HelpHover
+              text={
+                patchNotesChange.type === "CHAMPION"
+                  ? "Increase >5%"
+                  : "Change >5%"
+              }
+            />
           </h4>
           <BuildsTable
             builds={entity.buildStats}
@@ -121,7 +137,9 @@ function ChampionStats({
     <div>
       {championStats.roleStats.length > 0 && (
         <>
-          <h4 className="font-header text-xl mb-2">Role pickrate increases <HelpHover text="Increase >5%" /></h4>
+          <h4 className="font-header text-xl mb-2">
+            Role pickrate increases <HelpHover text="Increase >5%" />
+          </h4>
           <div className="flex space-x-4 overflow-x-scroll pb-2">
             {championStats.roleStats.map((s) => (
               <RoleDifferenceCard
@@ -143,31 +161,29 @@ function DifferenceCard({ current, previous, text }) {
   const TrendingIcon = increase > 0 ? TrendingUpIcon : TrendingDownIcon;
 
   return (
-    <div className="flex items-center rounded p-4 text-lg font-bold shadow bg-white text-gray-600 dark:text-gray-300 dark:bg-gray-800 w-1/2">
-      <div className="sm:flex align-center items-center mx-auto">
-        <div className="flex flex-col items-center">
-          <div
-            className={`flex items-center font-semibold ${winrateClass(
-              0.5 + increase,
-              undefined,
-              true
-            )}`}
-          >
-            <span className="text-xl font-header">
-              <TrendingIcon className="w-8 inline mr-2" />
-              {percentage(increase)}
-            </span>
-          </div>
-          <div className="flex items-center mb-2 font-semibold text-xs">
-            <span className="text-gray-600 dark:text-gray-400">
-              {" "}
-              {percentage(previous)}
-            </span>
-            <ArrowSmRightIcon className="h-4 inline text-gray-600 dark:text-gray-400" />{" "}
-            <span>{percentage(current)}</span>
-          </div>
+    <div className="flex items-center rounded p-4 text-lg font-bold shadow bg-white text-gray-600 dark:text-gray-300 dark:bg-gray-800">
+      <div className="flex flex-col items-center align-center mx-auto">
+        <div
+          className={`flex items-center font-semibold ${winrateClass(
+            0.5 + increase,
+            undefined,
+            true
+          )}`}
+        >
+          <span className="text-xl font-header">
+            <TrendingIcon className="w-8 inline mr-2" />
+            {percentage(increase)}
+          </span>
         </div>
-        <span className="ml-4">{text}</span>
+        <div className="flex items-center font-semibold text-xs">
+          <span className="text-gray-600 dark:text-gray-400">
+            {" "}
+            {percentage(previous)}
+          </span>
+          <ArrowSmRightIcon className="h-4 inline text-gray-600 dark:text-gray-400" />{" "}
+          <span>{percentage(current)}</span>
+        </div>
+        <span>{text}</span>
       </div>
     </div>
   );
