@@ -35,6 +35,7 @@ export default function RuneTierlist({
     () => [
       {
         Header: "Rune",
+        headerClass: "w-full",
         accessor: "name",
         Cell: ({ row }) => (
           <div className="flex items-center">

@@ -1,12 +1,10 @@
-import * as path from "path";
-import * as fs from "fs";
 import Api from "./DatasetApi";
 import {
+  getIncrease,
   getPickrateIncrease,
-  getPickrateIncreaseFromPlayRate,
   getWinrateIncrease,
 } from "../utils/stats";
-import {IChampionStats} from "../models/champions/ChampionStats";
+import { IChampionStats } from "../models/champions/ChampionStats";
 
 export default class ChampionApi {
   static getAllChampions() {
@@ -38,7 +36,7 @@ export default class ChampionApi {
       }));
   }
 
-  static getChampionsByPlayRateDifference() {
+  static getChampionsByPickrateDifference() {
     const dataset = Api.getDataset();
 
     return dataset.champions
@@ -94,6 +92,36 @@ export default class ChampionApi {
         previousMatches: roleStats.previousMatches,
         totalMatches: champ.matches,
         previousTotalMatches: champ.previousMatches,
+      }));
+  }
+
+  static getChampionsByBanrateDifference() {
+    const dataset = Api.getDataset();
+
+    return (dataset.champions as IChampionStats[])
+      .sort(
+        (a, b) =>
+          Math.abs(
+            getIncrease(
+              b.bans,
+              b.previousBans,
+              dataset.championMatches,
+              dataset.previousChampionMatches
+            )
+          ) -
+          Math.abs(
+            getIncrease(
+              a.bans,
+              a.previousBans,
+              dataset.championMatches,
+              dataset.previousChampionMatches
+            )
+          )
+      )
+      .map(({ id, bans, previousBans }) => ({
+        id,
+        bans,
+        previousBans,
       }));
   }
 

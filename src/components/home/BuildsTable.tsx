@@ -106,7 +106,7 @@ export default function BuildsTable({
     () => [
       {
         Header: "Build",
-        headerClass: "text-left",
+        headerClass: "text-left w-full",
         accessor: (row) =>
           row.championId +
           "-" +

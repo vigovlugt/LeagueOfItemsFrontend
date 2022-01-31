@@ -19,6 +19,7 @@ export default function PatchOverview({
   patch,
   winrateChampions,
   pickrateChampions,
+  banrateChampions,
   winrateItems,
   pickrateItems,
   winrateRunes,
@@ -69,6 +70,7 @@ export default function PatchOverview({
         matches={championMatches / CHAMPIONS_PER_MATCH}
         previousMatches={previousChampionMatches / CHAMPIONS_PER_MATCH}
         rolePickrateData={pickrateRoles}
+        banrateData={banrateChampions}
         type="CHAMPION"
       />
 
@@ -97,6 +99,7 @@ const PatchEntityChanges = ({
   matches,
   previousMatches,
   rolePickrateData = [],
+  banrateData = [],
   type,
 }) => {
   const title = {
@@ -132,6 +135,7 @@ const PatchEntityChanges = ({
           <DifferenceCard key={d.id} {...{ [dataKey]: d }} />
         ))}
       </div>
+
       {rolePickrateData.length > 0 && (
         <>
           <h2 className="font-header text-xl lg:text-2xl mt-4 mb-2">
@@ -154,6 +158,25 @@ const PatchEntityChanges = ({
           </div>
         </>
       )}
+
+      {banrateData.length > 0 && (
+        <>
+          <h2 className="font-header text-xl lg:text-2xl mt-4 mb-2">
+            Biggest banrate changes since last patch
+          </h2>
+          <div className="flex space-x-2 w-full overflow-x-auto pb-2">
+            {banrateData.map((d) => (
+              <DifferenceCard
+                key={d.id}
+                champion={d}
+                type="banrate"
+                matches={matches}
+                previousMatches={previousMatches}
+              />
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 };
@@ -170,17 +193,19 @@ const DifferenceCard = ({
 
   const entity = champion ?? item ?? rune;
 
-  const increase = isWinrate
-    ? getWinrateIncrease(entity)
-    : getPickrateIncrease(entity, matches, previousMatches);
+  const current = {
+    winrate: entity.wins / entity.matches,
+    pickrate: entity.matches / matches,
+    banrate: entity.bans / matches,
+  }[type];
 
-  const current = isWinrate
-    ? entity.wins / entity.matches
-    : entity.matches / matches;
+  const previous = {
+    winrate: entity.previousWins / entity.previousMatches,
+    pickrate: entity.previousMatches / previousMatches,
+    banrate: entity.previousBans / previousMatches,
+  }[type];
 
-  const previous = isWinrate
-    ? entity.previousWins / entity.previousMatches
-    : entity.previousMatches / previousMatches;
+  const increase = current - previous;
 
   const TrendingIcon = increase > 0 ? TrendingUpIcon : TrendingDownIcon;
 

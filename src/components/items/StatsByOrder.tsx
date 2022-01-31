@@ -25,6 +25,7 @@ export default function StatsByOrder({
       {
         Header: "",
         accessor: "name",
+        headerClass: "w-full",
         Cell: ({ row }) => (
           <img
             src={`/images/${type}s/32/${

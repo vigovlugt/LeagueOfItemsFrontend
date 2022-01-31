@@ -5,10 +5,14 @@ import ChampionRoleStats from "./ChampionRoleStats";
 import ChampionBuildPathStats from "./ChampionBuildPathStats";
 
 export interface IChampionStats {
+  id: number;
+  
   wins: number;
+  bans: number;
   matches: number;
 
   previousWins: number;
+  previousBans: number;
   previousMatches: number;
 
   runeStats: ChampionRuneStats[];
@@ -19,9 +23,11 @@ export interface IChampionStats {
 
 export default class ChampionStats extends Champion implements IChampionStats {
   public wins: number;
+  public bans: number;
   public matches: number;
 
   public previousWins: number;
+  public previousBans: number;
   public previousMatches: number;
 
   public runeStats: ChampionRuneStats[];

@@ -27,6 +27,7 @@ export default function Tierlist({
       {
         Header: "Item",
         accessor: "name",
+        headerClass: "w-full",
         Cell: ({ row }) => (
           <div className="flex items-center">
             <img
