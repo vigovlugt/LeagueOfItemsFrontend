@@ -1,4 +1,5 @@
 import styles from "./Table.module.css";
+import Link from "next/link";
 
 const thPaddingBySize = {
   xs: "px-2 py-2 md:px-2 md:py-2",
@@ -13,7 +14,12 @@ const tdPaddingBySize = {
 };
 
 /* eslint react/jsx-key: "off" */
-export default function Table({ table, onClick = (_) => {}, size = "md" }) {
+export default function Table({
+  table,
+  onClick = (_) => {},
+  size = "md",
+  href = null,
+}) {
   const isPaginated = Boolean(table.page);
 
   const {
@@ -64,7 +70,7 @@ export default function Table({ table, onClick = (_) => {}, size = "md" }) {
             return (
               <tr
                 {...row.getRowProps()}
-                onClick={() => onClick(row)}
+                onClick={onClick ? () => onClick(row) : undefined}
                 className="cursor-pointer"
               >
                 {row.cells.map((cell) => {
@@ -72,12 +78,20 @@ export default function Table({ table, onClick = (_) => {}, size = "md" }) {
                     <td
                       {...cell.getCellProps()}
                       className={`${
-                        tdPaddingBySize[size]
+                        href ? null : tdPaddingBySize[size]
                       } w-[1%] whitespace-nowrap ${
                         cell.column.cellClass || ""
                       }`}
                     >
-                      {cell.render("Cell")}
+                      {href ? (
+                        <Link href={href(row)} passHref>
+                          <a className={"block " + tdPaddingBySize[size]}>
+                            {cell.render("Cell")}
+                          </a>
+                        </Link>
+                      ) : (
+                        cell.render("Cell")
+                      )}
                     </td>
                   );
                 })}
