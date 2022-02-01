@@ -29,7 +29,11 @@ export default function UggButton({ name }) {
 
   return (
     <div className="hidden rounded-md bg-ugg-dark px-3 py-2 text-white shadow focus:outline-none dark:bg-ugg lg:flex">
-      <a href={`${UGG_BASE_URL}/lol/champions/${name}/build`} target="_blank">
+      <a
+        href={`${UGG_BASE_URL}/lol/champions/${name}/build`}
+        target="_blank"
+        rel="noreferrer"
+      >
         <UggLogoIcon />
       </a>
       <Menu as="div" className="relative ml-3 flex items-center">
@@ -44,6 +48,7 @@ export default function UggButton({ name }) {
                   href={i.link(name)}
                   className={`py-1 px-3 ${active && "bg-ugg dark:bg-ugg-dark"}`}
                   target="_blank"
+                  rel="noreferrer"
                 >
                   {i.title}
                 </a>
