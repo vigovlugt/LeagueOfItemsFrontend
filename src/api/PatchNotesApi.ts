@@ -12,7 +12,7 @@ import ItemApi from "./ItemApi";
 import BuildsApi from "./BuildsApi";
 import BuildStats, { IBuildStats } from "../models/builds/BuildStats";
 import RuneStats from "../models/runes/RuneStats";
-import { getPickrateIncrease } from "../utils/stats";
+import { getPickrateIncrease, getWinrateIncrease } from "../utils/stats";
 
 export default class PatchNotesApi {
   static getPatchNotes(): IPatchNotesDataset {
@@ -81,14 +81,12 @@ export default class PatchNotesApi {
       .slice(0, 5);
 
     roleStats = roleStats
-      .sort(
-        (a, b) =>
-          getPickrateIncrease(b, matches, previousMatches) -
-          getPickrateIncrease(a, matches, previousMatches)
-      )
       .filter(
-        (s) => Math.abs(getPickrateIncrease(s, matches, previousMatches)) > 0.05
-      );
+        (s) =>
+          Math.abs(getPickrateIncrease(s, matches, previousMatches)) > 0.05 ||
+          Math.abs(getWinrateIncrease(s)) > 0.05
+      )
+      .sort((a, b) => b.matches - a.matches);
 
     return {
       wins,
