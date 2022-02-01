@@ -67,7 +67,7 @@ export default function RuneTierlist({
             <span className={`${winrateClass(wins, matches)}`}>
               {winrate(wins, matches)}
             </span>
-            <span className="text-gray-600 dark:text-gray-400 text-xs">
+            <span className="text-xs text-gray-600 dark:text-gray-400">
               {winrate(previousWins, previousMatches)}
             </span>
           </div>
@@ -110,7 +110,7 @@ export default function RuneTierlist({
         }) => (
           <div className="flex flex-col">
             <span>{pickrate(matches, totalMatches)}</span>
-            <span className="text-gray-600 dark:text-gray-400 text-xs">
+            <span className="text-xs text-gray-600 dark:text-gray-400">
               {pickrate(previousMatches, previousTotalMatches)}
             </span>
           </div>
@@ -206,12 +206,12 @@ export default function RuneTierlist({
         description="Rune tierlist with all League of Legends items."
       />
 
-      <h2 className="font-header text-4xl mb-2">Keystones</h2>
-      <div className="rounded-lg overflow-hidden shadow-lg mb-8">
+      <h2 className="mb-2 font-header text-4xl">Keystones</h2>
+      <div className="mb-8 overflow-hidden rounded-lg shadow-lg">
         <Table table={keystoneTable} onClick={goToRune} />
       </div>
-      <h2 className="font-header text-4xl mb-2">Runes</h2>
-      <div className="rounded-lg overflow-hidden shadow-lg">
+      <h2 className="mb-2 font-header text-4xl">Runes</h2>
+      <div className="overflow-hidden rounded-lg shadow-lg">
         <Table table={normalTable} onClick={goToRune} />
       </div>
     </div>

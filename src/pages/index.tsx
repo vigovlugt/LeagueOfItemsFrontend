@@ -56,7 +56,7 @@ export default function Home({
       />
 
       <div
-        className={`${styles.homePageGrid} w-full max-w-full pt-6 gap-8 mb-16`}
+        className={`${styles.homePageGrid} max-w-full mb-16 w-full gap-8 pt-6`}
       >
         <div className="overflow-hidden">
           <CategoryPreviews />

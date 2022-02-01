@@ -53,7 +53,7 @@ export default function StatsByOrder({
           },
         }) => (
           <div
-            className={`${winrateClass(wins, matches)} text-right w-full`}
+            className={`${winrateClass(wins, matches)} w-full text-right`}
             title={wins}
           >
             {winrate(wins, matches)}
@@ -82,7 +82,7 @@ export default function StatsByOrder({
             original: { matches, championId },
           },
         }) => (
-          <div className="text-right w-full" title={matches + " matches"}>
+          <div className="w-full text-right" title={matches + " matches"}>
             {pickrate(
               matches,
               orderMatchesByChampion
@@ -120,17 +120,17 @@ export default function StatsByOrder({
   return (
     <>
       {/* General stats */}
-      <div className="px-3 py-3 rounded text-center shadow bg-white dark:bg-gray-900">
-        <h3 className="text-xl font-header font-medium mb-1">
+      <div className="rounded bg-white px-3 py-3 text-center shadow dark:bg-gray-900">
+        <h3 className="mb-1 font-header text-xl font-medium">
           {nameByOrder[orderStats.order]} item
         </h3>
         <div className="flex justify-around">
           <span className="text-center">
-            <span className="text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400 whitespace-nowrap block">
+            <span className="block whitespace-nowrap text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
               Winrate
             </span>
             <span
-              className={`font-bold text-lg ${winrateClass(
+              className={`text-lg font-bold ${winrateClass(
                 orderStats.wins,
                 orderStats.matches
               )}`}
@@ -139,11 +139,11 @@ export default function StatsByOrder({
             </span>
           </span>
           <span className="text-center">
-            <span className="text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400 whitespace-nowrap block">
+            <span className="block whitespace-nowrap text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
               Games
             </span>
             <span
-              className="text-center font-bold text-lg"
+              className="text-center text-lg font-bold"
               title={orderStats.matches + "  matches"}
             >
               {pickrate(orderStats.matches, totalMatches)}
@@ -154,7 +154,7 @@ export default function StatsByOrder({
 
       {/* Champion stats */}
       <div>
-        <div className="rounded-lg overflow-hidden mb-4 shadow bg-white dark:bg-dark">
+        <div className="mb-4 overflow-hidden rounded-lg bg-white shadow dark:bg-dark">
           <Table table={table} onClick={goTo} size="sm" />
         </div>
       </div>

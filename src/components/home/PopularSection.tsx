@@ -5,52 +5,55 @@ import { ArrowSmRightIcon } from "@heroicons/react/solid";
 export default function PopularSection({ pageViewDataset }) {
   return (
     <div>
-      <h2 className="font-header text-3xl lg:text-4xl mb-2">Most viewed items</h2>
-      <div className="flex w-full overflow-x-auto pb-2 space-x-4">
-        {pageViewDataset.items
-          .map((p) => (
-            <GridCell key={p.type + "-" + p.id} {...p} />
-          ))}
+      <h2 className="mb-2 font-header text-3xl lg:text-4xl">
+        Most viewed items
+      </h2>
+      <div className="flex w-full space-x-4 overflow-x-auto pb-2">
+        {pageViewDataset.items.map((p) => (
+          <GridCell key={p.type + "-" + p.id} {...p} />
+        ))}
       </div>
 
       <Link href="/items" passHref>
-        <a className="flex justify-center items-center w-full bg-white rounded p-2 text-lg shadow mt-4 mb-8 dark:text-gray-50 dark:bg-gray-900">
+        <a className="mt-4 mb-8 flex w-full items-center justify-center rounded bg-white p-2 text-lg shadow dark:bg-gray-900 dark:text-gray-50">
           <h2 className="font-header text-xl">View all items</h2>
-          <ArrowSmRightIcon className="w-8 inline text-gray-600 dark:text-gray-400" />
+          <ArrowSmRightIcon className="inline w-8 text-gray-600 dark:text-gray-400" />
         </a>
       </Link>
 
       <div className="lg:flex">
-        <div className="lg:w-1/2 pr-4">
-          <h2 className="font-header text-3xl lg:text-4xl mb-2">Most viewed runes</h2>
-          <div className="flex w-full overflow-x-auto pb-2 space-x-4">
-            {pageViewDataset.runes
-              .map((p) => (
-                <GridCell key={p.type + "-" + p.id} {...p} />
-              ))}
+        <div className="pr-4 lg:w-1/2">
+          <h2 className="mb-2 font-header text-3xl lg:text-4xl">
+            Most viewed runes
+          </h2>
+          <div className="flex w-full space-x-4 overflow-x-auto pb-2">
+            {pageViewDataset.runes.map((p) => (
+              <GridCell key={p.type + "-" + p.id} {...p} />
+            ))}
           </div>
 
           <Link href="/runes" passHref>
-            <a className="flex justify-center items-center bg-white rounded p-2 text-lg shadow mt-4 dark:text-gray-50 dark:bg-gray-900">
+            <a className="mt-4 flex items-center justify-center rounded bg-white p-2 text-lg shadow dark:bg-gray-900 dark:text-gray-50">
               <h2 className="font-header text-xl">View all runes</h2>
-              <ArrowSmRightIcon className="w-8 inline text-gray-600 dark:text-gray-400" />
+              <ArrowSmRightIcon className="inline w-8 text-gray-600 dark:text-gray-400" />
             </a>
           </Link>
         </div>
 
-        <div className="mt-8 lg:mt-0 lg:w-1/2 lg:pl-4 mb-8">
-          <h2 className="font-header text-3xl lg:text-4xl mb-2">Most viewed champions</h2>
-          <div className="flex w-full overflow-x-auto pb-2 space-x-4">
-            {pageViewDataset.champions
-              .map((p) => (
-                <GridCell key={p.type + "-" + p.id} {...p} />
-              ))}
+        <div className="mt-8 mb-8 lg:mt-0 lg:w-1/2 lg:pl-4">
+          <h2 className="mb-2 font-header text-3xl lg:text-4xl">
+            Most viewed champions
+          </h2>
+          <div className="flex w-full space-x-4 overflow-x-auto pb-2">
+            {pageViewDataset.champions.map((p) => (
+              <GridCell key={p.type + "-" + p.id} {...p} />
+            ))}
           </div>
 
           <Link href="/champions" passHref>
-            <a className="flex justify-center items-center bg-white rounded p-2 text-lg shadow mt-4 dark:text-gray-50 dark:bg-gray-900">
+            <a className="mt-4 flex items-center justify-center rounded bg-white p-2 text-lg shadow dark:bg-gray-900 dark:text-gray-50">
               <h2 className="font-header text-xl">View all champions</h2>
-              <ArrowSmRightIcon className="w-8 inline text-gray-600 dark:text-gray-400" />
+              <ArrowSmRightIcon className="inline w-8 text-gray-600 dark:text-gray-400" />
             </a>
           </Link>
         </div>

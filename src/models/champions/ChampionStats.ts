@@ -6,7 +6,7 @@ import ChampionBuildPathStats from "./ChampionBuildPathStats";
 
 export interface IChampionStats {
   id: number;
-  
+
   wins: number;
   bans: number;
   matches: number;
@@ -46,6 +46,8 @@ export default class ChampionStats extends Champion implements IChampionStats {
     this.runeStats = data.runeStats.map((s) => new ChampionRuneStats(s));
     this.itemStats = data.itemStats.map((s) => new ChampionItemStats(s));
     this.roleStats = data.roleStats.map((s) => new ChampionRoleStats(s));
-    this.buildPathStats = data.buildPathStats.map((s) => new ChampionBuildPathStats(s));
+    this.buildPathStats = data.buildPathStats.map(
+      (s) => new ChampionBuildPathStats(s)
+    );
   }
 }

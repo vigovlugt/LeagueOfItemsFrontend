@@ -28,15 +28,15 @@ export default function UggButton({ name }) {
   name = name.toLowerCase().replace(/[^\w]/g, "");
 
   return (
-    <div className="hidden lg:flex bg-ugg-dark rounded-md px-3 py-2 text-white shadow focus:outline-none dark:bg-ugg">
+    <div className="hidden rounded-md bg-ugg-dark px-3 py-2 text-white shadow focus:outline-none dark:bg-ugg lg:flex">
       <a href={`${UGG_BASE_URL}/lol/champions/${name}/build`} target="_blank">
         <UggLogoIcon />
       </a>
-      <Menu as="div" className="relative flex items-center ml-3">
+      <Menu as="div" className="relative ml-3 flex items-center">
         <Menu.Button>
-          <ChevronDownIcon className="w-6 h-6" />
+          <ChevronDownIcon className="h-6 w-6" />
         </Menu.Button>
-        <Menu.Items className="flex flex-col align-center absolute -right-3 w-48 top-9 origin-top-right rounded-md shadow-lg bg-ugg-dark py-2 z-10 dark:bg-ugg">
+        <Menu.Items className="align-center absolute -right-3 top-9 z-10 flex w-48 origin-top-right flex-col rounded-md bg-ugg-dark py-2 shadow-lg dark:bg-ugg">
           {MENU_ITEMS.map((i) => (
             <Menu.Item key={i.title}>
               {({ active }) => (

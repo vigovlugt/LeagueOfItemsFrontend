@@ -47,7 +47,7 @@ export default function ItemPage({
         name={item.name}
         description={item.plaintext}
       >
-        <div className="grid grid-cols-2 gap-3 mb-4 xl:w-1/2">
+        <div className="mb-4 grid grid-cols-2 gap-3 xl:w-1/2">
           <StatsCard {...item} entityType="item" />
           <StatsCard
             {...item}
@@ -57,14 +57,14 @@ export default function ItemPage({
             entityType="item"
           />
 
-          <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
+          <div className="rounded bg-white p-4 text-center text-lg font-bold text-gray-600 shadow dark:bg-gray-800 dark:text-gray-400">
             <span className="text-gray-900 dark:text-white">
               {pickrate(item.matches, totalMatches)}
             </span>{" "}
             Pickrate
             <HelpHover text={ITEM_PICKRATE_HELPER_TEXT} />
           </div>
-          <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
+          <div className="rounded bg-white p-4 text-center text-lg font-bold text-gray-600 shadow dark:bg-gray-800 dark:text-gray-400">
             <span className="text-gray-900 dark:text-white">
               {item.championStats.length}
             </span>{" "}
@@ -75,10 +75,10 @@ export default function ItemPage({
 
       {/* Highest winrate champions */}
       <div>
-        <h2 className="text-2xl font-header font-medium mb-1">
+        <h2 className="mb-1 font-header text-2xl font-medium">
           Highest winrate champions
         </h2>
-        <div className="flex space-x-2 w-full overflow-x-auto pb-2">
+        <div className="flex w-full space-x-2 overflow-x-auto pb-2">
           {item.championStats
             .sort((a, b) => b.wins / b.matches - a.wins / a.matches)
             .map((championStats) => (
@@ -95,10 +95,10 @@ export default function ItemPage({
 
       {/* Highest pickrate champions */}
       <div>
-        <h2 className="text-2xl font-header font-medium mb-1 mt-4">
+        <h2 className="mb-1 mt-4 font-header text-2xl font-medium">
           Highest pickrate champions
         </h2>
-        <div className="flex space-x-2 w-full overflow-x-auto pb-2">
+        <div className="flex w-full space-x-2 overflow-x-auto pb-2">
           {item.championStats
             .sort(
               (a, b) =>
@@ -119,11 +119,11 @@ export default function ItemPage({
 
       {/* Winrate by order */}
       <div className="mt-4">
-        <h2 className="text-2xl font-header font-medium mb-1">
+        <h2 className="mb-1 font-header text-2xl font-medium">
           Champion stats by order
         </h2>
         <div
-          className="grid grid-cols-1 grid-flow-row xl:grid-flow-col xl:grid-cols-5 gap-2"
+          className="grid grid-flow-row grid-cols-1 gap-2 xl:grid-flow-col xl:grid-cols-5"
           style={{ gridTemplateRows: "auto auto" }}
         >
           {item.orderStats.map((stats, i) => (

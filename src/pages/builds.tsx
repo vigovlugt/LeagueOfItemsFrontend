@@ -125,17 +125,17 @@ export default function BuildsPage({
 
   return (
     <div className="w-">
-      <div className="flex rounded shadow bg-white p-3 mb-4 dark:bg-gray-900">
+      <div className="mb-4 flex rounded bg-white p-3 shadow dark:bg-gray-900">
         <Popover className="relative">
           {({}) => (
             <>
-              <Popover.Button className="px-3 py-2 rounded-md inline-flex items-center font-medium dark:text-white">
+              <Popover.Button className="inline-flex items-center rounded-md px-3 py-2 font-medium dark:text-white">
                 <span>Filters</span>
                 <ChevronDownIcon className="ml-1 h-5 w-5" />
               </Popover.Button>
-              <Popover.Panel className="absolute z-10 w-96 px-4 -left-4">
+              <Popover.Panel className="absolute -left-4 z-10 w-96 px-4">
                 <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                  <div className="relative p-6 bg-white dark:bg-gray-800 font-medium flex flex-col space-y-1">
+                  <div className="relative flex flex-col space-y-1 bg-white p-6 font-medium dark:bg-gray-800">
                     <span>Items</span>
                     <label>
                       <input

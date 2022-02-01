@@ -50,7 +50,7 @@ export default function ChampionPage({
         description={champion.blurb}
       >
         <div className="flex flex-col lg:flex-row">
-          <div className="grid grid-cols-2 gap-3 lg:w-1/2 mr-3 mb-4 lg:mb-0">
+          <div className="mr-3 mb-4 grid grid-cols-2 gap-3 lg:mb-0 lg:w-1/2">
             <StatsCard {...champion} />
             <StatsCard
               {...champion}
@@ -59,14 +59,14 @@ export default function ChampionPage({
               type="pickrate"
             />
 
-            <div className="flex items-center justify-center bg-white rounded p-4 text-lg font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
-              <span className="text-gray-900 dark:text-white mr-1">
+            <div className="flex items-center justify-center rounded bg-white p-4 text-lg font-bold text-gray-600 shadow dark:bg-gray-800 dark:text-gray-400">
+              <span className="mr-1 text-gray-900 dark:text-white">
                 {champion.itemStats.length}
               </span>{" "}
               Items
             </div>
-            <div className="flex items-center justify-center bg-white rounded p-4 text-lg font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
-              <span className="text-gray-900 dark:text-white mr-1">
+            <div className="flex items-center justify-center rounded bg-white p-4 text-lg font-bold text-gray-600 shadow dark:bg-gray-800 dark:text-gray-400">
+              <span className="mr-1 text-gray-900 dark:text-white">
                 {champion.runeStats.length}
               </span>{" "}
               Runes
@@ -80,12 +80,12 @@ export default function ChampionPage({
       </PageHeader>
 
       {/* Highest winrate runes */}
-      <h2 className="text-2xl font-header font-medium mb-1">
+      <h2 className="mb-1 font-header text-2xl font-medium">
         Highest winrate runes
       </h2>
-      <div className="flex flex-col lg:flex-row lg:space-x-8 mb-4">
+      <div className="mb-4 flex flex-col lg:flex-row lg:space-x-8">
         <div className="mb-4 lg:mb-0 lg:max-w-1/2">
-          <div className="flex space-x-2 w-full overflow-x-auto pb-2">
+          <div className="flex w-full space-x-2 overflow-x-auto pb-2">
             {champion.runeStats
               .filter(
                 (stats) =>
@@ -105,7 +105,7 @@ export default function ChampionPage({
         </div>
 
         <div className="flex-1 overflow-auto">
-          <div className="flex space-x-2 w-full overflow-x-auto pb-2">
+          <div className="flex w-full space-x-2 overflow-x-auto pb-2">
             {champion.runeStats
               .filter(
                 (stats) =>
@@ -126,12 +126,12 @@ export default function ChampionPage({
       </div>
 
       {/* Highest pickrate runes */}
-      <h2 className="text-2xl font-header font-medium mb-1">
+      <h2 className="mb-1 font-header text-2xl font-medium">
         Highest pickrate runes
       </h2>
-      <div className="flex flex-col lg:flex-row lg:space-x-8 mb-4">
+      <div className="mb-4 flex flex-col lg:flex-row lg:space-x-8">
         <div className="mb-4 lg:mb-0 lg:max-w-1/2">
-          <div className="flex space-x-2 w-full overflow-x-auto pb-2">
+          <div className="flex w-full space-x-2 overflow-x-auto pb-2">
             {champion.runeStats
               .filter(
                 (stats) =>
@@ -151,7 +151,7 @@ export default function ChampionPage({
         </div>
 
         <div className="flex-1 overflow-auto">
-          <div className="flex space-x-2 w-full overflow-x-auto pb-2">
+          <div className="flex w-full space-x-2 overflow-x-auto pb-2">
             {champion.runeStats
               .filter(
                 (stats) =>
@@ -173,11 +173,11 @@ export default function ChampionPage({
 
       {/* Winrate by order */}
       <div>
-        <h2 className="text-2xl font-header font-medium mb-1">
+        <h2 className="mb-1 font-header text-2xl font-medium">
           Item stats by order
         </h2>
         <div
-          className="grid grid-cols-1 grid-flow-row xl:grid-flow-col xl:grid-cols-5 gap-2"
+          className="grid grid-flow-row grid-cols-1 gap-2 xl:grid-flow-col xl:grid-cols-5"
           style={{ gridTemplateRows: "auto auto" }}
         >
           {champion.orderStats.map((stats) => (

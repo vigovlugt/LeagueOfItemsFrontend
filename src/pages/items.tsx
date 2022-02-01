@@ -16,14 +16,14 @@ export default function Items({ items }) {
     <div>
       <NextSeo title="Items" />
 
-      <h2 className="font-header text-4xl mb-2">Mythic</h2>
+      <h2 className="mb-2 font-header text-4xl">Mythic</h2>
       <div className="flex flex-wrap">
         {mythic.map((i) => (
           <ItemGridCell {...i} key={i.id} className="mr-[6px] mb-[6px]" />
         ))}
       </div>
 
-      <h2 className="font-header text-4xl mt-8 mb-2">Legendary</h2>
+      <h2 className="mt-8 mb-2 font-header text-4xl">Legendary</h2>
       <div className="flex flex-wrap">
         {legendary.map((i) => (
           <ItemGridCell {...i} key={i.id} className="mr-[6px] mb-[6px]" />

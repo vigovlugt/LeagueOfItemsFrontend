@@ -21,14 +21,14 @@ export default function PatchNotesRundown({
 
   return (
     <div>
-      <p className="whitespace-pre-wrap font-medium max-w-[65ch]">
+      <p className="max-w-[65ch] whitespace-pre-wrap font-medium">
         {patchNotesDataset.quote}
       </p>
-      <h2 className="font-header text-4xl mb-2 mt-8">Patch Highlights</h2>
+      <h2 className="mb-2 mt-8 font-header text-4xl">Patch Highlights</h2>
       <div
         className={
           (maximizeHighlights ? "absolute inset-0 z-10 bg-black/90" : "") +
-          " cursor-pointer flex justify-center items-center"
+          " flex cursor-pointer items-center justify-center"
         }
       >
         <img
@@ -40,10 +40,10 @@ export default function PatchNotesRundown({
         />
         {maximizeHighlights && (
           <button
-            className="absolute top-4 right-4 -m-4 p-4 focus:outline-none z-20"
+            className="absolute top-4 right-4 z-20 -m-4 p-4 focus:outline-none"
             onClick={() => toggleMaximizeHighlights()}
           >
-            <XIcon className="w-6 h-6" />
+            <XIcon className="h-6 w-6" />
           </button>
         )}
       </div>

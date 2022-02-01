@@ -48,15 +48,15 @@ export default function PatchNotesChange({
       : previousChampionMatches / 10;
 
   return (
-    <div className="pt-4 border-t-[2px] border-gray-300 dark:border-gray-700 min-w-0">
-      <div className="flex mb-2">
+    <div className="min-w-0 border-t-[2px] border-gray-300 pt-4 dark:border-gray-700">
+      <div className="mb-2 flex">
         <GridCell type={patchNotesChange.type} id={patchNotesChange.id} />
         <div className="ml-4">
-          <h3 className="font-header text-2xl mb-2">
+          <h3 className="mb-2 font-header text-2xl">
             {patchNotesChange.title}
           </h3>
           {patchNotesChange.summary && (
-            <p className="font-medium max-w-[65ch] mb-2">
+            <p className="mb-2 max-w-[65ch] font-medium">
               {decode(patchNotesChange.summary)}
             </p>
           )}
@@ -68,7 +68,7 @@ export default function PatchNotesChange({
         </div>
       </div>
       {patchNotesChange.quote && (
-        <p className="font-medium mb-2 italic text-gray-600 dark:text-gray-400">
+        <p className="mb-2 font-medium italic text-gray-600 dark:text-gray-400">
           “{decode(patchNotesChange.quote)}”
         </p>
       )}
@@ -78,7 +78,7 @@ export default function PatchNotesChange({
         ))}
       </div>
 
-      <div className="flex flex-col md:flex-row mt-8 mb-4 space-y-4 md:space-y-0 md:space-x-4">
+      <div className="mt-8 mb-4 flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4">
         <DifferenceCard
           current={entity.wins / entity.matches}
           previous={entity.previousWins / entity.previousMatches}
@@ -91,8 +91,12 @@ export default function PatchNotesChange({
         />
         {patchNotesChange.type === "CHAMPION" && (
           <DifferenceCard
-            current={(entity as IPatchNotesChampionStats).bans / matches * 10}
-            previous={(entity as IPatchNotesChampionStats).previousBans / previousMatches * 10}
+            current={((entity as IPatchNotesChampionStats).bans / matches) * 10}
+            previous={
+              ((entity as IPatchNotesChampionStats).previousBans /
+                previousMatches) *
+              10
+            }
             text="Banrate"
           />
         )}
@@ -100,7 +104,7 @@ export default function PatchNotesChange({
 
       {entity.buildStats.length > 0 && (
         <div className="mb-4 max-w-[512px]">
-          <h4 className="font-header text-xl mb-2">
+          <h4 className="mb-2 font-header text-xl">
             Build pickrate{" "}
             {patchNotesChange.type === "CHAMPION" ? "increase" : "change"}{" "}
             <HelpHover
@@ -137,7 +141,7 @@ function ChampionStats({
     <div>
       {championStats.roleStats.length > 0 && (
         <>
-          <h4 className="font-header text-xl mb-2">
+          <h4 className="mb-2 font-header text-xl">
             Role pickrate increases <HelpHover text="Increase >5%" />
           </h4>
           <div className="flex space-x-4 overflow-x-scroll pb-2">
@@ -161,8 +165,8 @@ function DifferenceCard({ current, previous, text }) {
   const TrendingIcon = increase > 0 ? TrendingUpIcon : TrendingDownIcon;
 
   return (
-    <div className="flex items-center rounded p-4 text-lg font-bold shadow bg-white text-gray-600 dark:text-gray-300 dark:bg-gray-800">
-      <div className="flex flex-col items-center align-center mx-auto">
+    <div className="flex items-center rounded bg-white p-4 text-lg font-bold text-gray-600 shadow dark:bg-gray-800 dark:text-gray-300">
+      <div className="align-center mx-auto flex flex-col items-center">
         <div
           className={`flex items-center font-semibold ${winrateClass(
             0.5 + increase,
@@ -170,17 +174,17 @@ function DifferenceCard({ current, previous, text }) {
             true
           )}`}
         >
-          <span className="text-xl font-header">
-            <TrendingIcon className="w-8 inline mr-2" />
+          <span className="font-header text-xl">
+            <TrendingIcon className="mr-2 inline w-8" />
             {percentage(increase)}
           </span>
         </div>
-        <div className="flex items-center font-semibold text-xs">
+        <div className="flex items-center text-xs font-semibold">
           <span className="text-gray-600 dark:text-gray-400">
             {" "}
             {percentage(previous)}
           </span>
-          <ArrowSmRightIcon className="h-4 inline text-gray-600 dark:text-gray-400" />{" "}
+          <ArrowSmRightIcon className="inline h-4 text-gray-600 dark:text-gray-400" />{" "}
           <span>{percentage(current)}</span>
         </div>
         <span>{text}</span>
@@ -203,8 +207,8 @@ const RoleDifferenceCard = ({ current, previous, role }) => {
   }[role];
 
   return (
-    <div className="flex flex-col items-center bg-white rounded shadow text-gray-900 dark:text-gray-50 dark:bg-gray-800">
-      <div className="h-16 w-32 flex justify-center items-center rounded-t overflow-hidden">
+    <div className="flex flex-col items-center rounded bg-white text-gray-900 shadow dark:bg-gray-800 dark:text-gray-50">
+      <div className="flex h-16 w-32 items-center justify-center overflow-hidden rounded-t">
         <RoleIcon className="w-12" />
       </div>
 
@@ -215,15 +219,15 @@ const RoleDifferenceCard = ({ current, previous, role }) => {
           true
         )}`}
       >
-        <TrendingIcon className="w-8 inline mr-2" />
-        <span className="text-xl font-header">{percentage(increase)}</span>
+        <TrendingIcon className="mr-2 inline w-8" />
+        <span className="font-header text-xl">{percentage(increase)}</span>
       </div>
-      <div className="flex items-center mb-2 font-semibold text-xs ">
+      <div className="mb-2 flex items-center text-xs font-semibold ">
         <span className="text-gray-600 dark:text-gray-400">
           {" "}
           {percentage(previous)}
         </span>
-        <ArrowSmRightIcon className="h-4 inline text-gray-600 dark:text-gray-400" />{" "}
+        <ArrowSmRightIcon className="inline h-4 text-gray-600 dark:text-gray-400" />{" "}
         <span>{percentage(current)}</span>
       </div>
     </div>

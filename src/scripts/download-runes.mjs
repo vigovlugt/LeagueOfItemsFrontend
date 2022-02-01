@@ -1,7 +1,8 @@
-import { getImage, getRunes, getVersion, saveBuffer} from "./utils.mjs";
+import { getImage, getRunes, getVersion, saveBuffer } from "./utils.mjs";
 import fetch from "node-fetch";
 
-const wikiaUrl = (file) => `https://leagueoflegends.fandom.com/wikia.php?controller=Lightbox&method=getMediaDetail&fileTitle=${file}&format=json`;
+const wikiaUrl = (file) =>
+  `https://leagueoflegends.fandom.com/wikia.php?controller=Lightbox&method=getMediaDetail&fileTitle=${file}&format=json`;
 
 const getImageUrl = async (name) => {
   const res = await fetch(wikiaUrl(name));
@@ -10,11 +11,11 @@ const getImageUrl = async (name) => {
   if (!json.exists) return null;
 
   return json.rawImageUrl;
-}
+};
 
 const transformName = (name) => {
   return name.replace(":", "-");
-}
+};
 
 const saveRuneImage = async (r) => {
   const imageUrl = await getImageUrl(transformName(r.name) + " rune.png");
@@ -25,7 +26,7 @@ const saveRuneImage = async (r) => {
 
   const image = await getImage(imageUrl);
 
-  saveBuffer(`../../public/images/runes/${r.id}.png`, image)
+  saveBuffer(`../../public/images/runes/${r.id}.png`, image);
 };
 
 async function main() {
