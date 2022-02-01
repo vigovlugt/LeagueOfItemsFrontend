@@ -12,6 +12,7 @@ const tdPaddingBySize = {
   md: "px-2 py-2 md:px-6 md:py-4",
 };
 
+/* eslint react/jsx-key: "off" */
 export default function Table({ table, onClick, size = "md" }) {
   const isPaginated = Boolean(table.page);
 
