@@ -41,7 +41,7 @@ export default function Table({ table, onClick, size = "md" }) {
                   {...column.getHeaderProps(column.getSortByToggleProps?.())}
                   className={`${
                     thPaddingBySize[size]
-                  } text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400 whitespace-nowrap ${
+                  } whitespace-nowrap text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400 ${
                     column.headerClass || ""
                   }`}
                 >
@@ -56,7 +56,7 @@ export default function Table({ table, onClick, size = "md" }) {
         </thead>
         <tbody
           {...table.getTableBodyProps()}
-          className="divide-y bg-white divide-gray-200 dark:bg-gray-900 dark:divide-gray-700"
+          className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900"
         >
           {(table.page || table.rows).map((row) => {
             table.prepareRow(row);
@@ -72,7 +72,7 @@ export default function Table({ table, onClick, size = "md" }) {
                       {...cell.getCellProps()}
                       className={`${
                         tdPaddingBySize[size]
-                      } whitespace-nowrap w-[1%] ${
+                      } w-[1%] whitespace-nowrap ${
                         cell.column.cellClass || ""
                       }`}
                     >
@@ -86,15 +86,15 @@ export default function Table({ table, onClick, size = "md" }) {
         </tbody>
       </table>
       {isPaginated && (
-        <div className="flex justify-center mt-2">
+        <div className="mt-2 flex justify-center">
           <nav
-            className={`${styles.tablePagination} relative z-0 inline-flex shadow-sm -space-x-px`}
+            className={`${styles.tablePagination} relative z-0 inline-flex -space-x-px shadow-sm`}
             aria-label="Pagination"
           >
             {pageIndex != 0 && (
               <a
                 href="#"
-                className="relative inline-flex items-center px-2 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 dark:bg-dark dark:border-gray-600"
+                className="relative inline-flex items-center border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 dark:border-gray-600 dark:bg-dark"
                 onClick={() => gotoPage(0)}
               >
                 <span className="sr-only">First</span>
@@ -115,7 +115,7 @@ export default function Table({ table, onClick, size = "md" }) {
             {canPreviousPage && (
               <a
                 href="#"
-                className="relative inline-flex items-center px-2 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 dark:bg-dark dark:border-gray-600"
+                className="relative inline-flex items-center border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 dark:border-gray-600 dark:bg-dark"
                 onClick={previousPage}
               >
                 <span className="sr-only">Previous</span>
@@ -143,7 +143,7 @@ export default function Table({ table, onClick, size = "md" }) {
                 <a
                   key={n}
                   href="#"
-                  className="bg-white border-gray-300 text-gray-500 relative inline-flex items-center px-4 py-2 border text-sm font-medium dark:bg-dark dark:border-gray-600"
+                  className="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 dark:border-gray-600 dark:bg-dark"
                   onClick={() => gotoPage(n)}
                 >
                   {n + 1}
@@ -153,7 +153,7 @@ export default function Table({ table, onClick, size = "md" }) {
             <a
               href="#"
               aria-current="page"
-              className="bg-white border-gray-900 text-gray-900 relative inline-flex items-center px-4 py-2 border text-sm font-medium z-10 dark:bg-dark dark:border-gray-400 dark:text-gray-50"
+              className="relative z-10 inline-flex items-center border border-gray-900 bg-white px-4 py-2 text-sm font-medium text-gray-900 dark:border-gray-400 dark:bg-dark dark:text-gray-50"
             >
               {pageIndex + 1}
             </a>
@@ -166,7 +166,7 @@ export default function Table({ table, onClick, size = "md" }) {
                 <a
                   key={n}
                   href="#"
-                  className="bg-white border-gray-300 text-gray-500 relative inline-flex items-center px-4 py-2 border text-sm font-medium dark:bg-dark dark:border-gray-600"
+                  className="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 dark:border-gray-600 dark:bg-dark"
                   onClick={() => gotoPage(n)}
                 >
                   {n + 1}
@@ -175,7 +175,7 @@ export default function Table({ table, onClick, size = "md" }) {
             {canNextPage && (
               <a
                 href="#"
-                className="relative inline-flex items-center px-2 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 dark:bg-dark dark:border-gray-600"
+                className="relative inline-flex items-center border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 dark:border-gray-600 dark:bg-dark"
                 onClick={nextPage}
               >
                 <span className="sr-only">Next</span>
@@ -197,7 +197,7 @@ export default function Table({ table, onClick, size = "md" }) {
             {pageIndex != pageCount - 1 && (
               <a
                 href="#"
-                className="relative inline-flex items-center px-2 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 dark:bg-dark dark:border-gray-600"
+                className="relative inline-flex items-center border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 dark:border-gray-600 dark:bg-dark"
                 onClick={() => gotoPage(pageCount - 1)}
               >
                 <span className="sr-only">Last</span>

@@ -14,8 +14,7 @@ export default async function connect() {
   }
 
   if (!cached.promise) {
-    cached.promise = mongoose
-      .connect(MONGODB_URL);
+    cached.promise = mongoose.connect(MONGODB_URL);
   }
 
   cached.conn = await cached.promise;

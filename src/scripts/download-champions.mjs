@@ -25,7 +25,7 @@ async function main() {
   const champions = await getChampions(version);
   console.log("Downloaded champion info");
 
-  await Promise.all(champions.map(c => saveImgForChampion(version, c)));
+  await Promise.all(champions.map((c) => saveImgForChampion(version, c)));
   await Promise.all(champions.map(saveTileForChampion));
   console.log("Done");
 }

@@ -67,7 +67,7 @@ export default function ChampionTierlist({
             <span className={`${winrateClass(wins, matches)}`}>
               {winrate(wins, matches)}
             </span>
-            <span className="text-gray-600 dark:text-gray-400 text-xs">
+            <span className="text-xs text-gray-600 dark:text-gray-400">
               {winrate(previousWins, previousMatches)}
             </span>
           </div>
@@ -115,7 +115,7 @@ export default function ChampionTierlist({
         }) => (
           <div className="flex flex-col">
             <span>{pickrate(matches, totalMatches)}</span>
-            <span className="text-gray-600 dark:text-gray-400 text-xs">
+            <span className="text-xs text-gray-600 dark:text-gray-400">
               {pickrate(previousMatches, previousTotalMatches)}
             </span>
           </div>
@@ -164,7 +164,7 @@ export default function ChampionTierlist({
         }) => (
           <div className="flex flex-col">
             <span>{pickrate(bans, totalMatches)}</span>
-            <span className="text-gray-600 dark:text-gray-400 text-xs">
+            <span className="text-xs text-gray-600 dark:text-gray-400">
               {pickrate(previousBans, previousTotalMatches)}
             </span>
           </div>
@@ -254,7 +254,7 @@ export default function ChampionTierlist({
   const goToChampion = (row) => router.push(`/champions/${row.original.id}`);
 
   return (
-    <div className="rounded-lg overflow-hidden shadow-lg">
+    <div className="overflow-hidden rounded-lg shadow-lg">
       <NextSeo
         title="Champion tierlist"
         description="League of Legends champion tierlist."

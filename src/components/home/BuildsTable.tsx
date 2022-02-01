@@ -56,13 +56,13 @@ export default function BuildsTable({
         return (
           <div className="flex justify-end">
             <div
-              className={`text-xl flex items-center ${winrateClass(
+              className={`flex items-center text-xl ${winrateClass(
                 0.5 + increase,
                 undefined,
                 true
               )}`}
             >
-              <TrendingIcon className="w-5 h-5 inline mr-1" />
+              <TrendingIcon className="mr-1 inline h-5 w-5" />
               {(Math.abs(increase) * 100).toFixed(2) + "%"}
             </div>
           </div>
@@ -89,7 +89,7 @@ export default function BuildsTable({
         const title = isWinrate ? undefined : row.original.matches + " matches";
 
         return (
-          <div className="flex items-end flex-col">
+          <div className="flex flex-col items-end">
             <div title={title}>{value}</div>
             <div className="text-xs text-gray-600 dark:text-gray-400">
               {previousValue}
@@ -219,16 +219,18 @@ export default function BuildsTable({
     <div
       className={
         !isFull
-          ? "rounded overflow-hidden shadow mb-4"
-          : "rounded overflow-hidden mb-4"
+          ? "mb-4 overflow-hidden rounded shadow"
+          : "mb-4 overflow-hidden rounded"
       }
     >
       <Table table={table} onClick={gotoBuild} size={size} />
       {!isFull && (
         <Link href={linkHref} passHref>
-          <a className="flex justify-center items-center w-full rounded-b p-2 text-lg shadow bg-gray-50 dark:text-gray-50 dark:bg-gray-800">
-            <h2 className="font-header">{filterName ? `View all ${filterName} builds` : "View all builds"}</h2>
-            <ArrowSmRightIcon className="w-8 inline text-gray-600 dark:text-gray-400" />
+          <a className="flex w-full items-center justify-center rounded-b bg-gray-50 p-2 text-lg shadow dark:bg-gray-800 dark:text-gray-50">
+            <h2 className="font-header">
+              {filterName ? `View all ${filterName} builds` : "View all builds"}
+            </h2>
+            <ArrowSmRightIcon className="inline w-8 text-gray-600 dark:text-gray-400" />
           </a>
         </Link>
       )}

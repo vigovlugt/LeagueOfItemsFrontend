@@ -10,7 +10,7 @@ export default function ChampionIndex({ champions }) {
         description="See all League of Legends champions with data about both runes and items."
       />
 
-      <h2 className="font-header text-4xl mb-2">Champions</h2>
+      <h2 className="mb-2 font-header text-4xl">Champions</h2>
       <div className="flex flex-wrap">
         {champions.map((c) => (
           <ChampionGridCell {...c} key={c.id} className="mr-[6px] mb-[6px]" />

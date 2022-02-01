@@ -19,14 +19,14 @@ export default function RuneIndex({ runes }) {
         description="See all League of Legends runes and what champions they are best used on."
       />
 
-      <h2 className="font-header text-4xl mb-2">Keystones</h2>
+      <h2 className="mb-2 font-header text-4xl">Keystones</h2>
       <div className="flex flex-wrap">
         {keystones.map((i) => (
           <RuneGridCell {...i} key={i.id} className="mr-[6px] mb-[6px]" />
         ))}
       </div>
 
-      <h2 className="font-header text-4xl mb-2">Runes</h2>
+      <h2 className="mb-2 font-header text-4xl">Runes</h2>
       <div className="flex flex-wrap">
         {normalRunes.map((i) => (
           <RuneGridCell

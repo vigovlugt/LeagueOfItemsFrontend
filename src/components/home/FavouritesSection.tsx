@@ -7,17 +7,17 @@ export default function FavouritesSection() {
 
   return (
     <div>
-      <h2 className="font-header text-3xl lg:text-4xl mb-2">My favourites</h2>
+      <h2 className="mb-2 font-header text-3xl lg:text-4xl">My favourites</h2>
       {hasFavourites ? (
-        <div className="flex w-full overflow-x-auto pb-2 space-x-4">
+        <div className="flex w-full space-x-4 overflow-x-auto pb-2">
           {favourites.map((f) => (
             <GridCell key={f.type + "-" + f.id} type={f.type} id={f.id} />
           ))}
         </div>
       ) : (
-        <div className="p-4 h-32 flex justify-center items-center bg-white rounded text-lg shadow mt-4 dark:text-gray-50 dark:bg-gray-900 font-header">
+        <div className="mt-4 flex h-32 items-center justify-center rounded bg-white p-4 font-header text-lg shadow dark:bg-gray-900 dark:text-gray-50">
           <span>
-            Add favourites by pressing the <StarIcon className="w-6 inline" />{" "}
+            Add favourites by pressing the <StarIcon className="inline w-6" />{" "}
             icon in the menu bar on any item, rune or champion page.
           </span>
         </div>

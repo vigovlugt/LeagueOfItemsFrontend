@@ -66,8 +66,14 @@ export default class BuildStats implements IBuildStats {
     return new BuildStats({
       buildType: "BUILD_PATH",
       championId: champion.id,
-      totalMatches: champion.buildPathStats.reduce((sum, s) => sum + s.matches, 0),
-      previousTotalMatches: champion.buildPathStats.reduce((sum, s) => sum + s.previousMatches, 0),
+      totalMatches: champion.buildPathStats.reduce(
+        (sum, s) => sum + s.matches,
+        0
+      ),
+      previousTotalMatches: champion.buildPathStats.reduce(
+        (sum, s) => sum + s.previousMatches,
+        0
+      ),
       ...championBuildPathStats,
     });
   }

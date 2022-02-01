@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function ItemGridCell({ id, className="", size = "md" }) {
+export default function ItemGridCell({ id, className = "", size = "md" }) {
   return (
     <Link href={`/items/${id}`} passHref>
       <a className={`block cursor-pointer ${className}`}>

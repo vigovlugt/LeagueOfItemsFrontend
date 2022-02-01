@@ -32,7 +32,7 @@ export default function PatchOverview({
   return (
     <div
       id="patch-overview"
-      className="rounded p-4 mt-24 bg-white dark:bg-gray-900"
+      className="mt-24 rounded bg-white p-4 dark:bg-gray-900"
     >
       <Link
         href={`https://www.leagueoflegends.com/en-us/news/game-updates/patch-${patch.replace(
@@ -43,22 +43,22 @@ export default function PatchOverview({
       >
         <a
           target="_blank"
-          className="flex justify-center items-center w-full bg-white rounded-lg p-8 py-24 sm:py-32 shadow mb-8 dark:text-gray-50 dark:bg-dark relative overflow-hidden group"
+          className="group relative mb-8 flex w-full items-center justify-center overflow-hidden rounded-lg bg-white p-8 py-24 shadow dark:bg-dark dark:text-gray-50 sm:py-32"
         >
           <img
             src={patchNotes.bannerImageUrl}
             alt={""}
             loading="lazy"
             className={
-              "absolute inset-0 w-full h-full " + styles.patchOverviewImage
+              "absolute inset-0 h-full w-full " + styles.patchOverviewImage
             }
           />
-          <div className="absolute inset-0 flex flex-col justify-center items-center font-header pointer-events-none text-center">
-            <h2 className="text-4xl mt-8 group-hover:text-white">
+          <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center font-header">
+            <h2 className="mt-8 text-4xl group-hover:text-white">
               Patch {patch} overview
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 text-sm mt-4 group-hover:text-white">
-              Patch notes <ArrowSmRightIcon className="w-6 inline" />
+            <p className="mt-4 text-sm text-gray-600 group-hover:text-white dark:text-gray-400">
+              Patch notes <ArrowSmRightIcon className="inline w-6" />
             </p>
           </div>
         </a>
@@ -112,11 +112,11 @@ const PatchEntityChanges = ({
 
   return (
     <div>
-      <h2 className="font-header text-4xl mb-2 mt-8">{title}</h2>
-      <h2 className="font-header text-xl lg:text-2xl mb-2">
+      <h2 className="mb-2 mt-8 font-header text-4xl">{title}</h2>
+      <h2 className="mb-2 font-header text-xl lg:text-2xl">
         Biggest pickrate changes since last patch
       </h2>
-      <div className="flex space-x-2 w-full overflow-x-auto pb-2">
+      <div className="flex w-full space-x-2 overflow-x-auto pb-2">
         {pickrateData.map((d) => (
           <DifferenceCard
             key={d.id}
@@ -127,10 +127,10 @@ const PatchEntityChanges = ({
           />
         ))}
       </div>
-      <h2 className="font-header text-xl lg:text-2xl mt-4 mb-2">
+      <h2 className="mt-4 mb-2 font-header text-xl lg:text-2xl">
         Biggest winrate changes since last patch
       </h2>
-      <div className="flex space-x-2 w-full overflow-x-auto pb-2">
+      <div className="flex w-full space-x-2 overflow-x-auto pb-2">
         {winrateData.map((d) => (
           <DifferenceCard key={d.id} {...{ [dataKey]: d }} />
         ))}
@@ -138,10 +138,10 @@ const PatchEntityChanges = ({
 
       {rolePickrateData.length > 0 && (
         <>
-          <h2 className="font-header text-xl lg:text-2xl mt-4 mb-2">
+          <h2 className="mt-4 mb-2 font-header text-xl lg:text-2xl">
             Role pickrate increases since last patch
           </h2>
-          <div className="flex space-x-2 w-full overflow-x-auto pb-2">
+          <div className="flex w-full space-x-2 overflow-x-auto pb-2">
             {rolePickrateData.map((d) => {
               const data = { ...d, id: d.championId };
 
@@ -161,10 +161,10 @@ const PatchEntityChanges = ({
 
       {banrateData.length > 0 && (
         <>
-          <h2 className="font-header text-xl lg:text-2xl mt-4 mb-2">
+          <h2 className="mt-4 mb-2 font-header text-xl lg:text-2xl">
             Biggest banrate changes since last patch
           </h2>
-          <div className="flex space-x-2 w-full overflow-x-auto pb-2">
+          <div className="flex w-full space-x-2 overflow-x-auto pb-2">
             {banrateData.map((d) => (
               <DifferenceCard
                 key={d.id}
@@ -218,11 +218,11 @@ const DifferenceCard = ({
   }[entity.role];
 
   return (
-    <div className="flex flex-col items-center bg-white rounded shadow text-gray-900 dark:text-gray-50 dark:bg-gray-800">
-      <div className="relative h-32 w-32 flex justify-center items-center rounded-t overflow-hidden">
+    <div className="flex flex-col items-center rounded bg-white text-gray-900 shadow dark:bg-gray-800 dark:text-gray-50">
+      <div className="relative flex h-32 w-32 items-center justify-center overflow-hidden rounded-t">
         {champion && <ChampionGridCell id={champion.id} />}
         {RoleIcon && (
-          <RoleIcon className="absolute right-0 bottom-0 w-11 pointer-events-none bg-gray-800 pt-[2px] pl-[2px] rounded-tl-lg rounded-tr-lg" />
+          <RoleIcon className="pointer-events-none absolute right-0 bottom-0 w-11 rounded-tl-lg rounded-tr-lg bg-gray-800 pt-[2px] pl-[2px]" />
         )}
         {item && <ItemGridCell id={item.id} />}
         {rune && (
@@ -239,15 +239,15 @@ const DifferenceCard = ({
           rune !== null ? "mb-1" : "my-1"
         } ${winrateClass(0.5 + increase, undefined, true)}`}
       >
-        <TrendingIcon className="w-8 inline mr-2" />
-        <span className="text-xl font-header">{percentage(increase)}</span>
+        <TrendingIcon className="mr-2 inline w-8" />
+        <span className="font-header text-xl">{percentage(increase)}</span>
       </div>
-      <div className="flex items-center mb-2 font-semibold text-xs ">
+      <div className="mb-2 flex items-center text-xs font-semibold ">
         <span className="text-gray-600 dark:text-gray-400">
           {" "}
           {percentage(previous)}
         </span>
-        <ArrowSmRightIcon className="h-4 inline text-gray-600 dark:text-gray-400" />{" "}
+        <ArrowSmRightIcon className="inline h-4 text-gray-600 dark:text-gray-400" />{" "}
         <span>{percentage(current)}</span>
       </div>
     </div>

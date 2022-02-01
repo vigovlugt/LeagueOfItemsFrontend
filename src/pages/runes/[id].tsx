@@ -37,7 +37,7 @@ export default function RunePage({
         name={rune.name}
         description={removeTags(rune.shortDescription)}
       >
-        <div className="grid grid-cols-2 gap-3 mb-4 xl:w-1/2">
+        <div className="mb-4 grid grid-cols-2 gap-3 xl:w-1/2">
           <StatsCard {...rune} entityType="rune" />
           <StatsCard
             {...rune}
@@ -47,7 +47,7 @@ export default function RunePage({
             type="pickrate"
           />
 
-          <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-300 dark:bg-gray-800">
+          <div className="rounded bg-white p-4 text-center text-lg font-bold text-gray-600 shadow dark:bg-gray-800 dark:text-gray-300">
             <span className="text-gray-900 dark:text-white">
               {rune.championStats.length}
             </span>{" "}
@@ -58,10 +58,10 @@ export default function RunePage({
 
       {/* Highest winrate champions */}
       <div>
-        <h2 className="text-2xl font-header font-medium mb-1">
+        <h2 className="mb-1 font-header text-2xl font-medium">
           Highest winrate champions
         </h2>
-        <div className="flex space-x-2 w-full overflow-x-auto pb-2">
+        <div className="flex w-full space-x-2 overflow-x-auto pb-2">
           {rune.championStats
             .sort((a, b) => b.wins / b.matches - a.wins / a.matches)
             .map((championStats) => (
@@ -78,10 +78,10 @@ export default function RunePage({
 
       {/* Highest pickrate champions */}
       <div>
-        <h2 className="text-2xl font-header font-medium mb-1 mt-4">
+        <h2 className="mb-1 mt-4 font-header text-2xl font-medium">
           Highest pickrate champions
         </h2>
-        <div className="flex space-x-2 w-full overflow-x-auto pb-2">
+        <div className="flex w-full space-x-2 overflow-x-auto pb-2">
           {rune.championStats
             .sort(
               (a, b) =>

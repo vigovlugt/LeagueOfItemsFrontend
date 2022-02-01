@@ -5,7 +5,7 @@ export default function RuneIcon() {
       viewBox="0 0 8 8"
       stroke="currentColor"
       fill="currentColor"
-      className="w-7 inline"
+      className="inline w-7"
     >
       <path
         strokeLinecap="round"

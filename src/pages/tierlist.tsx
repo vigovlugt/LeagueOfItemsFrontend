@@ -11,7 +11,7 @@ import {
   ITEM_PICKRATE_HELPER_TEXT,
   ITEM_WINRATE_HELPER_TEXT,
 } from "../constants/constants";
-import {getPickrateIncrease} from "../utils/stats";
+import { getPickrateIncrease } from "../utils/stats";
 
 export default function Tierlist({
   items,
@@ -63,7 +63,7 @@ export default function Tierlist({
             <span className={`${winrateClass(wins, matches)}`}>
               {winrate(wins, matches)}
             </span>
-            <span className="text-gray-600 dark:text-gray-400 text-xs">
+            <span className="text-xs text-gray-600 dark:text-gray-400">
               {winrate(previousWins, previousMatches)}
             </span>
           </div>
@@ -111,7 +111,7 @@ export default function Tierlist({
         }) => (
           <div className="flex flex-col">
             <span>{pickrate(matches, totalMatches)}</span>
-            <span className="text-gray-600 dark:text-gray-400 text-xs">
+            <span className="text-xs text-gray-600 dark:text-gray-400">
               {pickrate(previousMatches, previousTotalMatches)}
             </span>
           </div>
@@ -185,7 +185,7 @@ export default function Tierlist({
   const goToItem = (row) => router.push(`/items/${row.original.id}`);
 
   return (
-    <div className="rounded-lg overflow-hidden shadow-lg">
+    <div className="overflow-hidden rounded-lg shadow-lg">
       <NextSeo
         title="Item tierlist"
         description="Item tierlist with all League of Legends items."

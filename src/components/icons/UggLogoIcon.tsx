@@ -4,7 +4,7 @@ export default function UggLogoIcon() {
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 81 27"
-      className="w-[81px] h-[27px]"
+      className="h-[27px] w-[81px]"
     >
       <path
         fill="#3273fa"

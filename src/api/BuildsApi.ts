@@ -4,13 +4,13 @@ import {
   getPickrateIncreaseFromPlayRate,
   getWinrateIncrease,
 } from "../utils/stats";
-import BuildStats, {IBuildStats} from "../models/builds/BuildStats";
+import BuildStats, { IBuildStats } from "../models/builds/BuildStats";
 
 export default class BuildsApi {
   private static _builds;
 
   static getAllBuilds(): IBuildStats[] {
-    if(BuildsApi._builds){
+    if (BuildsApi._builds) {
       return BuildsApi._builds;
     }
 

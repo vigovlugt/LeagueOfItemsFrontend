@@ -18,7 +18,10 @@ export default function PatchRundown({
   previousChampionMatches: number;
 }) {
   return (
-    <div id="patch-rundown" className="rounded p-4 mt-24 bg-white dark:bg-gray-900">
+    <div
+      id="patch-rundown"
+      className="mt-24 rounded bg-white p-4 dark:bg-gray-900"
+    >
       <Link
         href={`https://www.leagueoflegends.com/en-us/news/game-updates/patch-${patch.replace(
           ".",
@@ -28,22 +31,22 @@ export default function PatchRundown({
       >
         <a
           target="_blank"
-          className="flex justify-center items-center w-full bg-white rounded-lg p-8 py-24 sm:py-32 shadow mb-4 dark:text-gray-50 dark:bg-dark relative overflow-hidden group"
+          className="group relative mb-4 flex w-full items-center justify-center overflow-hidden rounded-lg bg-white p-8 py-24 shadow dark:bg-dark dark:text-gray-50 sm:py-32"
         >
           <img
             src={patchNotes.bannerImageUrl}
             loading="lazy"
             alt={""}
             className={
-              "absolute inset-0 w-full h-full " + styles.patchRundownImage
+              "absolute inset-0 h-full w-full " + styles.patchRundownImage
             }
           />
-          <div className="absolute inset-0 flex flex-col justify-center items-center font-header pointer-events-none text-center">
-            <h2 className="text-4xl mt-8 group-hover:text-white">
+          <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center font-header">
+            <h2 className="mt-8 text-4xl group-hover:text-white">
               Patch {patch} notes
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 text-sm mt-4 group-hover:text-white">
-              Full patch notes <ArrowSmRightIcon className="w-6 inline" />
+            <p className="mt-4 text-sm text-gray-600 group-hover:text-white dark:text-gray-400">
+              Full patch notes <ArrowSmRightIcon className="inline w-6" />
             </p>
           </div>
         </a>
@@ -56,7 +59,7 @@ export default function PatchRundown({
         previousChampionMatches={previousChampionMatches}
       />
 
-      <p className="text-center mb-2 font-medium">
+      <p className="mb-2 text-center font-medium">
         This overview only shows items, runes and champions from the patch
         notes.
       </p>
@@ -68,11 +71,11 @@ export default function PatchRundown({
         passHref
       >
         <a
-          className="flex justify-center items-center w-full rounded p-2 text-lg shadow bg-gray-50 dark:text-gray-50 dark:bg-gray-800"
+          className="flex w-full items-center justify-center rounded bg-gray-50 p-2 text-lg shadow dark:bg-gray-800 dark:text-gray-50"
           target="_blank"
         >
           <h2 className="font-header">View full patch notes</h2>
-          <ArrowSmRightIcon className="w-8 inline text-gray-600 dark:text-gray-400" />
+          <ArrowSmRightIcon className="inline w-8 text-gray-600 dark:text-gray-400" />
         </a>
       </Link>
     </div>
