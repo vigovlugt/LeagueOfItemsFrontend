@@ -132,9 +132,26 @@ export default class ChampionApi {
     );
   }
 
+  static getPreviousMatchesByChampion() {
+    return this.getAllChampions().reduce(
+      (agg, c) => ({ ...agg, [c.id]: c.previousMatches }),
+      {}
+    );
+  }
+
   static getOrderMatchesByChampion() {
     return this.getAllChampions().reduce(
       (agg, c) => ({ ...agg, [c.id]: c.orderStats.map((s) => s.matches) }),
+      {}
+    );
+  }
+
+  static getPreviousOrderMatchesByChampion() {
+    return this.getAllChampions().reduce(
+      (agg, c) => ({
+        ...agg,
+        [c.id]: c.orderStats.map((s) => s.previousMatches),
+      }),
       {}
     );
   }

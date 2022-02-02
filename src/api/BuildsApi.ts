@@ -5,6 +5,7 @@ import {
   getWinrateIncrease,
 } from "../utils/stats";
 import BuildStats, { IBuildStats } from "../models/builds/BuildStats";
+import { IChampionStats } from "../models/champions/ChampionStats";
 
 export default class BuildsApi {
   private static _builds;
@@ -16,19 +17,23 @@ export default class BuildsApi {
 
     const builds = Api.getDataset()
       .champions.map((c) => {
-        return [
-          ...c.runeStats.map((s) =>
-            BuildStats.fromChampionRuneStats(c, s).toJSON()
-          ),
-          ...c.buildPathStats.map((s) =>
-            BuildStats.fromChampionBuildPathStats(c, s).toJSON()
-          ),
-        ];
+        return this.getBuildsForChampion(c);
       })
       .flat();
 
     BuildsApi._builds = builds;
     return builds;
+  }
+
+  static getBuildsForChampion(champion: IChampionStats): IBuildStats[] {
+    return [
+      ...champion.runeStats.map((s) =>
+        BuildStats.fromChampionRuneStats(champion, s).toJSON()
+      ),
+      ...champion.buildPathStats.map((s) =>
+        BuildStats.fromChampionBuildPathStats(champion, s).toJSON()
+      ),
+    ];
   }
 
   static getByWinrate() {

@@ -11,6 +11,8 @@ export default function StatsByOrder({
   totalMatches,
   type = "champion",
   orderMatchesByChampion = null,
+  previousOrderMatchesByChampion = null,
+  showPrevious,
 }) {
   const router = useRouter();
 
@@ -19,6 +21,7 @@ export default function StatsByOrder({
       type === "champion" ? orderStats.championStats : orderStats.itemStats,
     []
   );
+  console.log(orderStats);
 
   const columns = useMemo(
     () => [
@@ -49,7 +52,7 @@ export default function StatsByOrder({
         headerClass: "text-right",
         Cell: ({
           row: {
-            original: { wins, matches },
+            original: { wins, matches, previousWins, previousMatches },
           },
         }) => (
           <div
@@ -57,6 +60,11 @@ export default function StatsByOrder({
             title={wins}
           >
             {winrate(wins, matches)}
+            {showPrevious && (
+              <div className="text-xs text-gray-600 dark:text-gray-400">
+                {winrate(previousWins, previousMatches)}
+              </div>
+            )}
           </div>
         ),
         accessor: "wins",
@@ -79,7 +87,7 @@ export default function StatsByOrder({
           : (rowA, rowB) => rowA.original.matches - rowB.original.matches,
         Cell: ({
           row: {
-            original: { matches, championId },
+            original: { matches, previousMatches, championId },
           },
         }) => (
           <div className="w-full text-right" title={matches + " matches"}>
@@ -88,6 +96,16 @@ export default function StatsByOrder({
               orderMatchesByChampion
                 ? orderMatchesByChampion[championId]
                 : orderStats.matches
+            )}
+            {showPrevious && (
+              <div className="text-xs text-gray-600 dark:text-gray-400">
+                {pickrate(
+                  previousMatches,
+                  previousOrderMatchesByChampion
+                    ? previousOrderMatchesByChampion[championId]
+                    : orderStats.previousMatches
+                )}
+              </div>
             )}
           </div>
         ),

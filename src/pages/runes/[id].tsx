@@ -1,9 +1,4 @@
-import {
-  pickrate,
-  removeTags,
-  winrate,
-  winrateClass,
-} from "../../utils/format";
+import { removeTags } from "../../utils/format";
 import RuneApi from "../../api/RuneApi";
 import RuneStats from "../../models/runes/RuneStats";
 import Card from "../../components/Card";
@@ -19,6 +14,7 @@ export default function RunePage({
   totalMatches,
   previousTotalMatches,
   matchesByChampion,
+  previousMatchesByChampion,
 }) {
   rune = new RuneStats(rune);
 
@@ -70,6 +66,9 @@ export default function RunePage({
                 type={"champion"}
                 {...championStats}
                 totalMatches={matchesByChampion[championStats.championId]}
+                previousTotalMatches={
+                  previousMatchesByChampion[championStats.championId]
+                }
                 id={championStats.championId}
               />
             ))}
@@ -94,6 +93,9 @@ export default function RunePage({
                 type={"champion"}
                 {...championStats}
                 totalMatches={matchesByChampion[championStats.championId]}
+                previousTotalMatches={
+                  previousMatchesByChampion[championStats.championId]
+                }
                 id={championStats.championId}
               />
             ))}
@@ -119,6 +121,7 @@ export async function getStaticProps({ params }) {
   const previousTotalMatches = MatchApi.getPreviousTotalMatches();
 
   const matchesByChampion = ChampionApi.getMatchesByChampion();
+  const previousMatchesByChampion = ChampionApi.getPreviousMatchesByChampion();
 
   return {
     props: {
@@ -126,6 +129,7 @@ export async function getStaticProps({ params }) {
       totalMatches,
       previousTotalMatches,
       matchesByChampion,
+      previousMatchesByChampion,
     },
   };
 }
