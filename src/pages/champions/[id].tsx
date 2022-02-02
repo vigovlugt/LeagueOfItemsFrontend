@@ -12,19 +12,30 @@ import { useState } from "react";
 import PageHeader from "../../components/PageHeader";
 import MatchApi from "../../api/MatchApi";
 import usePageView from "../../hooks/usePageView";
-import { CHAMPION_PICKRATE_HELPER_TEXT } from "../../constants/constants";
-import HelpHover from "../../components/HelpHover";
 import StatsCard from "../../components/StatsCard";
+import BuildsTable from "../../components/home/BuildsTable";
+import BuildsApi from "../../api/BuildsApi";
+import BuildStats from "../../models/builds/BuildStats";
+import RuneStats from "../../models/runes/RuneStats";
 
 export default function ChampionPage({
   champion,
   runes,
   totalMatches,
   previousTotalMatches,
+  buildStats,
+  keystones,
 }) {
   champion = new ChampionStats(champion);
 
   const [modalIsOpen, setModalOpen] = useState(false);
+
+  const [showSmallRunes, setShowSmallRunes] = useState(false);
+  const [showPreviousOrderStats, setShowPreviousOrderStats] = useState(false);
+
+  const builds = showSmallRunes
+    ? buildStats
+    : buildStats.filter((b) => !BuildStats.isSmallRune(b, keystones));
 
   usePageView("CHAMPION", champion.id);
 
@@ -98,6 +109,7 @@ export default function ChampionPage({
                   type={"rune"}
                   {...runeStats}
                   totalMatches={champion.matches}
+                  previousTotalMatches={champion.previousMatches}
                   id={runeStats.runeId}
                 />
               ))}
@@ -118,6 +130,7 @@ export default function ChampionPage({
                   type={"rune"}
                   {...runeStats}
                   totalMatches={champion.matches}
+                  previousTotalMatches={champion.previousMatches}
                   id={runeStats.runeId}
                 />
               ))}
@@ -144,6 +157,7 @@ export default function ChampionPage({
                   type={"rune"}
                   {...runeStats}
                   totalMatches={champion.matches}
+                  previousTotalMatches={champion.previousMatches}
                   id={runeStats.runeId}
                 />
               ))}
@@ -164,6 +178,7 @@ export default function ChampionPage({
                   type={"rune"}
                   {...runeStats}
                   totalMatches={champion.matches}
+                  previousTotalMatches={champion.previousMatches}
                   id={runeStats.runeId}
                 />
               ))}
@@ -172,10 +187,24 @@ export default function ChampionPage({
       </div>
 
       {/* Winrate by order */}
-      <div>
-        <h2 className="mb-1 font-header text-2xl font-medium">
-          Item stats by order
-        </h2>
+      <div className="mb-4">
+        <div className="flex items-center justify-between">
+          <h2 className="mb-1 font-header text-2xl font-medium">
+            Item stats by order
+          </h2>
+          <label>
+            <input
+              type="checkbox"
+              className="mr-1"
+              checked={showPreviousOrderStats}
+              onChange={() =>
+                setShowPreviousOrderStats(!showPreviousOrderStats)
+              }
+            />{" "}
+            Show previous patch stats
+          </label>
+        </div>
+
         <div
           className="grid grid-flow-row grid-cols-1 gap-2 xl:grid-flow-col xl:grid-cols-5"
           style={{ gridTemplateRows: "auto auto" }}
@@ -186,9 +215,27 @@ export default function ChampionPage({
               totalMatches={champion.matches}
               type={"item"}
               orderStats={stats}
+              showPrevious={showPreviousOrderStats}
             />
           ))}
         </div>
+      </div>
+
+      {/* Build stats */}
+      <div>
+        <div className="flex justify-between">
+          <h2 className="mb-1 font-header text-2xl font-medium">Build stats</h2>
+          <label>
+            <input
+              type="checkbox"
+              className="mr-1"
+              checked={showSmallRunes}
+              onChange={() => setShowSmallRunes(!showSmallRunes)}
+            />
+            Show small runes
+          </label>
+        </div>
+        <BuildsTable builds={builds} type="full" />
       </div>
     </div>
   );
@@ -206,7 +253,13 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const champion = ChampionApi.getChampion(params.id);
   const runes = RuneApi.getAllRunes();
+  const keystones = runes
+    .filter((r) => RuneStats.isKeystone(r))
+    .map((r) => r.id);
+
   const items = ItemApi.getAllItems();
+
+  const buildStats = BuildsApi.getBuildsForChampion(champion);
 
   const totalMatches = MatchApi.getTotalMatches();
   const previousTotalMatches = MatchApi.getPreviousTotalMatches();
@@ -214,8 +267,10 @@ export async function getStaticProps({ params }) {
   return {
     props: {
       champion,
+      buildStats,
       totalMatches,
       previousTotalMatches,
+      keystones,
       runes: runes.map(({ id, tier }) => ({ id, tier })),
       items: items.map(({ id, description }) => ({
         id,

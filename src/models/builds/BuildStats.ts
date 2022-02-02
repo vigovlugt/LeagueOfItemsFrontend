@@ -1,7 +1,7 @@
 import ChampionRuneStats from "../champions/ChampionRuneStats";
 import ChampionBuildPathStats from "../champions/ChampionBuildPathStats";
 import Champion from "../champions/Champion";
-import ChampionStats from "../champions/ChampionStats";
+import ChampionStats, { IChampionStats } from "../champions/ChampionStats";
 
 export interface IBuildStats {
   buildType: string;
@@ -43,7 +43,7 @@ export default class BuildStats implements IBuildStats {
   }
 
   public static fromChampionRuneStats(
-    champion: ChampionStats,
+    champion: IChampionStats,
     championRuneStats: ChampionRuneStats
   ) {
     return new BuildStats({
@@ -60,7 +60,7 @@ export default class BuildStats implements IBuildStats {
   }
 
   public static fromChampionBuildPathStats(
-    champion: ChampionStats,
+    champion: IChampionStats,
     championBuildPathStats: ChampionBuildPathStats
   ) {
     return new BuildStats({

@@ -100,12 +100,7 @@ export default function ChampionTierlist({
         id: "winrateIncrease",
       },
       {
-        Header: () => (
-          <>
-            Pickrate
-            <HelpHover text={CHAMPION_PICKRATE_HELPER_TEXT} />
-          </>
-        ),
+        Header: "Pickrate",
         headerClass: "text-right",
         cellClass: "text-right",
         Cell: ({

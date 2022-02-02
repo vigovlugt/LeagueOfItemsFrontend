@@ -16,17 +16,21 @@ import {
 } from "../../constants/constants";
 import ChampionApi from "../../api/ChampionApi";
 import StatsCard from "../../components/StatsCard";
+import Champion from "../../models/champions/Champion";
 
 export default function ItemPage({
   item,
   totalMatches,
   previousTotalMatches,
   matchesByChampion,
+  previousMatchesByChampion,
   orderMatchesByChampion,
+  previousOrderMatchesByChampion,
 }) {
   item = new ItemStats(item);
 
   const [modalIsOpen, setModalOpen] = useState(false);
+  const [showPreviousOrderStats, setShowPreviousOrderStats] = useState(false);
 
   usePageView("ITEM", item.id);
 
@@ -87,6 +91,9 @@ export default function ItemPage({
                 type={"champion"}
                 {...championStats}
                 totalMatches={matchesByChampion[championStats.championId]}
+                previousTotalMatches={
+                  previousMatchesByChampion[championStats.championId]
+                }
                 id={championStats.championId}
               />
             ))}
@@ -111,6 +118,9 @@ export default function ItemPage({
                 type={"champion"}
                 {...championStats}
                 totalMatches={matchesByChampion[championStats.championId]}
+                previousTotalMatches={
+                  previousMatchesByChampion[championStats.championId]
+                }
                 id={championStats.championId}
               />
             ))}
@@ -119,9 +129,22 @@ export default function ItemPage({
 
       {/* Winrate by order */}
       <div className="mt-4">
-        <h2 className="mb-1 font-header text-2xl font-medium">
-          Champion stats by order
-        </h2>
+        <div className="flex items-center justify-between">
+          <h2 className="mb-1 font-header text-2xl font-medium">
+            Champion stats by order
+          </h2>
+          <label>
+            <input
+              type="checkbox"
+              className="mr-1"
+              checked={showPreviousOrderStats}
+              onChange={() =>
+                setShowPreviousOrderStats(!showPreviousOrderStats)
+              }
+            />{" "}
+            Show previous patch stats
+          </label>
+        </div>
         <div
           className="grid grid-flow-row grid-cols-1 gap-2 xl:grid-flow-col xl:grid-cols-5"
           style={{ gridTemplateRows: "auto auto" }}
@@ -140,6 +163,16 @@ export default function ItemPage({
                 }),
                 {}
               )}
+              previousOrderMatchesByChampion={Object.keys(
+                previousOrderMatchesByChampion
+              ).reduce(
+                (agg, key) => ({
+                  ...agg,
+                  [key]: previousOrderMatchesByChampion[key][i],
+                }),
+                {}
+              )}
+              showPrevious={showPreviousOrderStats}
             />
           ))}
         </div>
@@ -164,7 +197,10 @@ export async function getStaticProps({ params }) {
   const previousTotalMatches = MatchApi.getPreviousTotalMatches();
 
   const matchesByChampion = ChampionApi.getMatchesByChampion();
+  const previousMatchesByChampion = ChampionApi.getPreviousMatchesByChampion();
   const orderMatchesByChampion = ChampionApi.getOrderMatchesByChampion();
+  const previousOrderMatchesByChampion =
+    ChampionApi.getPreviousOrderMatchesByChampion();
 
   return {
     props: {
@@ -172,7 +208,9 @@ export async function getStaticProps({ params }) {
       totalMatches,
       previousTotalMatches,
       matchesByChampion,
+      previousMatchesByChampion,
       orderMatchesByChampion,
+      previousOrderMatchesByChampion,
     },
   };
 }

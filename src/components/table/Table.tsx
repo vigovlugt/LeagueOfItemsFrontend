@@ -14,12 +14,7 @@ const tdPaddingBySize = {
 };
 
 /* eslint react/jsx-key: "off" */
-export default function Table({
-  table,
-  onClick = (_) => {},
-  size = "md",
-  href = null,
-}) {
+export default function Table({ table, onClick, size = "md", href = null }) {
   const isPaginated = Boolean(table.page);
 
   const {
@@ -71,7 +66,7 @@ export default function Table({
               <tr
                 {...row.getRowProps()}
                 onClick={onClick ? () => onClick(row) : undefined}
-                className="cursor-pointer"
+                className={onClick ? "cursor-pointer" : ""}
               >
                 {row.cells.map((cell) => {
                   return (

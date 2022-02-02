@@ -113,7 +113,6 @@ export async function getStaticProps() {
   const previousRuneMatches = RuneApi.getPreviousTotalMatches();
 
   const pageViewDataset = PageViewApi.getDataset();
-  console.log(pageViewDataset);
 
   const winrateBuilds = BuildsApi.getByWinrate()
     .filter(

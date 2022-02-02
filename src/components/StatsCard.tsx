@@ -13,7 +13,6 @@ export default function StatsCard({
   entityType = "champion",
 }) {
   const isWinrate = type === "winrate";
-  const isChampion = entityType === "champion";
 
   return (
     <div className="flex-col items-center justify-center rounded bg-white p-4 text-lg font-bold text-gray-600 shadow dark:bg-gray-800 dark:text-gray-400">
@@ -32,7 +31,6 @@ export default function StatsCard({
               {pickrate(matches, totalMatches)}
             </span>{" "}
             Pickrate
-            {isChampion && <HelpHover text={CHAMPION_PICKRATE_HELPER_TEXT} />}
           </>
         )}
       </div>
