@@ -8,11 +8,31 @@ import { useState } from "react";
 import ItemModal from "../../components/items/ItemModal";
 import PageHeader from "../../components/PageHeader";
 import MatchApi from "../../api/MatchApi";
+import usePageView from "../../hooks/usePageView";
+import HelpHover from "../../components/HelpHover";
+import {
+  ITEM_PICKRATE_HELPER_TEXT,
+  ITEM_WINRATE_HELPER_TEXT,
+} from "../../constants/constants";
+import ChampionApi from "../../api/ChampionApi";
+import StatsCard from "../../components/StatsCard";
+import Champion from "../../models/champions/Champion";
 
-export default function ItemPage({ item, totalMatches }) {
+export default function ItemPage({
+  item,
+  totalMatches,
+  previousTotalMatches,
+  matchesByChampion,
+  previousMatchesByChampion,
+  orderMatchesByChampion,
+  previousOrderMatchesByChampion,
+}) {
   item = new ItemStats(item);
 
   const [modalIsOpen, setModalOpen] = useState(false);
+  const [showPreviousOrderStats, setShowPreviousOrderStats] = useState(false);
+
+  usePageView("ITEM", item.id);
 
   return (
     <div className="flex flex-col">
@@ -31,20 +51,24 @@ export default function ItemPage({ item, totalMatches }) {
         name={item.name}
         description={item.plaintext}
       >
-        <div className="grid grid-cols-2 gap-3 mb-4 xl:w-1/2">
-          <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
-            <span className={winrateClass(item.wins, item.matches)}>
-              {winrate(item.wins, item.matches)}
-            </span>{" "}
-            Winrate
-          </div>
-          <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
+        <div className="mb-4 grid grid-cols-2 gap-3 xl:w-1/2">
+          <StatsCard {...item} entityType="item" />
+          <StatsCard
+            {...item}
+            totalMatches={totalMatches}
+            previousTotalMatches={previousTotalMatches}
+            type="pickrate"
+            entityType="item"
+          />
+
+          <div className="rounded bg-white p-4 text-center text-lg font-bold text-gray-600 shadow dark:bg-gray-800 dark:text-gray-400">
             <span className="text-gray-900 dark:text-white">
               {pickrate(item.matches, totalMatches)}
             </span>{" "}
             Pickrate
+            <HelpHover text={ITEM_PICKRATE_HELPER_TEXT} />
           </div>
-          <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-400 dark:bg-gray-800">
+          <div className="rounded bg-white p-4 text-center text-lg font-bold text-gray-600 shadow dark:bg-gray-800 dark:text-gray-400">
             <span className="text-gray-900 dark:text-white">
               {item.championStats.length}
             </span>{" "}
@@ -55,10 +79,10 @@ export default function ItemPage({ item, totalMatches }) {
 
       {/* Highest winrate champions */}
       <div>
-        <h2 className="text-2xl font-header font-medium mb-1">
+        <h2 className="mb-1 font-header text-2xl font-medium">
           Highest winrate champions
         </h2>
-        <div className="flex space-x-2 w-full overflow-x-auto pb-2">
+        <div className="flex w-full space-x-2 overflow-x-auto pb-2">
           {item.championStats
             .sort((a, b) => b.wins / b.matches - a.wins / a.matches)
             .map((championStats) => (
@@ -66,7 +90,37 @@ export default function ItemPage({ item, totalMatches }) {
                 key={championStats.championId}
                 type={"champion"}
                 {...championStats}
-                totalMatches={item.matches}
+                totalMatches={matchesByChampion[championStats.championId]}
+                previousTotalMatches={
+                  previousMatchesByChampion[championStats.championId]
+                }
+                id={championStats.championId}
+              />
+            ))}
+        </div>
+      </div>
+
+      {/* Highest pickrate champions */}
+      <div>
+        <h2 className="mb-1 mt-4 font-header text-2xl font-medium">
+          Highest pickrate champions
+        </h2>
+        <div className="flex w-full space-x-2 overflow-x-auto pb-2">
+          {item.championStats
+            .sort(
+              (a, b) =>
+                b.matches / matchesByChampion[b.championId] -
+                a.matches / matchesByChampion[a.championId]
+            )
+            .map((championStats) => (
+              <Card
+                key={championStats.championId}
+                type={"champion"}
+                {...championStats}
+                totalMatches={matchesByChampion[championStats.championId]}
+                previousTotalMatches={
+                  previousMatchesByChampion[championStats.championId]
+                }
                 id={championStats.championId}
               />
             ))}
@@ -75,18 +129,50 @@ export default function ItemPage({ item, totalMatches }) {
 
       {/* Winrate by order */}
       <div className="mt-4">
-        <h2 className="text-2xl font-header font-medium mb-1">
-          Stats by order
-        </h2>
+        <div className="flex items-center justify-between">
+          <h2 className="mb-1 font-header text-2xl font-medium">
+            Champion stats by order
+          </h2>
+          <label>
+            <input
+              type="checkbox"
+              className="mr-1"
+              checked={showPreviousOrderStats}
+              onChange={() =>
+                setShowPreviousOrderStats(!showPreviousOrderStats)
+              }
+            />{" "}
+            Show previous patch stats
+          </label>
+        </div>
         <div
-          className="grid grid-cols-1 grid-flow-row xl:grid-flow-col xl:grid-cols-5 gap-2"
+          className="grid grid-flow-row grid-cols-1 gap-2 xl:grid-flow-col xl:grid-cols-5"
           style={{ gridTemplateRows: "auto auto" }}
         >
-          {item.orderStats.map((stats) => (
+          {item.orderStats.map((stats, i) => (
             <StatsByOrder
               key={Math.random()}
               totalMatches={item.matches}
               orderStats={stats}
+              orderMatchesByChampion={Object.keys(
+                orderMatchesByChampion
+              ).reduce(
+                (agg, key) => ({
+                  ...agg,
+                  [key]: orderMatchesByChampion[key][i],
+                }),
+                {}
+              )}
+              previousOrderMatchesByChampion={Object.keys(
+                previousOrderMatchesByChampion
+              ).reduce(
+                (agg, key) => ({
+                  ...agg,
+                  [key]: previousOrderMatchesByChampion[key][i],
+                }),
+                {}
+              )}
+              showPrevious={showPreviousOrderStats}
             />
           ))}
         </div>
@@ -108,13 +194,27 @@ export async function getStaticProps({ params }) {
   const item = ItemApi.getItem(params.id);
 
   const totalMatches = MatchApi.getTotalMatches();
+  const previousTotalMatches = MatchApi.getPreviousTotalMatches();
+
+  const matchesByChampion = ChampionApi.getMatchesByChampion();
+  const previousMatchesByChampion = ChampionApi.getPreviousMatchesByChampion();
+  const orderMatchesByChampion = ChampionApi.getOrderMatchesByChampion();
+  const previousOrderMatchesByChampion =
+    ChampionApi.getPreviousOrderMatchesByChampion();
 
   return {
     props: {
       item,
       totalMatches,
+      previousTotalMatches,
+      matchesByChampion,
+      previousMatchesByChampion,
+      orderMatchesByChampion,
+      previousOrderMatchesByChampion,
     },
   };
 }
 
 ItemPage.pageName = ({ item }) => item.name;
+ItemPage.favouriteType = () => "ITEM";
+ItemPage.favouriteId = ({ item }) => item.id;

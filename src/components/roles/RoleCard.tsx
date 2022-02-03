@@ -16,13 +16,13 @@ export default function RoleCard({ role, wins, matches, totalMatches }) {
   }[role];
 
   return (
-    <div className="block px-3 py-3 rounded text-center shadow bg-white dark:bg-gray-800">
-      <Icon className="mb-1 text-gray-600 mx-auto dark:text-white" />
+    <div className="flex flex-col justify-center rounded bg-white px-3 py-3 text-center shadow dark:bg-gray-800">
+      <Icon className="mx-auto mb-1 w-[46px] text-gray-600 dark:text-white" />
       {/*<p className="text-center text-xs font-medium uppercase tracking-wider -mb-1 text-gray-500 dark:text-gray-400 whitespace-nowrap">*/}
       {/*  Wins*/}
       {/*</p>*/}
       <p
-        className={`text-center font-bold text-lg ${winrateClass(
+        className={`text-center text-lg font-bold ${winrateClass(
           wins,
           matches
         )}`}
@@ -32,11 +32,8 @@ export default function RoleCard({ role, wins, matches, totalMatches }) {
       {/*<p className="text-center text-xs font-medium uppercase tracking-wider -mb-1 text-gray-500 dark:text-gray-400 whitespace-nowrap">*/}
       {/*  Matches*/}
       {/*</p>*/}
-      <p
-        className="text-center font-bold text-lg"
-        title={pickrate(matches, totalMatches)}
-      >
-        {matches}
+      <p className="text-center text-lg font-bold" title={matches + " matches"}>
+        {pickrate(matches, totalMatches)}
       </p>
     </div>
   );

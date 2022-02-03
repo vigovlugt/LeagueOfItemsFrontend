@@ -1,18 +1,24 @@
-import {
-  pickrate,
-  removeTags,
-  winrate,
-  winrateClass,
-} from "../../utils/format";
+import { removeTags } from "../../utils/format";
 import RuneApi from "../../api/RuneApi";
 import RuneStats from "../../models/runes/RuneStats";
 import Card from "../../components/Card";
 import { NextSeo } from "next-seo";
 import PageHeader from "../../components/PageHeader";
 import MatchApi from "../../api/MatchApi";
+import usePageView from "../../hooks/usePageView";
+import ChampionApi from "../../api/ChampionApi";
+import StatsCard from "../../components/StatsCard";
 
-export default function RunePage({ rune, totalMatches }) {
+export default function RunePage({
+  rune,
+  totalMatches,
+  previousTotalMatches,
+  matchesByChampion,
+  previousMatchesByChampion,
+}) {
   rune = new RuneStats(rune);
+
+  usePageView("RUNE", rune.id);
 
   return (
     <div className="flex flex-col">
@@ -27,23 +33,17 @@ export default function RunePage({ rune, totalMatches }) {
         name={rune.name}
         description={removeTags(rune.shortDescription)}
       >
-        <div className="grid grid-cols-2 gap-3 mb-4 xl:w-1/2">
-          <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-300 dark:bg-gray-800">
-            <span className={winrateClass(rune.wins, rune.matches)}>
-              {winrate(rune.wins, rune.matches)}
-            </span>{" "}
-            Winrate
-          </div>
-          <div
-            className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-300 dark:bg-gray-800"
-            title={rune.matches}
-          >
-            <span className="text-gray-900 dark:text-white">
-              {pickrate(rune.matches, totalMatches)}
-            </span>{" "}
-            Pickrate
-          </div>
-          <div className="bg-white rounded p-4 text-lg text-center font-bold text-gray-600 shadow dark:text-gray-300 dark:bg-gray-800">
+        <div className="mb-4 grid grid-cols-2 gap-3 xl:w-1/2">
+          <StatsCard {...rune} entityType="rune" />
+          <StatsCard
+            {...rune}
+            totalMatches={totalMatches}
+            previousTotalMatches={previousTotalMatches}
+            entityType="rune"
+            type="pickrate"
+          />
+
+          <div className="rounded bg-white p-4 text-center text-lg font-bold text-gray-600 shadow dark:bg-gray-800 dark:text-gray-300">
             <span className="text-gray-900 dark:text-white">
               {rune.championStats.length}
             </span>{" "}
@@ -54,10 +54,10 @@ export default function RunePage({ rune, totalMatches }) {
 
       {/* Highest winrate champions */}
       <div>
-        <h2 className="text-2xl font-header font-medium mb-1">
+        <h2 className="mb-1 font-header text-2xl font-medium">
           Highest winrate champions
         </h2>
-        <div className="flex space-x-2 w-full overflow-x-auto pb-2">
+        <div className="flex w-full space-x-2 overflow-x-auto pb-2">
           {rune.championStats
             .sort((a, b) => b.wins / b.matches - a.wins / a.matches)
             .map((championStats) => (
@@ -65,7 +65,37 @@ export default function RunePage({ rune, totalMatches }) {
                 key={championStats.championId}
                 type={"champion"}
                 {...championStats}
-                totalMatches={rune.matches}
+                totalMatches={matchesByChampion[championStats.championId]}
+                previousTotalMatches={
+                  previousMatchesByChampion[championStats.championId]
+                }
+                id={championStats.championId}
+              />
+            ))}
+        </div>
+      </div>
+
+      {/* Highest pickrate champions */}
+      <div>
+        <h2 className="mb-1 mt-4 font-header text-2xl font-medium">
+          Highest pickrate champions
+        </h2>
+        <div className="flex w-full space-x-2 overflow-x-auto pb-2">
+          {rune.championStats
+            .sort(
+              (a, b) =>
+                b.matches / matchesByChampion[b.championId] -
+                a.matches / matchesByChampion[a.championId]
+            )
+            .map((championStats) => (
+              <Card
+                key={championStats.championId}
+                type={"champion"}
+                {...championStats}
+                totalMatches={matchesByChampion[championStats.championId]}
+                previousTotalMatches={
+                  previousMatchesByChampion[championStats.championId]
+                }
                 id={championStats.championId}
               />
             ))}
@@ -88,13 +118,22 @@ export async function getStaticProps({ params }) {
   const rune = RuneApi.getRune(params.id);
 
   const totalMatches = MatchApi.getTotalMatches();
+  const previousTotalMatches = MatchApi.getPreviousTotalMatches();
+
+  const matchesByChampion = ChampionApi.getMatchesByChampion();
+  const previousMatchesByChampion = ChampionApi.getPreviousMatchesByChampion();
 
   return {
     props: {
       rune,
       totalMatches,
+      previousTotalMatches,
+      matchesByChampion,
+      previousMatchesByChampion,
     },
   };
 }
 
 RunePage.pageName = ({ rune }) => rune.name;
+RunePage.favouriteType = () => "RUNE";
+RunePage.favouriteId = ({ rune }) => rune.id;

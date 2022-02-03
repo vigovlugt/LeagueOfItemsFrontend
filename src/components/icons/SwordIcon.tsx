@@ -5,7 +5,7 @@ export default function SwordIcon() {
       viewBox="0 0 9 9"
       stroke="currentColor"
       fill="currentColor"
-      className="w-8 inline"
+      className="inline w-7"
       // style={{transform: "rotate(180deg)"}}
     >
       <path

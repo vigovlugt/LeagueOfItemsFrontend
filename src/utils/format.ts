@@ -1,9 +1,25 @@
+export function percentage(num) {
+  return parseFloat((num * 100).toFixed(2)) + "%";
+}
+
 export function winrate(wins, matches) {
   if (matches === 0) {
     return "-%";
   }
 
   return parseFloat(((wins / matches) * 100).toFixed(2)) + "%";
+}
+
+export function winrateIncrease(wins, matches, previousWins, previousMatches) {
+  if (matches === 0 || previousMatches == 0) {
+    return "-%";
+  }
+
+  return (
+    parseFloat(
+      ((wins / matches - previousWins / previousMatches) * 100).toFixed(2)
+    ) + "%"
+  );
 }
 
 export function pickrate(wins, matches) {
@@ -14,18 +30,18 @@ export function pickrate(wins, matches) {
   return parseFloat(((wins / matches) * 100).toFixed(2)) + "%";
 }
 
-export function winrateClass(wins, matches) {
+export function winrateClass(wins: number, matches?: number, noOkay = false) {
   if (matches === 0) {
     return "text-winrate-okay dark:text-winrate-okay-dark";
   }
 
-  const winrate = wins / matches;
+  const winrate = matches === undefined ? wins : wins / matches;
 
   if (winrate < 0.45) {
     return "text-winrate-shiggo";
-  } else if (winrate < 0.485) {
+  } else if (winrate < (noOkay ? 0.5 : 0.485)) {
     return "text-winrate-meh";
-  } else if (winrate < 0.515) {
+  } else if (winrate < 0.515 && !noOkay) {
     return "text-winrate-okay dark:text-winrate-okay-dark";
   } else if (winrate < 0.53) {
     return "text-winrate-good";

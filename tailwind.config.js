@@ -1,10 +1,10 @@
 const colors = require("tailwindcss/colors");
 const typography = require("@tailwindcss/typography");
+const aspectRatio = require("@tailwindcss/aspect-ratio");
 
 module.exports = {
   darkMode: "class",
-  mode: "jit",
-  purge: ["./src/**/*.{js,jsx,ts,tsx,vue}"],
+  content: ["./src/**/*.{js,jsx,ts,tsx,vue}"],
   theme: {
     maxWidth: {
       "1/4": "25%",
@@ -17,8 +17,12 @@ module.exports = {
       body: ["Open Sans"],
     },
     extend: {
+      screens: {
+        "2xl": "1535px",
+        "3xl": "1700px",
+      },
       colors: {
-        gray: colors.trueGray,
+        gray: colors.neutral,
         winrate: {
           shiggo: "#ff4e50",
           meh: "#fcb1b2",
@@ -28,8 +32,13 @@ module.exports = {
           great: "#3273fa",
           volxd: "#ff9b00",
         },
+        patchnotes: {
+          updated: "#0BC6E3",
+          new: "#4EA64E",
+          removed: "#BF302A",
+        },
         "ugg-dark": "#0B0B23",
-        ugg: "#242949",
+        ugg: "#191937",
         dark: "#121212",
         darker: "#090909",
       },
@@ -49,9 +58,6 @@ module.exports = {
         },
       },
     },
-    variants: {
-      extend: {},
-    },
   },
-  plugins: [typography],
+  plugins: [typography, aspectRatio],
 };

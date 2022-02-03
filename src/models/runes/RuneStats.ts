@@ -9,19 +9,23 @@ export default class RuneStats {
 
   public wins: number;
   public matches: number;
+  public previousWins: number;
+  public previousMatches: number;
 
   public championStats: RuneChampionStats[];
 
   constructor({
-                id,
-                name,
-                tier,
-                shortDescription,
-                longDescription,
-                wins,
-                matches,
-                championStats,
-              }) {
+    id,
+    name,
+    tier,
+    shortDescription,
+    longDescription,
+    wins,
+    matches,
+    previousWins,
+    previousMatches,
+    championStats,
+  }) {
     this.id = id;
     this.name = name;
     this.tier = tier;
@@ -31,10 +35,16 @@ export default class RuneStats {
 
     this.wins = wins;
     this.matches = matches;
+    this.previousWins = previousWins;
+    this.previousMatches = previousMatches;
     this.championStats = championStats.map((s) => new RuneChampionStats(s));
   }
 
   isKeystone() {
-    return this.tier === 0;
+    return RuneStats.isKeystone(this);
+  }
+
+  static isKeystone(rune) {
+    return rune.tier === 0;
   }
 }

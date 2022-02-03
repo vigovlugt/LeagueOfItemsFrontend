@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import UggButton from "./champions/UggButton";
 
 export default function PageHeader({
   id,
@@ -13,7 +14,7 @@ export default function PageHeader({
     <>
       <h2
         className={classNames(
-          "text-5xl font-header font-medium  lg:hidden text-center mb-2",
+          "mb-2 text-center font-header  text-5xl font-medium lg:hidden",
           {
             "cursor-pointer": hasModal,
           }
@@ -23,9 +24,9 @@ export default function PageHeader({
         {name}
       </h2>
 
-      <div className="flex mb-4 w-full flex-col items-center lg:items-start lg:flex-row ">
+      <div className="mb-4 flex w-full flex-col items-center lg:flex-row lg:items-start ">
         <div
-          className={classNames("w-[256px] h-[256px] lg:mr-4 flex-shrink-0", {
+          className={classNames("h-[256px] w-[256px] flex-shrink-0 lg:mr-4", {
             "cursor-pointer": hasModal,
           })}
           onClick={() => hasModal && setModalOpen(true)}
@@ -44,21 +45,25 @@ export default function PageHeader({
           />
         </div>
 
-        <div className="flex flex-col w-full">
-          <h2
-            className={classNames(
-              "text-5xl font-header font-medium hidden lg:block",
-              {
-                "cursor-pointer": hasModal,
-              }
-            )}
-            onClick={() => hasModal && setModalOpen(true)}
-          >
-            {name}
-          </h2>
+        <div className="flex w-full flex-col">
+          <div className="flex items-end justify-between">
+            <h2
+              className={classNames(
+                "hidden font-header text-5xl font-medium lg:block",
+                {
+                  "cursor-pointer": hasModal,
+                }
+              )}
+              onClick={() => hasModal && setModalOpen(true)}
+            >
+              {name}
+            </h2>
+            {type === "champion" && <UggButton name={name} />}
+          </div>
+
           <p
             className={classNames(
-              `text-lg font-header mb-4 text-center lg:text-left lg:overflow-ellipsis lg:overflow-hidden lg:max-h-[56px] cursor-pointer text-gray-600 dark:text-gray-400`,
+              `mb-3 max-h-[56px] cursor-pointer overflow-hidden overflow-ellipsis text-left font-header text-gray-600 dark:text-gray-400`,
               {
                 "cursor-pointer": hasModal,
               }
