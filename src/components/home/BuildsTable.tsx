@@ -19,6 +19,7 @@ export default function BuildsTable({
   filterId = null,
   filterType = null,
   filterName = null,
+  sortBy = null,
 }) {
   const router = useRouter();
 
@@ -33,7 +34,7 @@ export default function BuildsTable({
     {
       Header: isWinrate ? "WR increase" : "PR increase",
       headerClass: "text-right",
-      id: isWinrate ? "winrate" : "pickrate",
+      id: isWinrate ? "winrate-increase" : "pickrate-increase",
       accessor: (row) =>
         isWinrate
           ? getWinrateIncrease(row)
@@ -99,6 +100,7 @@ export default function BuildsTable({
       },
       sortDescFirst: true,
       sortType: "number",
+      id: isWinrate ? "winrate" : "pickrate",
     },
   ];
 
@@ -196,12 +198,12 @@ export default function BuildsTable({
   );
 
   useEffect(() => {
-    const id = router.query.sortby?.toString() ?? "pickrate";
+    const id = router.query.sortby?.toString() ?? sortBy ?? "pickrate-increase";
 
     if (table.setSortBy) {
       table.setSortBy([{ id, desc: true }]);
     }
-  }, [router.query.sortby]);
+  }, [router.query.sortby, sortBy]);
 
   const gotoBuild = (row) =>
     router.push(`/champions/${row.original.championId}`);
@@ -209,7 +211,7 @@ export default function BuildsTable({
   const linkHref =
     "/builds" +
     createQueryString({
-      sortby: isPickrate ? "pickrate" : "winrate",
+      sortby: isPickrate ? "pickrate-increase" : "winrate-increase",
       filterType,
       filterId,
       filterName,

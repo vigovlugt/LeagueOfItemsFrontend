@@ -86,6 +86,7 @@ export default function ChampionPage({
           <ChampionRoles
             roleStats={champion.roleStats}
             totalMatches={champion.matches}
+            previousTotalMatches={champion.previousMatches}
           />
         </div>
       </PageHeader>
@@ -235,7 +236,7 @@ export default function ChampionPage({
             Show small runes
           </label>
         </div>
-        <BuildsTable builds={builds} type="full" />
+        <BuildsTable builds={builds} type="full" sortBy="pickrate" />
       </div>
     </div>
   );
