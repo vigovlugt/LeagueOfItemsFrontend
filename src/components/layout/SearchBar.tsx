@@ -3,6 +3,7 @@ import classNames from "classnames";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import getSearchResults from "../../lib/search";
+import useOuterClick from "../../hooks/useOuterClick";
 
 export default function SearchBar({ onSubmit = null }) {
   const router = useRouter();
@@ -43,6 +44,7 @@ export default function SearchBar({ onSubmit = null }) {
     const { type, id } = results[0];
 
     router.push(`/${type}s/${id}`);
+    (document.activeElement as HTMLElement).blur();
     reset();
   };
 
@@ -59,11 +61,19 @@ export default function SearchBar({ onSubmit = null }) {
     setResults(results);
   }, [query, dataset]);
 
+  const outerClickRef = useOuterClick(() => {
+    setIsFocussed(false);
+  });
+
   return (
-    <form className="relative h-full" onSubmit={submit}>
+    <form
+      className="relative h-full"
+      onSubmit={submit}
+      ref={outerClickRef as any}
+    >
       <input
         className={classNames(
-          "h-full border rounded-md px-3 text-sm w-72 xl:w-96 shadow-sm border-gray-300 bg-white dark:bg-gray-800 dark:border-gray-600 dark:placeholder-gray-300 dark:text-white",
+          "h-full w-72 rounded-md border border-gray-300 bg-white px-3 text-sm shadow-sm dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-300 xl:w-96",
           {
             "rounded-b-none": results.length > 0 && isFocussed,
           }
@@ -71,7 +81,6 @@ export default function SearchBar({ onSubmit = null }) {
         placeholder="Search items, runes and champions"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        onBlur={() => setTimeout(() => setIsFocussed(false), 100)}
         onFocus={onFocus}
       />
       <button type="submit" className="absolute right-0 top-0 mt-3 mr-4">
@@ -85,8 +94,8 @@ export default function SearchBar({ onSubmit = null }) {
         </svg>
       </button>
       {results.length > 0 && isFocussed && (
-        <div className="absolute rounded-md border py-2 w-full z-10 rounded-t-none bg-white border-gray-300 dark:bg-dark dark:border-gray-600">
-          {results.slice(0, 5).map((result, i) => (
+        <div className="absolute z-10 w-full rounded-md rounded-t-none border border-gray-300 bg-white py-2 dark:border-gray-600 dark:bg-dark dark:text-white">
+          {results.slice(0, 5).map((result) => (
             <SearchResult {...result} key={result.id} onClick={reset} />
           ))}
         </div>
@@ -99,7 +108,7 @@ function SearchResult({ name, id, type, onClick }) {
   return (
     <Link href={`/${type}s/${id}`} passHref>
       <a
-        className="cursor-pointer px-3 py-2 flex items-center justify-start hover:bg-gray-100 dark:hover:bg-gray-800"
+        className="flex cursor-pointer items-center justify-start px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800"
         onClick={onClick}
       >
         <img

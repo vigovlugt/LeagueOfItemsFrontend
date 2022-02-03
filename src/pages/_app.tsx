@@ -1,12 +1,9 @@
-import SideNavigation from "../components/SideNavigation";
-import NavBar from "../components/NavBar";
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { DefaultSeo } from "next-seo";
 import { ThemeProvider } from "next-themes";
 
 import "../styles/global.css";
-import Logo from "../components/Logo";
 import Layout from "../components/layout/Layout";
 
 export default function App({ Component, pageProps }) {
@@ -31,14 +28,26 @@ export default function App({ Component, pageProps }) {
       ? Component.pageName(pageProps)
       : Component.pageName;
 
+  const favouriteType = Component.favouriteType
+    ? Component.favouriteType(pageProps)
+    : null;
+  const favouriteId = Component.favouriteId
+    ? Component.favouriteId(pageProps)
+    : null;
+
   return (
-    <ThemeProvider attribute="class" defaultTheme="light">
+    <ThemeProvider attribute="class" defaultTheme="dark">
       <DefaultSeo
-        title="League of Items"
         titleTemplate="League of Items - %s"
-        description="League of Items analyses U.GG data to provide you with an overview of all League of Legends Items and Runes."
+        defaultTitle="League of Items"
+        description="League of Items analyses U.GG data to provide you with an overview of the best League of Legends Items and Runes."
       />
-      <Layout pageName={pageName} pageContainer={pageContainer}>
+      <Layout
+        pageName={pageName}
+        pageContainer={pageContainer}
+        favouriteType={favouriteType}
+        favouriteId={favouriteId}
+      >
         <Component {...pageProps} />
       </Layout>
     </ThemeProvider>

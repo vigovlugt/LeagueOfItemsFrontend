@@ -1,6 +1,6 @@
 export default function SupportIcon({ className }) {
   return (
-    <svg viewBox="0 0 31 31" className={`w-[46px] ${className}`}>
+    <svg viewBox="0 0 31 31" className={className}>
       <g fill="currentColor" fillRule="evenodd" transform="translate(1.5 4)">
         <polygon points="14.089 22.953 18.041 19.779 14.089 9.976 10.121 19.779" />
         <polygon points="8.841 13.988 11.786 8.453 9.102 6 0 6 7.895 9.466 5.868 11.388" />

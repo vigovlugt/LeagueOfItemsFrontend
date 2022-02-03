@@ -1,30 +1,36 @@
 import classNames from "classnames";
 import Link from "next/link";
-import ListItem from "./icons/ListIcon";
 import { useRouter } from "next/router";
-import RuneIcon from "./icons/RuneIcon";
-import SwordIcon from "./icons/SwordIcon";
-import SideNavFooter from "./layout/SideNavFooter";
-import ChampionIcon from "./icons/ChampionIcon";
-import Logo from "./Logo";
+import RuneIcon from "../icons/RuneIcon";
+import SwordIcon from "../icons/SwordIcon";
+import SideNavFooter from "./SideNavFooter";
+import ChampionIcon from "../icons/ChampionIcon";
+import Logo from "../Logo";
 import {
   MailIcon,
-  MenuIcon,
   QuestionMarkCircleIcon,
   XIcon,
+  HomeIcon,
+  ViewListIcon,
+  BookOpenIcon,
 } from "@heroicons/react/outline";
-import SearchBar from "./layout/SearchBar";
+import SearchBar from "./SearchBar";
 
 const MENU_ITEMS = [
   {
-    name: "Items",
+    name: "Home",
     href: "/",
+    icon: () => <HomeIcon className="w-7" />,
+  },
+  {
+    name: "Items",
+    href: "/items",
     icon: SwordIcon,
   },
   {
     name: "Item Tierlist",
     href: "/tierlist",
-    icon: ListItem,
+    icon: () => <ViewListIcon className="w-7" />,
   },
   {
     name: "Runes",
@@ -34,7 +40,7 @@ const MENU_ITEMS = [
   {
     name: "Rune Tierlist",
     href: "/runes/tierlist",
-    icon: ListItem,
+    icon: () => <ViewListIcon className="w-7" />,
   },
   {
     name: "Champions",
@@ -44,7 +50,12 @@ const MENU_ITEMS = [
   {
     name: "Champion Tierlist",
     href: "/champions/tierlist",
-    icon: ListItem,
+    icon: () => <ViewListIcon className="w-7" />,
+  },
+  {
+    name: "Builds",
+    href: "/builds",
+    icon: () => <BookOpenIcon className="w-7" />,
   },
   {
     name: "FAQ",
@@ -65,17 +76,17 @@ export default function SideNavigation({ open, onClickClose }) {
   return (
     <nav
       className={classNames(
-        "h-screen p-4 z-10 border-r absolute inset-0 lg:w-80 lg:static lg:flex flex-col flex-shrink-0 flex-grow-0 border-gray-200 bg-white dark:bg-dark dark:border-gray-800",
+        "absolute inset-0 z-10 h-screen flex-shrink-0 flex-grow-0 flex-col border-r border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-dark lg:static lg:flex lg:w-80",
         {
           flex: open,
           hidden: !open,
         }
       )}
     >
-      <div className="flex justify-between items-start">
+      <div className="flex items-start justify-between">
         <div className="w-0 lg:hidden">
           <button
-            className="fixed flex items-center -m-3 p-3 focus:outline-none"
+            className="fixed -m-3 flex items-center p-3 focus:outline-none"
             onClick={onClickClose}
           >
             <XIcon className="w-8" />
@@ -83,14 +94,14 @@ export default function SideNavigation({ open, onClickClose }) {
         </div>
 
         <Logo />
-        <div className="w-0 lg:hidden mr-3" />
+        <div className="mr-3 w-0 lg:hidden" />
       </div>
 
-      <div className="h-[40px] flex justify-center mb-4 lg:hidden flex-shrink-0">
+      <div className="mb-4 flex h-[40px] flex-shrink-0 justify-center lg:hidden">
         <SearchBar onSubmit={onClickClose} />
       </div>
 
-      <div className="flex flex-col m-1 h-100 flex-grow">
+      <div className="h-100 m-1 flex flex-grow flex-col">
         {MENU_ITEMS.map((i) => (
           <MenuItem
             active={router.pathname === i.href}
@@ -120,10 +131,10 @@ function MenuItem({
     <Link href={href} passHref>
       <a
         className={classNames(
-          "py-2 px-3 rounded-lg text-lg font-semibold mb-1 cursor-pointer flex items-center",
+          "mb-1 flex cursor-pointer items-center rounded-lg py-2 px-3 text-lg font-semibold",
           className,
           {
-            "bg-gray-100 dark:bg-gray-800 text-black dark:text-white": active,
+            "bg-gray-100 text-black dark:bg-gray-800 dark:text-white": active,
             "text-gray-700 dark:text-gray-400": !active,
           }
         )}
@@ -131,11 +142,11 @@ function MenuItem({
       >
         <span
           className={classNames({
-            "text-gray-400 dark:text-gray-600": !active,
-            "text-gray-900 dark:text-gray-50": active,
+            "text-gray-400 dark:text-gray-700": !active,
+            "text-gray-700 dark:text-gray-400": active,
           })}
         >
-          {icon ? <Icon /> : <div className="w-8" />}
+          {icon ? <Icon className="w-8" /> : <div className="w-8" />}
         </span>
         <span className="ml-3">{name}</span>
       </a>

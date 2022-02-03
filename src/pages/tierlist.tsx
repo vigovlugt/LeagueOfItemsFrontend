@@ -1,23 +1,33 @@
 import ItemApi from "../api/ItemApi";
 import { useMemo } from "react";
 import { useTable, useSortBy } from "react-table";
-import Table from "../components/Table";
-import ItemStats from "../models/items/ItemStats";
+import Table from "../components/table/Table";
 import { useRouter } from "next/router";
-import { pickrate, winrate, winrateClass } from "../utils/format";
+import { percentage, pickrate, winrate, winrateClass } from "../utils/format";
 import { NextSeo } from "next-seo";
 import MatchApi from "../api/MatchApi";
+import HelpHover from "../components/HelpHover";
+import {
+  ITEM_PICKRATE_HELPER_TEXT,
+  ITEM_WINRATE_HELPER_TEXT,
+} from "../constants/constants";
+import { getPickrateIncrease } from "../utils/stats";
 
-export default function Tierlist({ items, totalMatches }) {
+export default function Tierlist({
+  items,
+  totalMatches,
+  previousTotalMatches,
+}) {
   const router = useRouter();
 
-  const data = useMemo(() => items.map((i) => new ItemStats(i)), []);
+  const data = useMemo(() => items, [items]);
 
   const columns = useMemo(
     () => [
       {
         Header: "Item",
         accessor: "name",
+        headerClass: "w-full",
         Cell: ({ row }) => (
           <div className="flex items-center">
             <img
@@ -36,15 +46,27 @@ export default function Tierlist({ items, totalMatches }) {
         ),
       },
       {
-        Header: "Winrate",
+        Header: () => (
+          <>
+            Winrate
+            <HelpHover text={ITEM_WINRATE_HELPER_TEXT} />
+          </>
+        ),
+        headerClass: "text-right",
+        cellClass: "text-right",
         Cell: ({
           row: {
-            original: { wins, matches },
+            original: { wins, matches, previousWins, previousMatches },
           },
         }) => (
-          <span className={`${winrateClass(wins, matches)}`}>
-            {winrate(wins, matches)}
-          </span>
+          <div className="flex flex-col">
+            <span className={`${winrateClass(wins, matches)}`}>
+              {winrate(wins, matches)}
+            </span>
+            <span className="text-xs text-gray-600 dark:text-gray-400">
+              {winrate(previousWins, previousMatches)}
+            </span>
+          </div>
         ),
         accessor: "wins",
         sortType: (rowA, rowB) =>
@@ -53,23 +75,91 @@ export default function Tierlist({ items, totalMatches }) {
         id: "winrate",
       },
       {
-        Header: "Pickrate",
+        Header: "WR increase",
+        headerClass: "text-right",
+        cellClass: "text-right",
         Cell: ({
           row: {
-            original: { matches },
+            original: { wins, matches, previousWins, previousMatches },
           },
-        }) => <span>{pickrate(matches, totalMatches)}</span>,
+        }) => (
+          <span className="text-gray-600 dark:text-gray-400">
+            {percentage(wins / matches - previousWins / previousMatches)}
+          </span>
+        ),
+        accessor: "wins",
+        sortType: (rowA, rowB) =>
+          rowA.original.wins / rowA.original.matches -
+          rowA.original.previousWins / rowA.original.previousMatches -
+          (rowB.original.wins / rowB.original.matches -
+            rowB.original.previousWins / rowB.original.previousMatches),
+        id: "winrateIncrease",
+      },
+      {
+        Header: () => (
+          <>
+            Pickrate
+            <HelpHover text={ITEM_PICKRATE_HELPER_TEXT} />
+          </>
+        ),
+        headerClass: "text-right",
+        cellClass: "text-right",
+        Cell: ({
+          row: {
+            original: { matches, previousMatches },
+          },
+        }) => (
+          <div className="flex flex-col">
+            <span>{pickrate(matches, totalMatches)}</span>
+            <span className="text-xs text-gray-600 dark:text-gray-400">
+              {pickrate(previousMatches, previousTotalMatches)}
+            </span>
+          </div>
+        ),
         accessor: "matches",
         sortType: (rowA, rowB) => rowA.original.matches - rowB.original.matches,
         id: "pickrate",
       },
       {
+        Header: "PR increase",
+        headerClass: "text-right",
+        cellClass: "text-right",
+        Cell: ({
+          row: {
+            original: { matches, previousMatches },
+          },
+        }) => (
+          <span className="text-gray-600 dark:text-gray-400">
+            {percentage(
+              matches / totalMatches - previousMatches / previousTotalMatches
+            )}
+          </span>
+        ),
+        accessor: "matches",
+        sortType: (rowA, rowB) =>
+          getPickrateIncrease(
+            rowA.original,
+            totalMatches,
+            previousTotalMatches
+          ) -
+          getPickrateIncrease(
+            rowB.original,
+            totalMatches,
+            previousTotalMatches
+          ),
+        id: "previousPickrate",
+      },
+      {
         Header: "Champions",
-        accessor: (original) => original.championStats.length,
+        headerClass: "text-right",
+        cellClass: "text-right",
+        accessor: (original) => original.champions,
         id: "champions",
       },
       {
         Header: "Matches",
+        headerClass: "text-right",
+        cellClass: "text-right",
         accessor: "matches",
       },
     ],
@@ -83,7 +173,7 @@ export default function Tierlist({ items, totalMatches }) {
       initialState: {
         sortBy: [
           {
-            id: "winrate",
+            id: "pickrate",
             desc: true,
           },
         ],
@@ -92,29 +182,49 @@ export default function Tierlist({ items, totalMatches }) {
     useSortBy
   );
 
-  const href = (row) => `/items/${row.original.id}`;
+  const goToItem = (row) => router.push(`/items/${row.original.id}`);
 
   return (
-    <div className="rounded-lg overflow-hidden shadow-lg">
+    <div className="overflow-hidden rounded-lg shadow-lg">
       <NextSeo
         title="Item tierlist"
         description="Item tierlist with all League of Legends items."
       />
 
-      <Table table={table} href={href} />
+      <Table table={table} onClick={goToItem} />
     </div>
   );
 }
 
 export async function getStaticProps(context) {
-  const items = ItemApi.getAllItems();
+  const items = ItemApi.getAllItems().map(
+    ({
+      id,
+      name,
+      matches,
+      previousMatches,
+      wins,
+      previousWins,
+      championStats,
+    }) => ({
+      id,
+      name,
+      matches,
+      wins,
+      previousMatches,
+      previousWins,
+      champions: championStats.length,
+    })
+  );
 
   const totalMatches = MatchApi.getTotalMatches();
+  const previousTotalMatches = MatchApi.getPreviousTotalMatches();
 
   return {
     props: {
       items,
       totalMatches,
+      previousTotalMatches,
     },
   };
 }

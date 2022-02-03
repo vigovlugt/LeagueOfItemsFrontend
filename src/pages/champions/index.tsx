@@ -1,11 +1,8 @@
 import { NextSeo } from "next-seo";
 import ChampionApi from "../../api/ChampionApi";
 import ChampionGridCell from "../../components/champions/ChampionGridCell";
-import ChampionStats from "../../models/champions/ChampionStats";
 
 export default function ChampionIndex({ champions }) {
-  champions = champions.map((i) => new ChampionStats(i));
-
   return (
     <div>
       <NextSeo
@@ -13,10 +10,10 @@ export default function ChampionIndex({ champions }) {
         description="See all League of Legends champions with data about both runes and items."
       />
 
-      <h2 className="font-header text-4xl mb-2">Champions</h2>
+      <h2 className="mb-2 font-header text-4xl">Champions</h2>
       <div className="flex flex-wrap">
         {champions.map((c) => (
-          <ChampionGridCell {...c} key={c.id} />
+          <ChampionGridCell {...c} key={c.id} className="mr-[6px] mb-[6px]" />
         ))}
       </div>
     </div>
@@ -24,7 +21,7 @@ export default function ChampionIndex({ champions }) {
 }
 
 export async function getStaticProps(context) {
-  const champions = ChampionApi.getAllChampions();
+  const champions = ChampionApi.getAllChampions().map(({ id }) => ({ id }));
 
   return {
     props: {

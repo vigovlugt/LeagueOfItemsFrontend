@@ -4,7 +4,7 @@ export default function RandomIcon() {
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 512 512"
-      className="w-5 inline"
+      className="inline w-5"
     >
       <path
         fill="currentColor"

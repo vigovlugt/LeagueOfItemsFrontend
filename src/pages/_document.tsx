@@ -25,20 +25,15 @@ export default class Document extends NextDocument {
             }}
           />
 
-          {/*Hotjar Tracking Code for leagueofitems.com*/}
+          {/* Micorosoft Clarity */}
           <script
             dangerouslySetInnerHTML={{
               __html: `
-            (function(h,o,t,j,a,r){
-            h.hj = h.hj || function () {
-              (h.hj.q = h.hj.q || []).push(arguments)
-            };
-            h._hjSettings={hjid:2382483,hjsv:6};
-            a=o.getElementsByTagName('head')[0];
-            r=o.createElement('script');r.async=1;
-            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-            a.appendChild(r);
-          })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+            (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "6t1rdrb8ui");
           `,
             }}
           />
