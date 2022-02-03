@@ -20,61 +20,63 @@ export default function Card({
     });
 
   return (
-    <Link href={`/${type}s/${id}`} passHref>
-      <a
-        className={`flex cursor-pointer flex-col items-center justify-center rounded bg-white px-3 py-3 text-center shadow ${
-          isLastPatch ? "dark:bg-gray-700" : "dark:bg-gray-800"
-        }`}
-        ref={setTriggerRef}
-      >
-        {isLastPatch && (
-          <span className="mb-1 block whitespace-nowrap text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
-            Last Patch
-          </span>
-        )}
-        <img
-          src={`/images/${type}s/64/${id}.webp`}
-          style={{
-            width: "64px",
-            height: "64px",
-            minHeight: "64px",
-            minWidth: "64px",
-          }}
-          alt="Image"
-        />
-
-        {/*<p className="text-center text-xs font-medium uppercase tracking-wider mt-1 -mb-1 text-gray-500 dark:text-gray-400 whitespace-nowrap">Wins</p>*/}
-        <p
-          className={`text-center text-lg font-bold ${winrateClass(
-            wins,
-            matches
-          )}`}
+    <div>
+      <Link href={`/${type}s/${id}`} passHref>
+        <a
+          className={`flex cursor-pointer flex-col items-center justify-center rounded bg-white px-3 py-3 text-center shadow ${
+            isLastPatch ? "dark:bg-gray-700" : "dark:bg-gray-800"
+          }`}
+          ref={setTriggerRef}
         >
-          {winrate(wins, matches)}
-        </p>
-        {/*<p className="text-center text-xs font-medium uppercase tracking-wider -mb-1 text-gray-500 dark:text-gray-400 whitespace-nowrap">Matches</p>*/}
-        <p
-          className="text-center text-lg font-bold"
-          title={matches + " matches"}
-        >
-          {pickrate(matches, totalMatches)}
-        </p>
-        {visible &&
-          previousMatches != null &&
-          previousWins != null &&
-          previousTotalMatches != null && (
-            <div ref={setTooltipRef} {...getTooltipProps()}>
-              <Card
-                type={type}
-                id={id}
-                wins={previousWins}
-                matches={previousMatches}
-                totalMatches={previousTotalMatches}
-                isLastPatch={true}
-              />
-            </div>
+          {isLastPatch && (
+            <span className="mb-1 block whitespace-nowrap text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">
+              Last Patch
+            </span>
           )}
-      </a>
-    </Link>
+          <img
+            src={`/images/${type}s/64/${id}.webp`}
+            style={{
+              width: "64px",
+              height: "64px",
+              minHeight: "64px",
+              minWidth: "64px",
+            }}
+            alt="Image"
+          />
+
+          {/*<p className="text-center text-xs font-medium uppercase tracking-wider mt-1 -mb-1 text-gray-500 dark:text-gray-400 whitespace-nowrap">Wins</p>*/}
+          <p
+            className={`text-center text-lg font-bold ${winrateClass(
+              wins,
+              matches
+            )}`}
+          >
+            {winrate(wins, matches)}
+          </p>
+          {/*<p className="text-center text-xs font-medium uppercase tracking-wider -mb-1 text-gray-500 dark:text-gray-400 whitespace-nowrap">Matches</p>*/}
+          <p
+            className="text-center text-lg font-bold"
+            title={matches + " matches"}
+          >
+            {pickrate(matches, totalMatches)}
+          </p>
+        </a>
+      </Link>
+      {visible &&
+        previousMatches != null &&
+        previousWins != null &&
+        previousTotalMatches != null && (
+          <div ref={setTooltipRef} {...getTooltipProps()}>
+            <Card
+              type={type}
+              id={id}
+              wins={previousWins}
+              matches={previousMatches}
+              totalMatches={previousTotalMatches}
+              isLastPatch={true}
+            />
+          </div>
+        )}
+    </div>
   );
 }
