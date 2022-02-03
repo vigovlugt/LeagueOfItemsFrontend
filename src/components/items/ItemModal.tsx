@@ -31,6 +31,7 @@ export default function ItemModal({ setIsOpen, isOpen, item }) {
             className="absolute inset-0"
             style={{
               backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.533) 0%, rgba(255, 255, 255, 0) 50%)`,
+              backgroundPosition: "center",
             }}
           />
           <div className="z-40 flex justify-end">

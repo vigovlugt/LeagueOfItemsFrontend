@@ -20,6 +20,7 @@ export default function ChampionModal({ setIsOpen, isOpen, champion }) {
           style={{
             backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.533) 0%, rgba(255, 255, 255, 0) 50%),
             url(http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.riotId}_0.jpg)`,
+            backgroundPosition: "center",
           }}
         >
           <div className="flex justify-end">
