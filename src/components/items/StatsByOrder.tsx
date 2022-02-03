@@ -21,7 +21,6 @@ export default function StatsByOrder({
       type === "champion" ? orderStats.championStats : orderStats.itemStats,
     []
   );
-  console.log(orderStats);
 
   const columns = useMemo(
     () => [
