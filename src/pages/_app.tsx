@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { DefaultSeo } from "next-seo";
 import { ThemeProvider } from "next-themes";
@@ -36,7 +36,7 @@ export default function App({ Component, pageProps }) {
     : null;
 
   return (
-    <ThemeProvider attribute="class" defaultTheme="dark">
+    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
       <DefaultSeo
         titleTemplate="League of Items - %s"
         defaultTitle="League of Items"
