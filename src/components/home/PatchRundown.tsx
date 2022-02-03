@@ -20,7 +20,7 @@ export default function PatchRundown({
   return (
     <div
       id="patch-rundown"
-      className="mt-24 rounded bg-white p-4 dark:bg-gray-900"
+      className="mt-24 mb-8 rounded bg-white p-4 dark:bg-gray-900"
     >
       <Link
         href={`https://www.leagueoflegends.com/en-us/news/game-updates/patch-${patch.replace(
