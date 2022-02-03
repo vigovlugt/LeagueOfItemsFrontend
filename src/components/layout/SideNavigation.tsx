@@ -56,6 +56,7 @@ const MENU_ITEMS = [
     name: "Builds",
     href: "/builds",
     icon: () => <BookOpenIcon className="w-7" />,
+    prefetch: false,
   },
   {
     name: "FAQ",
@@ -124,11 +125,12 @@ function MenuItem({
   icon = null,
   className = null,
   onClick,
+  prefetch = true,
 }) {
   const Icon = icon;
 
   return (
-    <Link href={href} passHref>
+    <Link href={href} passHref prefetch={prefetch}>
       <a
         className={classNames(
           "mb-1 flex cursor-pointer items-center rounded-lg py-2 px-3 text-lg font-semibold",
