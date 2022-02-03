@@ -14,7 +14,12 @@ const tdPaddingBySize = {
 };
 
 /* eslint react/jsx-key: "off" */
-export default function Table({ table, onClick, size = "md", href = null }) {
+export default function Table({
+  table,
+  onClick = null,
+  size = "md",
+  href = null,
+}) {
   const isPaginated = Boolean(table.page);
 
   const {
