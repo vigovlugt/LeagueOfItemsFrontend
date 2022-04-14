@@ -11,7 +11,7 @@
     "update:dataset": "./update-dataset.sh",
     "download:champions": "node src/scripts/download-champions.mjs && npm run optimize:images",
     "download:items": "node src/scripts/download-items.mjs && npm run optimize:images",
-    "download:runes": "node src/scripts/runes-items.mjs && npm run optimize:images",
+    "download:runes": "node src/scripts/download-runes.mjs && npm run optimize:images",
     "optimize:images": "node src/scripts/optimize-images.mjs",
     "upscale:images": "node src/scripts/upscale-images.mjs"
   },
