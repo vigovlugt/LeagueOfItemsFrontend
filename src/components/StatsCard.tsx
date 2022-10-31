@@ -1,21 +1,26 @@
-import { pickrate, winrate, winrateClass } from "../utils/format";
+import {pickrate, winrate, winrateClass} from "../utils/format";
 import HelpHover from "./HelpHover";
-import { CHAMPION_PICKRATE_HELPER_TEXT } from "../constants/constants";
+import {
+  CHAMPION_PICKRATE_HELPER_TEXT,
+  ITEM_PICKRATE_HELPER_TEXT,
+  ITEM_WINRATE_HELPER_TEXT
+} from "../constants/constants";
 
 export default function StatsCard({
-  wins = null,
-  matches = null,
-  previousWins = null,
-  previousMatches = null,
-  totalMatches = null,
-  previousTotalMatches = null,
-  type = "winrate",
-  entityType = "champion",
-}) {
+                                    wins = null,
+                                    matches = null,
+                                    previousWins = null,
+                                    previousMatches = null,
+                                    totalMatches = null,
+                                    previousTotalMatches = null,
+                                    type = "winrate",
+                                    entityType = "champion",
+                                  }) {
   const isWinrate = type === "winrate";
 
   return (
-    <div className="flex-col items-center justify-center rounded bg-white p-4 text-lg font-bold text-gray-600 shadow dark:bg-gray-800 dark:text-gray-400">
+    <div
+      className="flex-col items-center justify-center rounded bg-white p-4 text-lg font-bold text-gray-600 shadow dark:bg-gray-800 dark:text-gray-400">
       <div className="flex justify-center">
         {isWinrate && (
           <>
@@ -23,6 +28,10 @@ export default function StatsCard({
               {winrate(wins, matches)}
             </span>
             <span>Winrate</span>
+            {
+              entityType === "item" &&
+                <HelpHover text={ITEM_WINRATE_HELPER_TEXT}/>
+            }
           </>
         )}
         {!isWinrate && (
@@ -31,6 +40,10 @@ export default function StatsCard({
               {pickrate(matches, totalMatches)}
             </span>{" "}
             Pickrate
+            {
+              entityType === "item" &&
+                <HelpHover text={ITEM_PICKRATE_HELPER_TEXT}/>
+            }
           </>
         )}
       </div>
