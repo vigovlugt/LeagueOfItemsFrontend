@@ -1,10 +1,10 @@
 import ItemApi from "../../api/ItemApi";
 import ItemStats from "../../models/items/ItemStats";
-import { pickrate, winrate, winrateClass } from "../../utils/format";
+import {pickrate, winrate, winrateClass} from "../../utils/format";
 import StatsByOrder from "../../components/items/StatsByOrder";
 import Card from "../../components/Card";
-import { NextSeo } from "next-seo";
-import { useState } from "react";
+import {NextSeo} from "next-seo";
+import {useState} from "react";
 import ItemModal from "../../components/items/ItemModal";
 import PageHeader from "../../components/PageHeader";
 import MatchApi from "../../api/MatchApi";
@@ -19,14 +19,14 @@ import StatsCard from "../../components/StatsCard";
 import Champion from "../../models/champions/Champion";
 
 export default function ItemPage({
-  item,
-  totalMatches,
-  previousTotalMatches,
-  matchesByChampion,
-  previousMatchesByChampion,
-  orderMatchesByChampion,
-  previousOrderMatchesByChampion,
-}) {
+                                   item,
+                                   totalMatches,
+                                   previousTotalMatches,
+                                   matchesByChampion,
+                                   previousMatchesByChampion,
+                                   orderMatchesByChampion,
+                                   previousOrderMatchesByChampion,
+                                 }) {
   item = new ItemStats(item);
 
   const [modalIsOpen, setModalOpen] = useState(false);
@@ -41,7 +41,7 @@ export default function ItemPage({
         description={`See ${item.name}'s best champions and winrate statistics. Data from U.GG.`}
       />
 
-      <ItemModal isOpen={modalIsOpen} setIsOpen={setModalOpen} item={item} />
+      <ItemModal isOpen={modalIsOpen} setIsOpen={setModalOpen} item={item}/>
 
       <PageHeader
         type="item"
@@ -52,7 +52,7 @@ export default function ItemPage({
         description={item.plaintext}
       >
         <div className="mb-4 grid grid-cols-2 gap-3 xl:w-1/2">
-          <StatsCard {...item} entityType="item" />
+          <StatsCard {...item} entityType="item"/>
           <StatsCard
             {...item}
             totalMatches={totalMatches}
@@ -61,14 +61,8 @@ export default function ItemPage({
             entityType="item"
           />
 
-          <div className="rounded bg-white p-4 text-center text-lg font-bold text-gray-600 shadow dark:bg-gray-800 dark:text-gray-400">
-            <span className="text-gray-900 dark:text-white">
-              {pickrate(item.matches, totalMatches)}
-            </span>{" "}
-            Pickrate
-            <HelpHover text={ITEM_PICKRATE_HELPER_TEXT} />
-          </div>
-          <div className="rounded bg-white p-4 text-center text-lg font-bold text-gray-600 shadow dark:bg-gray-800 dark:text-gray-400">
+          <div
+            className="rounded bg-white p-4 text-center text-lg font-bold text-gray-600 shadow dark:bg-gray-800 dark:text-gray-400">
             <span className="text-gray-900 dark:text-white">
               {item.championStats.length}
             </span>{" "}
@@ -147,7 +141,7 @@ export default function ItemPage({
         </div>
         <div
           className="grid grid-flow-row grid-cols-1 gap-2 xl:grid-flow-col xl:grid-cols-5"
-          style={{ gridTemplateRows: "auto auto" }}
+          style={{gridTemplateRows: "auto auto"}}
         >
           {item.orderStats.map((stats, i) => (
             <StatsByOrder
@@ -185,12 +179,12 @@ export async function getStaticPaths() {
   const items = ItemApi.getAllItems();
 
   return {
-    paths: items.map((i) => ({ params: { id: "" + i.id } })),
+    paths: items.map((i) => ({params: {id: "" + i.id}})),
     fallback: false,
   };
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({params}) {
   const item = ItemApi.getItem(params.id);
 
   const totalMatches = MatchApi.getTotalMatches();
@@ -215,6 +209,6 @@ export async function getStaticProps({ params }) {
   };
 }
 
-ItemPage.pageName = ({ item }) => item.name;
+ItemPage.pageName = ({item}) => item.name;
 ItemPage.favouriteType = () => "ITEM";
-ItemPage.favouriteId = ({ item }) => item.id;
+ItemPage.favouriteId = ({item}) => item.id;
