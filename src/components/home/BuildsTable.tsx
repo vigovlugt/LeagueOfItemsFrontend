@@ -227,14 +227,17 @@ export default function BuildsTable({
     >
       <Table table={table} onClick={gotoBuild} size={size} />
       {!isFull && (
-        <Link href={linkHref} passHref>
-          <a className="flex w-full items-center justify-center rounded-b bg-gray-50 p-2 text-lg shadow dark:bg-gray-800 dark:text-gray-50">
-            <h2 className="font-header">
-              {filterName ? `View all ${filterName} builds` : "View all builds"}
-            </h2>
-            <ArrowSmRightIcon className="inline w-8 text-gray-600 dark:text-gray-400" />
-          </a>
-        </Link>
+        (<Link
+          href={linkHref}
+          passHref
+          className="flex w-full items-center justify-center rounded-b bg-gray-50 p-2 text-lg shadow dark:bg-gray-800 dark:text-gray-50">
+
+          <h2 className="font-header">
+            {filterName ? `View all ${filterName} builds` : "View all builds"}
+          </h2>
+          <ArrowSmRightIcon className="inline w-8 text-gray-600 dark:text-gray-400" />
+
+        </Link>)
       )}
     </div>
   );

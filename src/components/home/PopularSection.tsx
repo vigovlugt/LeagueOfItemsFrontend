@@ -1,8 +1,8 @@
 import GridCell from "../GridCell";
 import Link from "next/link";
-import { ArrowSmRightIcon } from "@heroicons/react/solid";
+import {ArrowSmRightIcon} from "@heroicons/react/solid";
 
-export default function PopularSection({ pageViewDataset }) {
+export default function PopularSection({pageViewDataset}) {
   return (
     <div>
       <h2 className="mb-2 font-header text-3xl lg:text-4xl">
@@ -14,11 +14,14 @@ export default function PopularSection({ pageViewDataset }) {
         ))}
       </div>
 
-      <Link href="/items" passHref>
-        <a className="mt-4 mb-8 flex w-full items-center justify-center rounded bg-white p-2 text-lg shadow dark:bg-gray-900 dark:text-gray-50">
-          <h2 className="font-header text-xl">View all items</h2>
-          <ArrowSmRightIcon className="inline w-8 text-gray-600 dark:text-gray-400" />
-        </a>
+      <Link
+        href="/items"
+        passHref
+        className="mt-4 mb-8 flex w-full items-center justify-center rounded bg-white p-2 text-lg shadow dark:bg-gray-900 dark:text-gray-50">
+
+        <h2 className="font-header text-xl">View all items</h2>
+        <ArrowSmRightIcon className="inline w-8 text-gray-600 dark:text-gray-400"/>
+
       </Link>
 
       <div className="lg:flex">
@@ -32,11 +35,14 @@ export default function PopularSection({ pageViewDataset }) {
             ))}
           </div>
 
-          <Link href="/runes" passHref>
-            <a className="mt-4 flex items-center justify-center rounded bg-white p-2 text-lg shadow dark:bg-gray-900 dark:text-gray-50">
-              <h2 className="font-header text-xl">View all runes</h2>
-              <ArrowSmRightIcon className="inline w-8 text-gray-600 dark:text-gray-400" />
-            </a>
+          <Link
+            href="/runes"
+            passHref
+            className="mt-4 flex items-center justify-center rounded bg-white p-2 text-lg shadow dark:bg-gray-900 dark:text-gray-50">
+
+            <h2 className="font-header text-xl">View all runes</h2>
+            <ArrowSmRightIcon className="inline w-8 text-gray-600 dark:text-gray-400"/>
+
           </Link>
         </div>
 
@@ -50,11 +56,14 @@ export default function PopularSection({ pageViewDataset }) {
             ))}
           </div>
 
-          <Link href="/champions" passHref>
-            <a className="mt-4 flex items-center justify-center rounded bg-white p-2 text-lg shadow dark:bg-gray-900 dark:text-gray-50">
-              <h2 className="font-header text-xl">View all champions</h2>
-              <ArrowSmRightIcon className="inline w-8 text-gray-600 dark:text-gray-400" />
-            </a>
+          <Link
+            href="/champions"
+            passHref
+            className="mt-4 flex items-center justify-center rounded bg-white p-2 text-lg shadow dark:bg-gray-900 dark:text-gray-50">
+
+            <h2 className="font-header text-xl">View all champions</h2>
+            <ArrowSmRightIcon className="inline w-8 text-gray-600 dark:text-gray-400"/>
+
           </Link>
         </div>
       </div>
