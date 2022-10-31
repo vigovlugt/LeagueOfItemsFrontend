@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
 import RuneIcon from "../icons/RuneIcon";
 import SwordIcon from "../icons/SwordIcon";
 import SideNavFooter from "./SideNavFooter";
@@ -20,7 +20,7 @@ const MENU_ITEMS = [
   {
     name: "Home",
     href: "/",
-    icon: () => <HomeIcon className="w-7" />,
+    icon: () => <HomeIcon className="w-7"/>,
   },
   {
     name: "Items",
@@ -30,7 +30,7 @@ const MENU_ITEMS = [
   {
     name: "Item Tierlist",
     href: "/tierlist",
-    icon: () => <ViewListIcon className="w-7" />,
+    icon: () => <ViewListIcon className="w-7"/>,
   },
   {
     name: "Runes",
@@ -40,7 +40,7 @@ const MENU_ITEMS = [
   {
     name: "Rune Tierlist",
     href: "/runes/tierlist",
-    icon: () => <ViewListIcon className="w-7" />,
+    icon: () => <ViewListIcon className="w-7"/>,
   },
   {
     name: "Champions",
@@ -50,28 +50,27 @@ const MENU_ITEMS = [
   {
     name: "Champion Tierlist",
     href: "/champions/tierlist",
-    icon: () => <ViewListIcon className="w-7" />,
+    icon: () => <ViewListIcon className="w-7"/>,
   },
   {
     name: "Builds",
     href: "/builds",
-    icon: () => <BookOpenIcon className="w-7" />,
-    prefetch: false,
+    icon: () => <BookOpenIcon className="w-7"/>,
   },
   {
     name: "FAQ",
     href: "/faq",
-    icon: () => <QuestionMarkCircleIcon className="w-8" />,
+    icon: () => <QuestionMarkCircleIcon className="w-8"/>,
     className: "mt-auto",
   },
   {
     name: "Contact",
     href: "mailto:info@leagueofitems.com",
-    icon: () => <MailIcon className="w-8" />,
+    icon: () => <MailIcon className="w-8"/>,
   },
 ];
 
-export default function SideNavigation({ open, onClickClose }) {
+export default function SideNavigation({open, onClickClose}) {
   const router = useRouter();
 
   return (
@@ -90,16 +89,16 @@ export default function SideNavigation({ open, onClickClose }) {
             className="fixed -m-3 flex items-center p-3 focus:outline-none"
             onClick={onClickClose}
           >
-            <XIcon className="w-8" />
+            <XIcon className="w-8"/>
           </button>
         </div>
 
-        <Logo />
-        <div className="mr-3 w-0 lg:hidden" />
+        <Logo/>
+        <div className="mr-3 w-0 lg:hidden"/>
       </div>
 
       <div className="mb-4 flex h-[40px] flex-shrink-0 justify-center lg:hidden">
-        <SearchBar onSubmit={onClickClose} />
+        <SearchBar onSubmit={onClickClose}/>
       </div>
 
       <div className="h-100 m-1 flex flex-grow flex-col">
@@ -113,45 +112,45 @@ export default function SideNavigation({ open, onClickClose }) {
         ))}
       </div>
 
-      <SideNavFooter />
+      <SideNavFooter/>
     </nav>
   );
 }
 
 function MenuItem({
-  name,
-  active,
-  href,
-  icon = null,
-  className = null,
-  onClick,
-  prefetch = true,
-}) {
+                    name,
+                    active,
+                    href,
+                    icon = null,
+                    className = null,
+                    onClick,
+                  }) {
   const Icon = icon;
 
   return (
-    <Link href={href} passHref prefetch={prefetch}>
-      <a
-        className={classNames(
-          "mb-1 flex cursor-pointer items-center rounded-lg py-2 px-3 text-lg font-semibold",
-          className,
-          {
-            "bg-gray-100 text-black dark:bg-gray-800 dark:text-white": active,
-            "text-gray-700 dark:text-gray-400": !active,
-          }
-        )}
-        onClick={onClick}
+    (<Link
+      href={href}
+      passHref
+      className={classNames(
+        "mb-1 flex cursor-pointer items-center rounded-lg py-2 px-3 text-lg font-semibold",
+        className,
+        {
+          "bg-gray-100 text-black dark:bg-gray-800 dark:text-white": active,
+          "text-gray-700 dark:text-gray-400": !active,
+        }
+      )}
+      onClick={onClick}>
+
+      <span
+        className={classNames({
+          "text-gray-400 dark:text-gray-700": !active,
+          "text-gray-700 dark:text-gray-400": active,
+        })}
       >
-        <span
-          className={classNames({
-            "text-gray-400 dark:text-gray-700": !active,
-            "text-gray-700 dark:text-gray-400": active,
-          })}
-        >
-          {icon ? <Icon className="w-8" /> : <div className="w-8" />}
-        </span>
-        <span className="ml-3">{name}</span>
-      </a>
-    </Link>
+        {icon ? <Icon className="w-8"/> : <div className="w-8"/>}
+      </span>
+      <span className="ml-3">{name}</span>
+
+    </Link>)
   );
 }

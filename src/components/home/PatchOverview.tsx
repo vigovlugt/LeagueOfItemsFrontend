@@ -40,28 +40,26 @@ export default function PatchOverview({
           "-"
         )}-notes/`}
         passHref
-      >
-        <a
-          target="_blank"
-          className="group relative mb-8 flex w-full items-center justify-center overflow-hidden rounded-lg bg-white p-8 py-24 shadow dark:bg-dark dark:text-gray-50 sm:py-32"
-        >
-          <img
-            src={patchNotes.bannerImageUrl}
-            alt={""}
-            loading="lazy"
-            className={
-              "absolute inset-0 h-full w-full " + styles.patchOverviewImage
-            }
-          />
-          <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center font-header">
-            <h2 className="mt-8 text-4xl group-hover:text-white">
-              Patch {patch} overview
-            </h2>
-            <p className="mt-4 text-sm text-gray-600 group-hover:text-white dark:text-gray-400">
-              Patch notes <ArrowSmRightIcon className="inline w-6" />
-            </p>
-          </div>
-        </a>
+        target="_blank"
+        className="group relative mb-8 flex w-full items-center justify-center overflow-hidden rounded-lg bg-white p-8 py-24 shadow dark:bg-dark dark:text-gray-50 sm:py-32">
+
+        <img
+          src={patchNotes.bannerImageUrl}
+          alt={""}
+          loading="lazy"
+          className={
+            "absolute inset-0 h-full w-full " + styles.patchOverviewImage
+          }
+        />
+        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center font-header">
+          <h2 className="mt-8 text-4xl group-hover:text-white">
+            Patch {patch} overview
+          </h2>
+          <p className="mt-4 text-sm text-gray-600 group-hover:text-white dark:text-gray-400">
+            Patch notes <ArrowSmRightIcon className="inline w-6" />
+          </p>
+        </div>
+
       </Link>
 
       <PatchEntityChanges

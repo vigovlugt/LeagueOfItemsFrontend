@@ -84,11 +84,11 @@ export default function Table({
                       }`}
                     >
                       {href ? (
-                        <Link href={href(row)} passHref>
-                          <a className={"block " + tdPaddingBySize[size]}>
-                            {cell.render("Cell")}
-                          </a>
-                        </Link>
+                        (<Link href={href(row)} passHref className={"block " + tdPaddingBySize[size]}>
+
+                          {cell.render("Cell")}
+
+                        </Link>)
                       ) : (
                         cell.render("Cell")
                       )}

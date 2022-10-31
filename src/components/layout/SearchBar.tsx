@@ -106,23 +106,24 @@ export default function SearchBar({ onSubmit = null }) {
 
 function SearchResult({ name, id, type, onClick }) {
   return (
-    <Link href={`/${type}s/${id}`} passHref>
-      <a
-        className="flex cursor-pointer items-center justify-start px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800"
-        onClick={onClick}
-      >
-        <img
-          src={`/images/${type}s/32/${id}.webp`}
-          style={{
-            width: "32px",
-            height: "32px",
-            minWidth: "32px",
-            minHeight: "32px",
-          }}
-          alt="Search result image"
-        />{" "}
-        <span className="ml-2 font-bold">{name}</span>
-      </a>
-    </Link>
+    (<Link
+      href={`/${type}s/${id}`}
+      passHref
+      className="flex cursor-pointer items-center justify-start px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800"
+      onClick={onClick}>
+
+      <img
+        src={`/images/${type}s/32/${id}.webp`}
+        style={{
+          width: "32px",
+          height: "32px",
+          minWidth: "32px",
+          minHeight: "32px",
+        }}
+        alt="Search result image"
+      />{" "}
+      <span className="ml-2 font-bold">{name}</span>
+
+    </Link>)
   );
 }
