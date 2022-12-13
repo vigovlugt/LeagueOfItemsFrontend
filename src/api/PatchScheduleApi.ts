@@ -5,7 +5,7 @@ export default class PatchScheduleApi {
     return Api.getDataset().patchSchedule;
   }
 
-  static getNextPatch() {
+  static getNextPatch(): any | null {
     const now = new Date();
     const patches = this.getPatchSchedule();
 
