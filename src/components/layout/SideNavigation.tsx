@@ -61,6 +61,7 @@ const MENU_ITEMS = [
   {
     name: "DraftGap",
     href: "https://draftgap.com?utm_source=league-of-items-sidebar&utm_medium=link&utm_campaign=launch",
+    target: "_blank",
     icon: () => <GlobeAltIcon className="w-7"/>,
     className: "mt-auto",
     isNewUntil: new Date("2023-03-01")
@@ -131,7 +132,8 @@ function MenuItem({
                     icon = null,
                     className = null,
                     onClick,
-                    isNewUntil = null
+                    isNewUntil = null,
+                    target = null
                   }) {
   const Icon = icon;
 
@@ -139,6 +141,7 @@ function MenuItem({
     (<Link
       href={href}
       passHref
+      target={target}
       className={classNames(
         "relative mb-1 flex cursor-pointer items-center rounded-lg py-2 px-3 text-lg font-semibold",
         className,
