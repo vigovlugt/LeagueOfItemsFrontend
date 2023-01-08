@@ -13,6 +13,7 @@ import {
   HomeIcon,
   ViewListIcon,
   BookOpenIcon,
+  GlobeAltIcon
 } from "@heroicons/react/outline";
 import SearchBar from "./SearchBar";
 
@@ -58,10 +59,16 @@ const MENU_ITEMS = [
     icon: () => <BookOpenIcon className="w-7"/>,
   },
   {
+    name: "DraftGap",
+    href: "https://draftgap.com?utm_source=league-of-items-sidebar&utm_medium=link&utm_campaign=launch",
+    icon: () => <GlobeAltIcon className="w-7"/>,
+    className: "mt-auto",
+    isNewUntil: new Date("2023-03-01")
+  },
+  {
     name: "FAQ",
     href: "/faq",
     icon: () => <QuestionMarkCircleIcon className="w-8"/>,
-    className: "mt-auto",
   },
   {
     name: "Contact",
@@ -124,6 +131,7 @@ function MenuItem({
                     icon = null,
                     className = null,
                     onClick,
+                    isNewUntil = null
                   }) {
   const Icon = icon;
 
@@ -132,7 +140,7 @@ function MenuItem({
       href={href}
       passHref
       className={classNames(
-        "mb-1 flex cursor-pointer items-center rounded-lg py-2 px-3 text-lg font-semibold",
+        "relative mb-1 flex cursor-pointer items-center rounded-lg py-2 px-3 text-lg font-semibold",
         className,
         {
           "bg-gray-100 text-black dark:bg-gray-800 dark:text-white": active,
@@ -150,6 +158,12 @@ function MenuItem({
         {icon ? <Icon className="w-8"/> : <div className="w-8"/>}
       </span>
       <span className="ml-3">{name}</span>
+
+      {
+        isNewUntil && isNewUntil > new Date() &&
+          <span
+              className="absolute top-0 right-0 inline-flex items-center rounded-md bg-red-700 px-2.5 py-0.5 text-sm font-medium text-white">NEW!</span>
+      }
 
     </Link>)
   );
