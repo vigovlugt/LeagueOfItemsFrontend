@@ -73,7 +73,7 @@ const MENU_ITEMS = [
   },
   {
     name: "Contact",
-    href: "mailto:info@leagueofitems.com",
+    href: "mailto:vigovlugt+leagueofitems@gmail.com",
     icon: () => <MailIcon className="w-8"/>,
   },
 ];
