@@ -41,4 +41,4 @@ If an item has a pickrate of 100% it is built once per game on average, so if an
 would be built twice per game on average.
 
 **If you have any other questions, feedback or feature requests, feel free to send an email
-to: [info@leagueofitems.com](mailto:info@leagueofitems.com)**
+to: [vigovlugt+leagueofitems@gmail.com](mailto:vigovlugt+leagueofitems@gmail.com)**
