@@ -20,7 +20,7 @@ All data is scraped from [U.GG](https://u.gg). The data analyzed is from Plat+ o
 
 # How often is the site updated?
 
-Every hour.
+Every 4 hours.
 
 # Why do most items have such a high winrates?
 
