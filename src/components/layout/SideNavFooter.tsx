@@ -35,7 +35,7 @@ export default function SideNavFooter() {
                 href={abTest.current.url}
                 target="_blank"
                 rel="noreferrer"
-                className="-mx-2"
+                className="-mx-2 flex justify-center"
             >
                 <img src={abTest.current.image} alt="Coachify" />
             </a>
