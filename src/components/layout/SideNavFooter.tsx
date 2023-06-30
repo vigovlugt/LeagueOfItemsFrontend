@@ -37,7 +37,12 @@ export default function SideNavFooter() {
                 rel="noreferrer"
                 className="-mx-2 flex justify-center"
             >
-                <img src={abTest.current.image} alt="Coachify" />
+                <img
+                    src={abTest.current.image}
+                    alt="Coachify"
+                    width={287}
+                    height={82}
+                />
             </a>
         </div>
     );
