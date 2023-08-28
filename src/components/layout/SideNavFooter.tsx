@@ -4,14 +4,18 @@ import dataset from "../../../data/dataset.json";
 import { useRef } from "react";
 
 const SPONSOR_AB_TEST = [
+    // {
+    //     image: "/images/sponsors/coachify-become-coach.webp",
+    //     url: "https://coachify.gg/article/how-to-start-coaching-esports?utm_campaign=loi_become_esport_coach&utm_source=league_of_items&utm_medium=referral",
+    // },
+    // {
+    //     image: "/images/sponsors/coachify-tools.webp",
+    //     url: "https://coachify.gg/?utm_campaign=loi_tools_for_esports_coaches&utm_source=league_of_items&utm_medium=referral",
+    // },
     {
-        image: "/images/sponsors/coachify-become-coach.webp",
-        url: "https://coachify.gg/article/how-to-start-coaching-esports?utm_campaign=loi_become_esport_coach&utm_source=league_of_items&utm_medium=referral",
-    },
-    {
-        image: "/images/sponsors/coachify-tools.webp",
-        url: "https://coachify.gg/?utm_campaign=loi_tools_for_esports_coaches&utm_source=league_of_items&utm_medium=referral",
-    },
+        image: "/images/sponsors/coachify-free-and-paid.webp",
+        url: "https://coachify.gg/directory/league-of-legends?utm_campaign=loi_free_and_paid_coaching&utm_source=league_of_items&utm_medium=referral"
+    }
 ] as const;
 
 export default function SideNavFooter() {
