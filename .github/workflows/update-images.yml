@@ -44,4 +44,7 @@ jobs:
 
       - name: Update images
         shell: bash
-        run: ./update-images.sh
+        run: |
+            git config --global user.email "vigovlugt@gmail.com"
+            git config --global user.name "League of Items Github Action"
+            ./update-images.sh
