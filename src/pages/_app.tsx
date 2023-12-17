@@ -7,7 +7,8 @@ import "../styles/global.css";
 import Layout from "../components/layout/Layout";
 
 // Add helper function to open image update endpoint
-(window as any).updateImages = () => {
+
+if (typeof window !== "undefined") (window as any).updateImages = () => {
   window.open("https://github.com/vigovlugt/LeagueOfItemsFrontend/actions/workflows/update-images.yml");
 }
 
