@@ -18,6 +18,7 @@
   "dependencies": {
     "@headlessui/react": "^1.4.3",
     "@heroicons/react": "^1.0.2",
+    "@radix-ui/react-tooltip": "^1.0.7",
     "@tailwindcss/aspect-ratio": "^0.4.0",
     "@tailwindcss/typography": "^0.5.1",
     "classnames": "^2.3.1",
@@ -46,7 +47,7 @@
     "prettier": "^2.5.1",
     "prettier-plugin-tailwindcss": "^0.1.4",
     "sharp": "^0.29.3",
-    "tailwindcss": "^3.0.18",
+    "tailwindcss": "^3.4.1",
     "ts-node": "^10.1.0",
     "typescript": "^4.5.5",
     "waifu2x": "^0.9.3"
