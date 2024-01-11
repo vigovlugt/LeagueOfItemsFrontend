@@ -12,7 +12,7 @@ export default function PageHeader({
     type,
     name,
     description,
-    tooltip,
+    tooltip = undefined,
     children,
     setModalOpen = null,
     hasModal = false,
