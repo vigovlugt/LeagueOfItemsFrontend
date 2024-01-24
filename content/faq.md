@@ -26,7 +26,7 @@ Every 4 hours.
 
 The winning team often has more items, so that would inflate the winrates of the items that team built.  
 This also means items which are built later in the game ([Guardian Angel](/items/3026), [Warmog's Armor](/items/3083))
-have higher winrates, and mythics which are generally built first, lower winrates.  
+have higher winrates, and items which are generally built first, lower winrates.  
 Additionally, some items are only built when already winning, like [Mejai's Soulstealer](/items/3041).
 
 # How are pickrates of champions/items/runes calculated?
