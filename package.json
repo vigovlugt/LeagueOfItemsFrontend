@@ -13,7 +13,8 @@
     "download:items": "node src/scripts/download-items.mjs && npm run optimize:images",
     "download:runes": "node src/scripts/download-runes.mjs && npm run optimize:images",
     "optimize:images": "node src/scripts/optimize-images.mjs",
-    "upscale:images": "node src/scripts/upscale-images.mjs"
+    "upscale:images": "node src/scripts/upscale-images.mjs",
+    "prettier:write": "prettier --write ./src/"
   },
   "dependencies": {
     "@headlessui/react": "^1.4.3",

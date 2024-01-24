@@ -1,10 +1,10 @@
 .homePageGrid {
-  display: grid;
-  grid-template-columns: auto 370px;
+    display: grid;
+    grid-template-columns: auto 370px;
 }
 
 @media (max-width: 1535px) {
-  .homePageGrid {
-    display: block;
-  }
+    .homePageGrid {
+        display: block;
+    }
 }
