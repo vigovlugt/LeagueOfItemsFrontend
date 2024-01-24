@@ -1,64 +1,66 @@
 export default class FavouritesLocalStorageApi {
-  static getFavourites() {
-    if (!process.browser) {
-      return [];
+    static getFavourites() {
+        if (!process.browser) {
+            return [];
+        }
+
+        const favouritesString = window.localStorage.getItem("favourites");
+        if (!favouritesString) {
+            return [];
+        }
+
+        try {
+            const favourites = JSON.parse(favouritesString);
+
+            return favourites;
+        } catch (e) {
+            return [];
+        }
     }
 
-    const favouritesString = window.localStorage.getItem("favourites");
-    if (!favouritesString) {
-      return [];
+    static setFavourites(favourites) {
+        if (!process.browser) {
+            return;
+        }
+
+        window.localStorage.setItem("favourites", JSON.stringify(favourites));
     }
 
-    try {
-      const favourites = JSON.parse(favouritesString);
+    static addFavourite(type, id) {
+        if (!process.browser) {
+            return;
+        }
 
-      return favourites;
-    } catch (e) {
-      return [];
-    }
-  }
+        const favourites = FavouritesLocalStorageApi.getFavourites();
 
-  static setFavourites(favourites) {
-    if (!process.browser) {
-      return;
-    }
+        if (favourites.find((f) => f.type === type && f.id === id)) {
+            return;
+        }
 
-    window.localStorage.setItem("favourites", JSON.stringify(favourites));
-  }
-
-  static addFavourite(type, id) {
-    if (!process.browser) {
-      return;
+        FavouritesLocalStorageApi.setFavourites([...favourites, { type, id }]);
     }
 
-    const favourites = FavouritesLocalStorageApi.getFavourites();
+    static removeFavourite(type, id) {
+        if (!process.browser) {
+            return;
+        }
 
-    if (favourites.find((f) => f.type === type && f.id === id)) {
-      return;
+        const favourites = FavouritesLocalStorageApi.getFavourites();
+
+        FavouritesLocalStorageApi.setFavourites(
+            favourites.filter((f) => !(f.type === type && f.id === id))
+        );
     }
 
-    FavouritesLocalStorageApi.setFavourites([...favourites, { type, id }]);
-  }
+    static hasFavourite(type, id) {
+        if (!process.browser) {
+            return;
+        }
 
-  static removeFavourite(type, id) {
-    if (!process.browser) {
-      return;
+        const favourites = FavouritesLocalStorageApi.getFavourites();
+
+        return (
+            favourites.find((f) => f.type === type && f.id === id) !== undefined
+        );
     }
-
-    const favourites = FavouritesLocalStorageApi.getFavourites();
-
-    FavouritesLocalStorageApi.setFavourites(
-      favourites.filter((f) => !(f.type === type && f.id === id))
-    );
-  }
-
-  static hasFavourite(type, id) {
-    if (!process.browser) {
-      return;
-    }
-
-    const favourites = FavouritesLocalStorageApi.getFavourites();
-
-    return favourites.find((f) => f.type === type && f.id === id) !== undefined;
-  }
 }

@@ -1,16 +1,16 @@
 import ItemChampionStats from "./ItemChampionStats";
 
 export default class ItemOrderStats {
-  public order: number;
-  public championStats: ItemChampionStats[];
+    public order: number;
+    public championStats: ItemChampionStats[];
 
-  public wins: number;
-  public matches: number;
+    public wins: number;
+    public matches: number;
 
-  constructor({ order, wins, matches, championStats }) {
-    this.order = order;
-    this.wins = wins;
-    this.matches = matches;
-    this.championStats = championStats.map((s) => new ItemChampionStats(s));
-  }
+    constructor({ order, wins, matches, championStats }) {
+        this.order = order;
+        this.wins = wins;
+        this.matches = matches;
+        this.championStats = championStats.map((s) => new ItemChampionStats(s));
+    }
 }
