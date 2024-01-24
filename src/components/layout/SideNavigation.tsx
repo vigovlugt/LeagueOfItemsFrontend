@@ -16,6 +16,7 @@ import {
     GlobeAltIcon,
 } from "@heroicons/react/outline";
 import SearchBar from "./SearchBar";
+import { GameBoostRectangleSm } from "../ads/GameBoost";
 
 const MENU_ITEMS = [
     {
@@ -120,6 +121,8 @@ export default function SideNavigation({ open, onClickClose }) {
                 ))}
             </div>
 
+            <GameBoostRectangleSm className="mb-3" />
+
             <SideNavFooter />
         </nav>
     );
@@ -143,7 +146,7 @@ function MenuItem({
             passHref
             target={target}
             className={classNames(
-                "relative mb-1 flex cursor-pointer items-center rounded-lg py-2 px-3 text-lg font-semibold",
+                "relative flex cursor-pointer items-center rounded-lg py-1.5 px-3 text-lg font-semibold",
                 className,
                 {
                     "bg-gray-100 text-black dark:bg-gray-800 dark:text-white":
