@@ -3,20 +3,24 @@ import ItemApi from "../api/ItemApi";
 import { useMemo } from "react";
 import ItemStats from "../models/items/ItemStats";
 import { NextSeo } from "next-seo";
+import {
+    GameBoostRectangleSm,
+    GameBoostVertical,
+} from "../components/ads/GameBoost";
 
 export default function Items({ items }) {
     return (
         <div>
             <NextSeo title="Items" />
 
-            <div className="flex flex-wrap">
-                {items.map((i) => (
-                    <ItemGridCell
-                        {...i}
-                        key={i.id}
-                        className="mr-[6px] mb-[6px]"
-                    />
-                ))}
+            <div className="flex flex-col md:flex-row-reverse gap-4">
+                <GameBoostRectangleSm className="flex md:hidden" hd />
+                <GameBoostVertical className="hidden md:flex self-start" />
+                <div className="flex flex-wrap gap-[6px]">
+                    {items.map((i) => (
+                        <ItemGridCell {...i} key={i.id} />
+                    ))}
+                </div>
             </div>
         </div>
     );
