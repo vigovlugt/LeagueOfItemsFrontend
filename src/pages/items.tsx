@@ -6,6 +6,7 @@ import { NextSeo } from "next-seo";
 import {
     GameBoostRectangleSm,
     GameBoostVertical,
+    SponsorLayout,
 } from "../components/ads/GameBoost";
 
 export default function Items({ items }) {
@@ -13,15 +14,13 @@ export default function Items({ items }) {
         <div>
             <NextSeo title="Items" />
 
-            <div className="flex flex-col md:flex-row-reverse gap-4">
-                <GameBoostRectangleSm className="flex md:hidden" hd />
-                <GameBoostVertical className="hidden md:flex self-start" />
+            <SponsorLayout>
                 <div className="flex flex-wrap gap-[6px]">
                     {items.map((i) => (
                         <ItemGridCell {...i} key={i.id} />
                     ))}
                 </div>
-            </div>
+            </SponsorLayout>
         </div>
     );
 }

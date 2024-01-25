@@ -19,6 +19,7 @@ export default function Table({
     onClick = null,
     size = "md",
     href = null,
+    className = "",
 }) {
     const isPaginated = Boolean(table.page);
 
@@ -35,7 +36,7 @@ export default function Table({
     } = table;
 
     return (
-        <div className="overflow-x-auto">
+        <div className={"overflow-x-auto " + className}>
             <table
                 {...table.getTableProps()}
                 className={`min-w-full divide-y divide-gray-200 font-semibold dark:divide-gray-700`}
