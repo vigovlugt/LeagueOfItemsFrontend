@@ -10,10 +10,10 @@ export function GameBoostRectangleSm({
     hd?: boolean;
 }) {
     return (
+        // eslint-disable-next-line react/jsx-no-target-blank
         <a
             href="https://gameboost.com/league-of-legends?ref=leagueofitems"
             target="_blank"
-            rel="noreferrer"
             {...props}
             className={
                 "rounded-xl ring-1 bg-[hsl(220_20%_9%)] flex flex-col gap-4 p-4 " +
@@ -79,10 +79,10 @@ export function GameBoostRectangleLg({
     ...props
 }: ComponentProps<"a">) {
     return (
+        // eslint-disable-next-line react/jsx-no-target-blank
         <a
             href="https://gameboost.com/league-of-legends?ref=leagueofitems"
             target="_blank"
-            rel="noreferrer"
             {...props}
             className={
                 "rounded-xl ring-1 bg-[hsl(220_20%_9%)] flex flex-col gap-1 p-4 " +
@@ -144,10 +144,10 @@ export function GameBoostVertical({
     ...props
 }: ComponentProps<"a">) {
     return (
+        // eslint-disable-next-line react/jsx-no-target-blank
         <a
             href="https://gameboost.com/league-of-legends?ref=leagueofitems"
             target="_blank"
-            rel="noreferrer"
             {...props}
             className={
                 "rounded-xl ring-1 bg-[hsl(220_20%_9%)] flex flex-col gap-16 p-4 w-[300px] min-w-[300px] items-center " +
