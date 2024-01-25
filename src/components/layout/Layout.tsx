@@ -28,7 +28,7 @@ export default function Layout({
                     />
                     <div
                         ref={pageContainer}
-                        className="h-full overflow-y-auto p-4 text-gray-900 dark:text-white lg:p-8"
+                        className="h-full overflow-auto p-4 text-gray-900 dark:text-white lg:p-8"
                     >
                         {children}
                     </div>

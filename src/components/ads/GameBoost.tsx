@@ -1,5 +1,6 @@
 import { ArrowRightIcon } from "@heroicons/react/solid";
 import { ComponentProps } from "react";
+import styles from "./GameBoost.module.css";
 
 export function GameBoostRectangleSm({
     className,
@@ -56,19 +57,84 @@ export function GameBoostRectangleSm({
                 className="self-start"
             />
 
-            <span className="text-3xl font-bold tracking-wide text-white my-2 leading-8">
+            <span className="text-2xl sm:text-3xl font-bold tracking-wide text-white my-2 leading-8">
                 Reach your <span className="text-[#0c6cfb]">dream rank</span>
             </span>
 
-            <span
-                className="px-4 py-1.5 bg-[#0c6cfb] text-white rounded-md text-sm font-semibold tracking-wide block mt-1"
+            <div
+                className="px-4 py-1.5 bg-[#0c6cfb] text-white rounded-md text-sm font-semibold tracking-wide mt-1 self-start"
                 style={{
                     fontFamily: "'Red Hat Display', sans-serif;",
                 }}
             >
                 Boosting, accounts and more{" "}
                 <ArrowRightIcon className="inline-block w-4 h-4 -mt-1" />
+            </div>
+        </a>
+    );
+}
+
+export function GameBoostRectangleLg({
+    className,
+    ...props
+}: ComponentProps<"a">) {
+    return (
+        <a
+            href="https://gameboost.com/league-of-legends?ref=leagueofitems"
+            target="_blank"
+            rel="noreferrer"
+            {...props}
+            className={
+                "rounded-xl ring-1 bg-[hsl(220_20%_9%)] flex flex-col gap-1 p-4 " +
+                className
+            }
+            style={{
+                backgroundImage: `linear-gradient(hsl(200, 20%, 9%, 75%), hsl(200, 20%, 9%, 75%)), url(/images/sponsors/gameboost-bg.webp)`,
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center 10%",
+                fontFamily: "'Red Hat Display', sans-serif",
+            }}
+            onClick={(e) => {
+                (window as any).gtag(
+                    "send",
+                    "event",
+                    "outbound",
+                    "click",
+                    e.currentTarget.href,
+                    {
+                        transport: "beacon",
+                    }
+                );
+            }}
+        >
+            {/* <img
+                className="dark:hidden"
+                width={128}
+                src="/images/sponsors/gameboost.svg"
+                alt="GameBoost logo"
+            /> */}
+            <img
+                width={96}
+                height={31}
+                src="/images/sponsors/gameboost-dark.svg"
+                alt="GameBoost logo"
+                className="self-start"
+            />
+
+            <span className="text-2xl sm:text-3xl font-bold tracking-wide text-white my-2 leading-8">
+                The <span className="text-[#0c6cfb]">fastest way</span> to climb
             </span>
+
+            <div
+                className="px-4 py-1.5 bg-[#0c6cfb] text-white rounded-md text-sm font-semibold tracking-wide mt-1 self-start"
+                style={{
+                    fontFamily: "'Red Hat Display', sans-serif;",
+                }}
+            >
+                Boosting, accounts and more{" "}
+                <ArrowRightIcon className="inline-block w-4 h-4 -mt-1" />
+            </div>
         </a>
     );
 }
@@ -122,7 +188,14 @@ export function GameBoostVertical({
 
             <span className="text-3xl font-bold tracking-wide text-white block leading-tight text-center">
                 The <br />
-                <span className="text-[#0c6cfb]">fastest way</span>
+                <span
+                    className="text-[#0c6cfb]"
+                    style={{
+                        textShadow: "0 0 5px black",
+                    }}
+                >
+                    fastest way
+                </span>
                 <br /> to climb
             </span>
 
@@ -131,7 +204,7 @@ export function GameBoostVertical({
                 width={200}
                 src="/images/sponsors/gameboost-boosting.webp"
                 alt="GameBoost Boosting"
-                className=""
+                className={styles.gameboostBoosting}
             />
 
             <span className="flex justify-center gap-2">
@@ -246,5 +319,18 @@ export function FaGraduationCap({ ...props }: ComponentProps<"svg">) {
                 fill="currentColor"
             />
         </svg>
+    );
+}
+
+export function SponsorLayout({ children, ...props }: ComponentProps<"div">) {
+    return (
+        <div
+            {...props}
+            className={"flex flex-col md:flex-row gap-4 " + props.className}
+        >
+            <GameBoostRectangleSm className="flex md:hidden" hd />
+            <div className="w-full">{children}</div>
+            <GameBoostVertical className="hidden md:flex self-start" />
+        </div>
     );
 }
