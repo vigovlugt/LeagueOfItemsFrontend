@@ -50,14 +50,14 @@ export function GameBoostRectangleSm({
             /> */}
             <img
                 width={96}
+                height={31}
                 src="/images/sponsors/gameboost-dark.svg"
                 alt="GameBoost logo"
                 className="self-start"
             />
 
             <span className="text-3xl font-bold tracking-wide text-white my-2 leading-8">
-                Reach your{" "}
-                <span className="text-[#0c6cfb] text-3xl">dream rank</span>
+                Reach your <span className="text-[#0c6cfb]">dream rank</span>
             </span>
 
             <span
@@ -84,7 +84,7 @@ export function GameBoostVertical({
             rel="noreferrer"
             {...props}
             className={
-                "rounded-xl ring-1 bg-[hsl(220_20%_9%)] flex flex-col gap-1 p-4 w-[300px] min-w-[300px] " +
+                "rounded-xl ring-1 bg-[hsl(220_20%_9%)] flex flex-col gap-16 p-4 w-[300px] min-w-[300px] items-center " +
                 className
             }
             style={{
@@ -115,24 +115,45 @@ export function GameBoostVertical({
             /> */}
             <img
                 width={96}
+                height={31}
                 src="/images/sponsors/gameboost-dark.svg"
                 alt="GameBoost logo"
-                className="self-start"
             />
 
-            <span className="text-lg font-bold tracking-wide text-white my-3 block leading-tight">
-                The fastest way to climb
+            <span className="text-3xl font-bold tracking-wide text-white block leading-tight text-center">
+                The <br />
+                <span className="text-[#0c6cfb]">fastest way</span>
+                <br /> to climb
             </span>
 
-            <span className="flex flex-col items-center my-8">
-                <FaRocketLaunch className="w-12 h-12 text-[#749ddc] mb-1" />
-                <span className="mb-6">Boosting</span>
-                <FaHelmetBattle className="w-12 h-12 text-[#749ddc] mb-1" />
-                <span className="mb-6">Accounts</span>
-                <FaHandFist className="w-12 h-12 text-[#749ddc] mb-1" />
-                <span className="mb-6">Smurfs</span>
-                <FaGraduationCap className="w-12 h-12 text-[#749ddc] mb-1" />
-                <span>Coaching</span>
+            <img
+                height={188}
+                width={200}
+                src="/images/sponsors/gameboost-boosting.webp"
+                alt="GameBoost Boosting"
+                className=""
+            />
+
+            <span className="flex justify-center gap-2">
+                <div className="flex flex-col items-center text-sm">
+                    <FaRocketLaunch className="w-8 h-8 text-[#8acfff] mb-1" />
+                    <span>Boosting</span>
+                </div>
+
+                <div className="flex flex-col items-center text-sm">
+                    <FaHelmetBattle className="w-8 h-8 text-[#8acfff] mb-1" />
+                    <span>Accounts</span>
+                </div>
+
+                <div className="flex flex-col items-center text-sm">
+                    <FaHandFist className="w-8 h-8 text-[#8acfff] mb-1" />
+                    <span>Smurfs</span>
+                </div>
+
+                <div className="flex flex-col items-center text-sm">
+                    <FaGraduationCap className="w-8 h-8 text-[#8acfff] mb-1" />
+                    <span>Coaching</span>
+                </div>
             </span>
 
             <span
