@@ -1,6 +1,5 @@
 import ItemApi from "../../api/ItemApi";
 import ItemStats from "../../models/items/ItemStats";
-import { pickrate, winrate, winrateClass } from "../../utils/format";
 import StatsByOrder from "../../components/items/StatsByOrder";
 import Card from "../../components/Card";
 import { NextSeo } from "next-seo";
@@ -9,14 +8,9 @@ import ItemModal from "../../components/items/ItemModal";
 import PageHeader from "../../components/PageHeader";
 import MatchApi from "../../api/MatchApi";
 import usePageView from "../../hooks/usePageView";
-import HelpHover from "../../components/HelpHover";
-import {
-    ITEM_PICKRATE_HELPER_TEXT,
-    ITEM_WINRATE_HELPER_TEXT,
-} from "../../constants/constants";
 import ChampionApi from "../../api/ChampionApi";
 import StatsCard from "../../components/StatsCard";
-import Champion from "../../models/champions/Champion";
+import { GameBoostRectangleLg } from "../../components/ads/GameBoost";
 
 export default function ItemPage({
     item,
@@ -71,22 +65,25 @@ export default function ItemPage({
                     </div>
                 }
             >
-                <div className="mb-4 grid grid-cols-2 gap-3 xl:w-1/2">
-                    <StatsCard {...item} entityType="item" />
-                    <StatsCard
-                        {...item}
-                        totalMatches={totalMatches}
-                        previousTotalMatches={previousTotalMatches}
-                        type="pickrate"
-                        entityType="item"
-                    />
+                <div className="flex flex-col md:flex-row gap-3">
+                    <div className="mb-4 grid grid-cols-2 gap-3 xl:w-1/2">
+                        <StatsCard {...item} entityType="item" />
+                        <StatsCard
+                            {...item}
+                            totalMatches={totalMatches}
+                            previousTotalMatches={previousTotalMatches}
+                            type="pickrate"
+                            entityType="item"
+                        />
 
-                    <div className="rounded bg-white p-4 text-center text-lg font-bold text-gray-600 shadow dark:bg-gray-800 dark:text-gray-400">
-                        <span className="text-gray-900 dark:text-white">
-                            {item.championStats.length}
-                        </span>{" "}
-                        Champions
+                        <div className="rounded bg-white p-4 text-center text-lg font-bold text-gray-600 shadow dark:bg-gray-800 dark:text-gray-400">
+                            <span className="text-gray-900 dark:text-white">
+                                {item.championStats.length}
+                            </span>{" "}
+                            Champions
+                        </div>
                     </div>
+                    <GameBoostRectangleLg className="md:ml-auto" />
                 </div>
             </PageHeader>
 

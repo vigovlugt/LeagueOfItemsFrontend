@@ -13,6 +13,7 @@ import RuneApi from "../../api/RuneApi";
 import { NextSeo } from "next-seo";
 import MatchApi from "../../api/MatchApi";
 import { getPickrateIncrease } from "../../utils/stats";
+import { SponsorLayout } from "../../components/ads/GameBoost";
 
 export default function RuneTierlist({
     runes,
@@ -215,7 +216,7 @@ export default function RuneTierlist({
     const goToRune = (row) => router.push(`/runes/${row.original.id}`);
 
     return (
-        <div>
+        <SponsorLayout>
             <NextSeo
                 title="Rune tierlist"
                 description="Rune tierlist with all League of Legends items."
@@ -226,10 +227,10 @@ export default function RuneTierlist({
                 <Table table={keystoneTable} onClick={goToRune} />
             </div>
             <h2 className="mb-2 font-header text-4xl">Runes</h2>
-            <div className="overflow-hidden rounded-lg shadow-lg">
+            <div className="rounded-lg shadow-lg w-full min-w-0 overflow-x-auto">
                 <Table table={normalTable} onClick={goToRune} />
             </div>
-        </div>
+        </SponsorLayout>
     );
 }
 
