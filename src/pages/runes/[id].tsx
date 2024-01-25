@@ -8,6 +8,7 @@ import MatchApi from "../../api/MatchApi";
 import usePageView from "../../hooks/usePageView";
 import ChampionApi from "../../api/ChampionApi";
 import StatsCard from "../../components/StatsCard";
+import { GameBoostRectangleLg } from "../../components/ads/GameBoost";
 
 export default function RunePage({
     rune,
@@ -33,22 +34,25 @@ export default function RunePage({
                 name={rune.name}
                 description={removeTags(rune.shortDescription)}
             >
-                <div className="mb-4 grid grid-cols-2 gap-3 xl:w-1/2">
-                    <StatsCard {...rune} entityType="rune" />
-                    <StatsCard
-                        {...rune}
-                        totalMatches={totalMatches}
-                        previousTotalMatches={previousTotalMatches}
-                        entityType="rune"
-                        type="pickrate"
-                    />
+                <div className="flex flex-col md:flex-row gap-3">
+                    <div className="mb-4 grid grid-cols-2 gap-3 xl:w-1/2">
+                        <StatsCard {...rune} entityType="rune" />
+                        <StatsCard
+                            {...rune}
+                            totalMatches={totalMatches}
+                            previousTotalMatches={previousTotalMatches}
+                            entityType="rune"
+                            type="pickrate"
+                        />
 
-                    <div className="rounded bg-white p-4 text-center text-lg font-bold text-gray-600 shadow dark:bg-gray-800 dark:text-gray-300">
-                        <span className="text-gray-900 dark:text-white">
-                            {rune.championStats.length}
-                        </span>{" "}
-                        Champions
+                        <div className="rounded bg-white p-4 text-center text-lg font-bold text-gray-600 shadow dark:bg-gray-800 dark:text-gray-300">
+                            <span className="text-gray-900 dark:text-white">
+                                {rune.championStats.length}
+                            </span>{" "}
+                            Champions
+                        </div>
                     </div>
+                    <GameBoostRectangleLg className="md:ml-auto" />
                 </div>
             </PageHeader>
 
