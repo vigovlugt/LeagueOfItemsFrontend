@@ -16,7 +16,7 @@ export function GameBoostRectangleSm({
             rel="noreferrer"
             {...props}
             className={
-                "rounded-xl ring-1 bg-[hsl(220_20%_9%)] flex flex-col gap-1 p-4 " +
+                "rounded-xl ring-1 bg-[hsl(220_20%_9%)] flex flex-col gap-4 p-4 " +
                 className
             }
             style={{
@@ -57,12 +57,12 @@ export function GameBoostRectangleSm({
                 className="self-start"
             />
 
-            <span className="text-2xl sm:text-3xl font-bold tracking-wide text-white my-2 leading-8">
+            <span className="text-2xl sm:text-3xl font-bold tracking-wide text-white leading-6 sm:leading-8">
                 Reach your <span className="text-[#0c6cfb]">dream rank</span>
             </span>
 
             <div
-                className="px-4 py-1.5 bg-[#0c6cfb] text-white rounded-md text-sm font-semibold tracking-wide mt-1 self-start"
+                className="px-4 py-1.5 bg-[#0c6cfb] text-white rounded-md text-sm font-semibold tracking-wide self-start"
                 style={{
                     fontFamily: "'Red Hat Display', sans-serif;",
                 }}

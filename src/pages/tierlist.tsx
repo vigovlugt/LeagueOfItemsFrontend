@@ -206,7 +206,7 @@ export default function Tierlist({
                 title="Item tierlist"
                 description="Item tierlist with all League of Legends items."
             />
-            <div className="rounded-lg shadow-lg w-full min-w-0 overflow-hidden">
+            <div className="rounded-lg shadow-lg w-full min-w-0 overflow-x-auto">
                 <Table
                     table={table}
                     onClick={goToItem}

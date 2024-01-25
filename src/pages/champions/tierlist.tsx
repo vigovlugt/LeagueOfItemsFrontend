@@ -272,7 +272,7 @@ export default function ChampionTierlist({
                 title="Champion tierlist"
                 description="League of Legends champion tierlist."
             />
-            <div className="overflow-hidden rounded-lg shadow-lg">
+            <div className="rounded-lg shadow-lg w-full min-w-0 overflow-x-auto">
                 <Table
                     table={table}
                     onClick={goToChampion}

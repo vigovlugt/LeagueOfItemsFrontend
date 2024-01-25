@@ -227,7 +227,7 @@ export default function RuneTierlist({
                 <Table table={keystoneTable} onClick={goToRune} />
             </div>
             <h2 className="mb-2 font-header text-4xl">Runes</h2>
-            <div className="overflow-hidden rounded-lg shadow-lg">
+            <div className="rounded-lg shadow-lg w-full min-w-0 overflow-x-auto">
                 <Table table={normalTable} onClick={goToRune} />
             </div>
         </SponsorLayout>
