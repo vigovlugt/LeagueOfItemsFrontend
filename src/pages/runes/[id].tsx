@@ -8,7 +8,6 @@ import MatchApi from "../../api/MatchApi";
 import usePageView from "../../hooks/usePageView";
 import ChampionApi from "../../api/ChampionApi";
 import StatsCard from "../../components/StatsCard";
-import { GameBoostRectangleLg } from "../../components/ads/GameBoost";
 
 export default function RunePage({
     rune,

@@ -1,13 +1,6 @@
 import ItemGridCell from "../components/items/ItemGridCell";
 import ItemApi from "../api/ItemApi";
-import { useMemo } from "react";
-import ItemStats from "../models/items/ItemStats";
 import { NextSeo } from "next-seo";
-import {
-    GameBoostRectangleSm,
-    GameBoostVertical,
-    SponsorLayout,
-} from "../components/ads/GameBoost";
 
 export default function Items({ items }) {
     return (

@@ -11,11 +11,8 @@ import {
 import { NextSeo } from "next-seo";
 import ChampionApi from "../../api/ChampionApi";
 import MatchApi from "../../api/MatchApi";
-import HelpHover from "../../components/HelpHover";
-import { CHAMPION_PICKRATE_HELPER_TEXT } from "../../constants/constants";
 import { IChampionStats } from "../../models/champions/ChampionStats";
 import { getIncrease, getPickrateIncrease } from "../../utils/stats";
-import { SponsorLayout } from "../../components/ads/GameBoost";
 
 interface IProps {
     champions: IChampionStats[];

@@ -1,10 +1,5 @@
-import ItemGridCell from "../items/ItemGridCell";
 import BuildsTable from "./BuildsTable";
-import RuneGridCell from "../runes/RuneGridCell";
 import HelpHover from "../HelpHover";
-import { ArrowSmDownIcon, ArrowSmRightIcon } from "@heroicons/react/solid";
-import Link from "next/link";
-import { GameBoostVertical } from "../ads/GameBoost";
 
 export default function HomeSidebar({ pickrateBuilds, winrateBuilds }) {
     return (
