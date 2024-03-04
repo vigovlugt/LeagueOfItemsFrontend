@@ -83,7 +83,6 @@ export default function ItemPage({
                             Champions
                         </div>
                     </div>
-                    <GameBoostRectangleLg className="md:ml-auto" />
                 </div>
             </PageHeader>
 

@@ -19,8 +19,6 @@ export default function HomeSidebar({ pickrateBuilds, winrateBuilds }) {
                 <HelpHover text="500 Match minimum" />
             </h3>
             <BuildsTable builds={winrateBuilds} size="sm" type="winrate" />
-
-            <GameBoostVertical className="mt-4 w-full sticky top-0" />
         </div>
     );
 }

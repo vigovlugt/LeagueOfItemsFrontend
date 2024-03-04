@@ -52,7 +52,6 @@ export default function RunePage({
                             Champions
                         </div>
                     </div>
-                    <GameBoostRectangleLg className="md:ml-auto" />
                 </div>
             </PageHeader>
 

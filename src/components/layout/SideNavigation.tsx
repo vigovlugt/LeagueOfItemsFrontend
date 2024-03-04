@@ -121,8 +121,6 @@ export default function SideNavigation({ open, onClickClose }) {
                 ))}
             </div>
 
-            <GameBoostRectangleSm className="mb-3" />
-
             <SideNavFooter />
         </nav>
     );
