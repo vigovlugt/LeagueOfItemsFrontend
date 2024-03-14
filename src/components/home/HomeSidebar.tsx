@@ -4,7 +4,7 @@ import RuneGridCell from "../runes/RuneGridCell";
 import HelpHover from "../HelpHover";
 import { ArrowSmDownIcon, ArrowSmRightIcon } from "@heroicons/react/solid";
 import Link from "next/link";
-import { GameBoostVertical } from "../ads/GameBoost";
+import { AdVertical } from "../ads/Ads";
 
 export default function HomeSidebar({ pickrateBuilds, winrateBuilds }) {
     return (
@@ -20,7 +20,7 @@ export default function HomeSidebar({ pickrateBuilds, winrateBuilds }) {
             </h3>
             <BuildsTable builds={winrateBuilds} size="sm" type="winrate" />
 
-            <GameBoostVertical className="mt-4 w-full sticky top-0" />
+            <AdVertical className="mt-4 w-full sticky top-0" />
         </div>
     );
 }

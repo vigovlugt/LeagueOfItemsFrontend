@@ -10,7 +10,7 @@ import MatchApi from "../../api/MatchApi";
 import usePageView from "../../hooks/usePageView";
 import ChampionApi from "../../api/ChampionApi";
 import StatsCard from "../../components/StatsCard";
-import { GameBoostRectangleLg } from "../../components/ads/GameBoost";
+import { AdRectangleLg } from "../../components/ads/Ads";
 
 export default function ItemPage({
     item,
@@ -83,7 +83,7 @@ export default function ItemPage({
                             Champions
                         </div>
                     </div>
-                    <GameBoostRectangleLg className="md:ml-auto" />
+                    <AdRectangleLg className="md:ml-auto" />
                 </div>
             </PageHeader>
 
