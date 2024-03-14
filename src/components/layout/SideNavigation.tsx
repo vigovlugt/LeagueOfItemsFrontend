@@ -16,7 +16,7 @@ import {
     GlobeAltIcon,
 } from "@heroicons/react/outline";
 import SearchBar from "./SearchBar";
-import { GameBoostRectangleSm } from "../ads/GameBoost";
+import { AdRectangleSm } from "../ads/Ads";
 
 const MENU_ITEMS = [
     {
@@ -70,12 +70,12 @@ const MENU_ITEMS = [
     {
         name: "FAQ",
         href: "/faq",
-        icon: () => <QuestionMarkCircleIcon className="w-8" />,
+        icon: () => <QuestionMarkCircleIcon className="w-7" />,
     },
     {
         name: "Contact",
         href: "mailto:vigovlugt+leagueofitems@gmail.com",
-        icon: () => <MailIcon className="w-8" />,
+        icon: () => <MailIcon className="w-7" />,
     },
 ] as const;
 
@@ -120,8 +120,6 @@ export default function SideNavigation({ open, onClickClose }) {
                     />
                 ))}
             </div>
-
-            <GameBoostRectangleSm className="mb-3" />
 
             <SideNavFooter />
         </nav>

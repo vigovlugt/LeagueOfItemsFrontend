@@ -1,7 +1,7 @@
 import { NextSeo } from "next-seo";
 import ChampionApi from "../../api/ChampionApi";
 import ChampionGridCell from "../../components/champions/ChampionGridCell";
-import { SponsorLayout } from "../../components/ads/GameBoost";
+import { SponsorLayout } from "../../components/ads/Ads";
 
 export default function ChampionIndex({ champions }) {
     return (

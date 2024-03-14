@@ -14,7 +14,7 @@ export default function Layout({
 
     return (
         <div className="font-sans w-screen">
-            <div className="flex w-full flex-row">
+            <div className="flex w-screen flex-row">
                 <SideNavigation
                     open={sideNavOpen}
                     onClickClose={() => setSideNavOpen(false)}
@@ -28,7 +28,10 @@ export default function Layout({
                     />
                     <div
                         ref={pageContainer}
-                        className="h-full overflow-auto p-4 text-gray-900 dark:text-white lg:p-8"
+                        className="overflow-auto min-w-0 p-4 text-gray-900 dark:text-white lg:p-8"
+                        style={{
+                            height: "calc(100vh - 65px)",
+                        }}
                     >
                         {children}
                     </div>

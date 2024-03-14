@@ -13,7 +13,7 @@ import RuneApi from "../../api/RuneApi";
 import { NextSeo } from "next-seo";
 import MatchApi from "../../api/MatchApi";
 import { getPickrateIncrease } from "../../utils/stats";
-import { SponsorLayout } from "../../components/ads/GameBoost";
+import { SponsorLayout } from "../../components/ads/Ads";
 
 export default function RuneTierlist({
     runes,

@@ -10,7 +10,7 @@ import MatchApi from "../../api/MatchApi";
 import usePageView from "../../hooks/usePageView";
 import ChampionApi from "../../api/ChampionApi";
 import StatsCard from "../../components/StatsCard";
-import { GameBoostRectangleLg } from "../../components/ads/GameBoost";
+import { AdHorizontal, AdRectangleSm } from "../../components/ads/Ads";
 
 export default function ItemPage({
     item,
@@ -83,7 +83,11 @@ export default function ItemPage({
                             Champions
                         </div>
                     </div>
-                    <GameBoostRectangleLg className="md:ml-auto" />
+                    <AdRectangleSm
+                        className="h-[150px] w-[256px] md:ml-auto"
+                        data-ad-format="false"
+                        data-full-width-responsive="false"
+                    />
                 </div>
             </PageHeader>
 
@@ -144,6 +148,12 @@ export default function ItemPage({
                         ))}
                 </div>
             </div>
+
+            <AdHorizontal
+                className="mt-4 h-32 w-full"
+                data-ad-format="false"
+                data-full-width-responsive="false"
+            />
 
             {/* Winrate by order */}
             <div className="mt-4">

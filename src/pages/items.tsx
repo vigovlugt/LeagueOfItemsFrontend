@@ -4,10 +4,10 @@ import { useMemo } from "react";
 import ItemStats from "../models/items/ItemStats";
 import { NextSeo } from "next-seo";
 import {
-    GameBoostRectangleSm,
-    GameBoostVertical,
+    AdRectangleSm,
+    AdVertical,
     SponsorLayout,
-} from "../components/ads/GameBoost";
+} from "../components/ads/Ads";
 
 export default function Items({ items }) {
     return (

@@ -12,7 +12,7 @@ import {
     ITEM_WINRATE_HELPER_TEXT,
 } from "../constants/constants";
 import { getPickrateIncrease } from "../utils/stats";
-import { SponsorLayout } from "../components/ads/GameBoost";
+import { SponsorLayout } from "../components/ads/Ads";
 
 export default function Tierlist({
     items,
