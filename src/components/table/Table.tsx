@@ -4,13 +4,13 @@ import Link from "next/link";
 const thPaddingBySize = {
     xs: "px-2 py-2 md:px-2 md:py-2",
     sm: "px-2 py-2 md:px-3 md:py-3",
-    md: "px-2 py-2 md:px-6 md:py-3",
+    md: "px-2 py-2 md:px-4 md:py-3",
 };
 
 const tdPaddingBySize = {
     xs: "px-2 py-2 md:px-2 md:py-2",
     sm: "px-2 py-2 md:px-3 md:py-3",
-    md: "px-2 py-2 md:px-6 md:py-4",
+    md: "px-2 py-2 md:px-4 md:py-4",
 };
 
 /* eslint react/jsx-key: "off" */
