@@ -60,7 +60,7 @@ export function AdRectangleSm({ ...props }: ComponentProps<"ins">) {
     return <AdSenseAd {...props} slot="9216640697" />;
 }
 
-export function AdRectangleLg({ ...props }: ComponentProps<"ins">) {
+export function AdHorizontal({ ...props }: ComponentProps<"ins">) {
     return <AdSenseAd {...props} slot="3441322412" />;
 }
 
@@ -79,8 +79,8 @@ export function SponsorLayout({ children, ...props }: ComponentProps<"div">) {
             </div>
             <div className="w-full">{children}</div>
             <div
-                className="self-start flex-shrink-0 flex-grow-0"
-                style={{ width: "300px" }}
+                className="self-start flex-shrink-0 flex-grow-0 sticky top-0"
+                style={{ width: "250px" }}
             >
                 <AdVertical />
             </div>
