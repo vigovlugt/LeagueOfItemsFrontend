@@ -15,7 +15,7 @@ import HelpHover from "../../components/HelpHover";
 import { CHAMPION_PICKRATE_HELPER_TEXT } from "../../constants/constants";
 import { IChampionStats } from "../../models/champions/ChampionStats";
 import { getIncrease, getPickrateIncrease } from "../../utils/stats";
-import { SponsorLayout } from "../../components/ads/GameBoost";
+import { SponsorLayout } from "../../components/ads/Ads";
 
 interface IProps {
     champions: IChampionStats[];

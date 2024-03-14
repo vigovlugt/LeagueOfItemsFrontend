@@ -3,7 +3,7 @@ import RuneGridCell from "../../components/runes/RuneGridCell";
 import { useMemo } from "react";
 import RuneStats from "../../models/runes/RuneStats";
 import { NextSeo } from "next-seo";
-import { SponsorLayout } from "../../components/ads/GameBoost";
+import { SponsorLayout } from "../../components/ads/Ads";
 
 export default function RuneIndex({ runes }) {
     const { keystones, normalRunes } = useMemo(() => {
