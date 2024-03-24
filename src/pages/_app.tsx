@@ -32,6 +32,18 @@ export default function App({ Component, pageProps }) {
             router.events.off("routeChangeComplete", handleRouteChangeComplete);
     }, []);
 
+    useEffect(() => {
+        const handleRouteChange = (url) => {
+            (window as any).gtag("event", "page_view", {
+                page_path: url,
+            });
+        };
+        router.events.on("routeChangeComplete", handleRouteChange);
+        return () => {
+            router.events.off("routeChangeComplete", handleRouteChange);
+        };
+    }, [router.events]);
+
     const pageName =
         typeof Component.pageName === "function"
             ? Component.pageName(pageProps)
