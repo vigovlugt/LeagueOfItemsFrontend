@@ -16,7 +16,6 @@ import {
     GlobeAltIcon,
 } from "@heroicons/react/outline";
 import SearchBar from "./SearchBar";
-import { AdRectangleSm } from "../ads/Ads";
 
 const MENU_ITEMS = [
     {

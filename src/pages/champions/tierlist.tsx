@@ -15,7 +15,6 @@ import HelpHover from "../../components/HelpHover";
 import { CHAMPION_PICKRATE_HELPER_TEXT } from "../../constants/constants";
 import { IChampionStats } from "../../models/champions/ChampionStats";
 import { getIncrease, getPickrateIncrease } from "../../utils/stats";
-import { SponsorLayout } from "../../components/ads/Ads";
 
 interface IProps {
     champions: IChampionStats[];
@@ -267,7 +266,7 @@ export default function ChampionTierlist({
     const goToChampion = (row) => router.push(`/champions/${row.original.id}`);
 
     return (
-        <SponsorLayout>
+        <>
             <NextSeo
                 title="Champion tierlist"
                 description="League of Legends champion tierlist."
@@ -279,7 +278,7 @@ export default function ChampionTierlist({
                     className="overflow-x-visible"
                 />
             </div>
-        </SponsorLayout>
+        </>
     );
 }
 

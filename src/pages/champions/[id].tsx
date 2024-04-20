@@ -17,7 +17,6 @@ import BuildsTable from "../../components/home/BuildsTable";
 import BuildsApi from "../../api/BuildsApi";
 import BuildStats from "../../models/builds/BuildStats";
 import RuneStats from "../../models/runes/RuneStats";
-import { AdHorizontal } from "../../components/ads/Ads";
 
 export default function ChampionPage({
     champion,
@@ -209,12 +208,6 @@ export default function ChampionPage({
                     </div>
                 </div>
             </div>
-
-            <AdHorizontal
-                className="mb-4 h-32 w-full"
-                data-ad-format="false"
-                data-full-width-responsive="false"
-            />
 
             {/* Winrate by order */}
             <div className="mb-4">

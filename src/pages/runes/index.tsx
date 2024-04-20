@@ -3,7 +3,6 @@ import RuneGridCell from "../../components/runes/RuneGridCell";
 import { useMemo } from "react";
 import RuneStats from "../../models/runes/RuneStats";
 import { NextSeo } from "next-seo";
-import { SponsorLayout } from "../../components/ads/Ads";
 
 export default function RuneIndex({ runes }) {
     const { keystones, normalRunes } = useMemo(() => {
@@ -20,30 +19,28 @@ export default function RuneIndex({ runes }) {
                 description="See all League of Legends runes and what champions they are best used on."
             />
 
-            <SponsorLayout>
-                <h2 className="mb-2 font-header text-4xl">Keystones</h2>
-                <div className="flex flex-wrap">
-                    {keystones.map((i) => (
-                        <RuneGridCell
-                            {...i}
-                            key={i.id}
-                            className="mr-[6px] mb-[6px]"
-                        />
-                    ))}
-                </div>
+            <h2 className="mb-2 font-header text-4xl">Keystones</h2>
+            <div className="flex flex-wrap">
+                {keystones.map((i) => (
+                    <RuneGridCell
+                        {...i}
+                        key={i.id}
+                        className="mr-[6px] mb-[6px]"
+                    />
+                ))}
+            </div>
 
-                <h2 className="mb-2 font-header text-4xl">Runes</h2>
-                <div className="flex flex-wrap">
-                    {normalRunes.map((i) => (
-                        <RuneGridCell
-                            {...i}
-                            key={i.id}
-                            className="mr-[6px] mb-[6px]"
-                            size="sm"
-                        />
-                    ))}
-                </div>
-            </SponsorLayout>
+            <h2 className="mb-2 font-header text-4xl">Runes</h2>
+            <div className="flex flex-wrap">
+                {normalRunes.map((i) => (
+                    <RuneGridCell
+                        {...i}
+                        key={i.id}
+                        className="mr-[6px] mb-[6px]"
+                        size="sm"
+                    />
+                ))}
+            </div>
         </div>
     );
 }
