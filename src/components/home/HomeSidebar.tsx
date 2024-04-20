@@ -4,7 +4,6 @@ import RuneGridCell from "../runes/RuneGridCell";
 import HelpHover from "../HelpHover";
 import { ArrowSmDownIcon, ArrowSmRightIcon } from "@heroicons/react/solid";
 import Link from "next/link";
-import { AdVertical } from "../ads/Ads";
 
 export default function HomeSidebar({ pickrateBuilds, winrateBuilds }) {
     return (
@@ -19,8 +18,6 @@ export default function HomeSidebar({ pickrateBuilds, winrateBuilds }) {
                 <HelpHover text="500 Match minimum" />
             </h3>
             <BuildsTable builds={winrateBuilds} size="sm" type="winrate" />
-
-            <AdVertical className="mt-4 w-full sticky top-0" />
         </div>
     );
 }

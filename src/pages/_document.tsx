@@ -38,13 +38,6 @@ export default class Document extends NextDocument {
                         }}
                     />
 
-                    {/* AdSense */}
-                    <script
-                        async
-                        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1885808487696267"
-                        crossOrigin="anonymous"
-                    ></script>
-
                     <link
                         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap"
                         rel="stylesheet"

@@ -12,7 +12,6 @@ import {
     ITEM_WINRATE_HELPER_TEXT,
 } from "../constants/constants";
 import { getPickrateIncrease } from "../utils/stats";
-import { SponsorLayout } from "../components/ads/Ads";
 
 export default function Tierlist({
     items,
@@ -201,7 +200,7 @@ export default function Tierlist({
     const goToItem = (row) => router.push(`/items/${row.original.id}`);
 
     return (
-        <SponsorLayout>
+        <>
             <NextSeo
                 title="Item tierlist"
                 description="Item tierlist with all League of Legends items."
@@ -213,7 +212,7 @@ export default function Tierlist({
                     className="overflow-x-visible"
                 />
             </div>
-        </SponsorLayout>
+        </>
     );
 }
 
