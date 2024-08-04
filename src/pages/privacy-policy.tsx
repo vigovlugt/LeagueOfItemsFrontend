@@ -9,7 +9,7 @@ export default function PrivacyPolicy({ content }) {
         <>
             <NextSeo title="Privacy Policy" />
 
-            <span id="ezoic-privacy-policy-embed"></span>
+            <a href="https://g.ezoic.net/privacy/leagueofitems.com">Ezoic services</a>
         </>
     );
 }
