@@ -1,0 +1,11 @@
+.patchRundownImage {
+    object-fit: cover;
+    object-position: top;
+    filter: saturate(0) opacity(0.3);
+    transition: filter ease-out 500ms, transform ease-out 500ms;
+}
+
+.patchRundownImage:hover {
+    filter: none;
+    transform: scale(1.05);
+}
