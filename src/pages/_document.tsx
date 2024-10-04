@@ -7,6 +7,19 @@ export default class Document extends NextDocument {
         return (
             <Html>
                 <Head>
+                    {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+                    <script
+                        src="https://the.gatekeeperconsent.com/cmp.min.js"
+                        data-cfasync="false"
+                    ></script>
+                    <script
+                        async
+                        src="//www.ezojs.com/ezoic/sa.min.js"
+                    ></script>
+                    <script>
+                        window.ezstandalone = window.ezstandalone || {};
+                        ezstandalone.cmd = ezstandalone.cmd || [];
+                    </script>
                     {/* Global Site Tag (gtag.js) - Google Analytics */}
                     <script
                         async
@@ -24,8 +37,7 @@ export default class Document extends NextDocument {
           `,
                         }}
                     />
-
-                    {/* Micorosoft Clarity */}
+                    {/* Microsoft Clarity */}
                     <script
                         dangerouslySetInnerHTML={{
                             __html: `
@@ -37,7 +49,6 @@ export default class Document extends NextDocument {
           `,
                         }}
                     />
-
                     <link
                         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap"
                         rel="stylesheet"
