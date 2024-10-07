@@ -118,6 +118,12 @@ export default function SideNavigation({ open, onClickClose }) {
                         onClick={onClickClose}
                     />
                 ))}
+                <div id="ezoic-pub-ad-placeholder-103"></div>
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `ezstandalone.cmd.push(function() { ezstandalone.showAds(103); });`,
+                    }}
+                ></script>
             </div>
 
             <SideNavFooter />

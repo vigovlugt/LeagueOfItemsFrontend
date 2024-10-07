@@ -24,6 +24,12 @@ export default function App({ Component, pageProps }) {
         const handleRouteChangeComplete = () => {
             // @ts-ignore
             pageContainer.current.scrollTo(0, 0);
+
+            // @ts-ignore
+            ezstandalone.cmd.push(function () {
+                // @ts-ignore
+                ezstandalone.refresh();
+            });
         };
 
         router.events.on("routeChangeComplete", handleRouteChangeComplete);
