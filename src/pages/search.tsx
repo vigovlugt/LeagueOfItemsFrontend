@@ -26,7 +26,7 @@ export default function SearchPage() {
         if (results.length > 0) {
             const { type, id } = results[0];
 
-            await router.push(`/${type}s/${id}`);
+            await router.push(`/${type.toLowerCase()}s/${id}`);
             return;
         }
 

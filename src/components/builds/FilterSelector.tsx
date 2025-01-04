@@ -129,7 +129,7 @@ function SearchResult({ name, id, onClick, type }) {
             onClick={onClick}
         >
             <img
-                src={`/images/${type}s/32/${id}.webp`}
+                src={`/images/${type.toLowerCase()}s/32/${id}.webp`}
                 style={{
                     width: "32px",
                     height: "32px",

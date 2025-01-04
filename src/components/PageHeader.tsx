@@ -45,7 +45,7 @@ export default function PageHeader({
                                 onClick={() => hasModal && setModalOpen(true)}
                             >
                                 <img
-                                    src={`/images/${type}s/${
+                                    src={`/images/${type.toLowerCase()}s/${
                                         type === "champion" ? "tiles/" : ""
                                     }256/${id}.webp`}
                                     style={{

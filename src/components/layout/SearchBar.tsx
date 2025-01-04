@@ -43,7 +43,7 @@ export default function SearchBar({ onSubmit = null }) {
 
         const { type, id } = results[0];
 
-        router.push(`/${type}s/${id}`);
+        router.push(`/${type.toLowerCase()}s/${id}`);
         (document.activeElement as HTMLElement).blur();
         reset();
     };
@@ -111,13 +111,13 @@ export default function SearchBar({ onSubmit = null }) {
 function SearchResult({ name, id, type, onClick }) {
     return (
         <Link
-            href={`/${type}s/${id}`}
+            href={`/${type.toLowerCase()}s/${id}`}
             passHref
             className="flex cursor-pointer items-center justify-start px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800"
             onClick={onClick}
         >
             <img
-                src={`/images/${type}s/32/${id}.webp`}
+                src={`/images/${type.toLowerCase()}s/32/${id}.webp`}
                 style={{
                     width: "32px",
                     height: "32px",

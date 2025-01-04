@@ -32,7 +32,7 @@ export default function StatsByOrder({
                 headerClass: "w-full",
                 Cell: ({ row }) => (
                     <img
-                        src={`/images/${type}s/32/${
+                        src={`/images/${type.toLowerCase()}s/32/${
                             type === "champion"
                                 ? row.original.championId
                                 : row.original.itemId

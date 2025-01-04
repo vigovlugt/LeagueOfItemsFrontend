@@ -60,7 +60,7 @@ export default function RandomPageButton() {
         goTo("champion", champions.id);
     };
 
-    const goTo = (type, id) => router.push(`/${type}s/${id}`);
+    const goTo = (type, id) => router.push(`/${type.toLowerCase()}s/${id}`);
 
     return (
         <button

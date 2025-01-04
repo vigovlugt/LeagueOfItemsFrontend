@@ -22,7 +22,7 @@ export default function Card({
     return (
         <div>
             <Link
-                href={`/${type}s/${id}`}
+                href={`/${type.toLowerCase()}s/${id}`}
                 passHref
                 className={`flex cursor-pointer flex-col items-center justify-center rounded bg-white px-3 py-3 text-center shadow ${
                     isLastPatch ? "dark:bg-gray-700" : "dark:bg-gray-800"
@@ -35,7 +35,7 @@ export default function Card({
                     </span>
                 )}
                 <img
-                    src={`/images/${type}s/64/${id}.webp`}
+                    src={`/images/${type.toLowerCase()}s/64/${id}.webp`}
                     style={{
                         width: "64px",
                         height: "64px",
