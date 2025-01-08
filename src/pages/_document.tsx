@@ -7,21 +7,6 @@ export default class Document extends NextDocument {
         return (
             <Html>
                 <Head>
-                    {/* Ezoic scripts */}
-                    {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-                    <script
-                        src="https://the.gatekeeperconsent.com/cmp.min.js"
-                        data-cfasync="false"
-                    ></script>
-                    <script
-                        async
-                        src="//www.ezojs.com/ezoic/sa.min.js"
-                    ></script>
-                    <script
-                        dangerouslySetInnerHTML={{
-                            __html: `window.ezstandalone = window.ezstandalone || {}; ezstandalone.cmd = ezstandalone.cmd || [];`,
-                        }}
-                    ></script>
                     {/* Global Site Tag (gtag.js) - Google Analytics */}
                     <script
                         async
