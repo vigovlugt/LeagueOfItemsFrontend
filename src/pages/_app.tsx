@@ -16,27 +16,7 @@ if (typeof window !== "undefined")
     };
 
 export default function App({ Component, pageProps }) {
-    const router = useRouter();
-
     const pageContainer = useRef();
-
-    useEffect(() => {
-        const handleRouteChangeComplete = () => {
-            // @ts-ignore
-            pageContainer.current.scrollTo(0, 0);
-
-            // @ts-ignore
-            ezstandalone.cmd.push(function () {
-                // @ts-ignore
-                ezstandalone.refresh();
-            });
-        };
-
-        router.events.on("routeChangeComplete", handleRouteChangeComplete);
-
-        return () =>
-            router.events.off("routeChangeComplete", handleRouteChangeComplete);
-    }, [router.events]);
 
     const pageName =
         typeof Component.pageName === "function"

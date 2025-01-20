@@ -3,6 +3,7 @@ import styles from "./PatchRundown.module.css";
 import { ArrowSmRightIcon } from "@heroicons/react/solid";
 import PatchNotesRundown from "../patchnotes/PatchNotesRundown";
 import IPatchNotesStats from "../../models/patchnotes/IPatchNotesStats";
+import { getPatchNotesUrl } from "../../utils/patch";
 
 export default function PatchRundown({
     patch,
@@ -23,10 +24,7 @@ export default function PatchRundown({
             className="mt-24 mb-8 rounded bg-white p-4 dark:bg-gray-900"
         >
             <Link
-                href={`https://www.leagueoflegends.com/en-us/news/game-updates/patch-${patch.replace(
-                    ".",
-                    "-"
-                )}-notes/`}
+                href={getPatchNotesUrl(patch)}
                 passHref
                 target="_blank"
                 className="group relative mb-4 flex w-full items-center justify-center overflow-hidden rounded-lg bg-white p-8 py-24 shadow dark:bg-dark dark:text-gray-50 sm:py-32"
@@ -63,10 +61,7 @@ export default function PatchRundown({
                 patch notes.
             </p>
             <Link
-                href={`https://www.leagueoflegends.com/en-us/news/game-updates/patch-${patch.replace(
-                    ".",
-                    "-"
-                )}-notes/`}
+                href={getPatchNotesUrl(patch)}
                 passHref
                 className="flex w-full items-center justify-center rounded bg-gray-50 p-2 text-lg shadow dark:bg-gray-800 dark:text-gray-50"
                 target="_blank"

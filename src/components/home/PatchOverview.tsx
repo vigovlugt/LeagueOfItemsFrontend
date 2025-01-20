@@ -14,6 +14,7 @@ import MidIcon from "../icons/roles/MidIcon";
 import BottomIcon from "../icons/roles/BottomIcon";
 import SupportIcon from "../icons/roles/SupportIcon";
 import styles from "./PatchOverview.module.css";
+import { getPatchNotesUrl } from "../../utils/patch";
 
 export default function PatchOverview({
     patch,
@@ -35,10 +36,7 @@ export default function PatchOverview({
             className="mt-24 rounded bg-white p-4 dark:bg-gray-900"
         >
             <Link
-                href={`https://www.leagueoflegends.com/en-us/news/game-updates/patch-${patch.replace(
-                    ".",
-                    "-"
-                )}-notes/`}
+                href={getPatchNotesUrl(patch)}
                 passHref
                 target="_blank"
                 className="group relative mb-8 flex w-full items-center justify-center overflow-hidden rounded-lg bg-white p-8 py-24 shadow dark:bg-dark dark:text-gray-50 sm:py-32"
