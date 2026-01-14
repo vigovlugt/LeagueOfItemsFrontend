@@ -4,7 +4,6 @@ export default [
         results: [
             {
                 size: 256,
-                quality: 100,
             },
             {
                 size: 128,
@@ -16,11 +15,9 @@ export default [
         results: [
             {
                 size: 512,
-                quality: 100,
             },
             {
                 size: 256,
-                quality: 100,
             },
             {
                 size: 128,
@@ -38,7 +35,6 @@ export default [
         results: [
             {
                 size: 256,
-                quality: 100,
             },
             {
                 size: 128,
