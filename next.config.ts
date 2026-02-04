@@ -1,7 +1,8 @@
-const path = require("path");
-const CopyPlugin = require("copy-webpack-plugin");
+import path from "path";
+import CopyPlugin from "copy-webpack-plugin";
+import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 
-module.exports = {
+export default {
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     config.plugins.push(
       new CopyPlugin({
@@ -10,7 +11,7 @@ module.exports = {
             from: path.join(__dirname, "data/dataset.json"),
             to: path.join(__dirname, "public/data/dataset.json"),
             transform: (content, path) => {
-              const dataset = JSON.parse(content);
+              const dataset = JSON.parse(content as any);
 
               return JSON.stringify({
                 items: dataset.items.map(({ id, name }) => ({ id, name })),
@@ -29,3 +30,5 @@ module.exports = {
     return config;
   },
 };
+
+initOpenNextCloudflareForDev();
