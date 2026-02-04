@@ -17,13 +17,19 @@
             "service": "league-of-items",
         },
     ],
-    // "r2_buckets": [
-    //     // Create a R2 binding with the binding name "NEXT_INC_CACHE_R2_BUCKET"
-    //     // {
-    //     //   "binding": "NEXT_INC_CACHE_R2_BUCKET",
-    //     //   "bucket_name": "<BUCKET_NAME>",
-    //     // },
-    // ],
+    "r2_buckets": [
+        // Create a R2 binding with the binding name "NEXT_INC_CACHE_R2_BUCKET"
+        {
+            "binding": "NEXT_INC_CACHE_R2_BUCKET",
+            "bucket_name": "league-of-items-next-inc-cache",
+        },
+    ],
+    "routes": [
+        {
+            "pattern": "leagueofitems.com",
+            "custom_domain": true
+        }
+    ]
     // "images": {
     //     // Enable image optimization
     //     // see https://opennext.js.org/cloudflare/howtos/image

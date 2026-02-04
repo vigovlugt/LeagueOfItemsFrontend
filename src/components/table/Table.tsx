@@ -93,7 +93,7 @@ export default function Table({
                                             }`}
                                         >
                                             {href ? (
-                                                <Link
+                                                <Link prefetch={false}
                                                     href={href(row)}
                                                     passHref
                                                     className={

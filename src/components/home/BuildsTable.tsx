@@ -239,7 +239,7 @@ export default function BuildsTable({
         >
             <Table table={table} onClick={gotoBuild} size={size} />
             {!isFull && (
-                <Link
+                <Link prefetch={false}
                     href={linkHref}
                     passHref
                     className="flex w-full items-center justify-center rounded-b bg-gray-50 p-2 text-lg shadow dark:bg-gray-800 dark:text-gray-50"

@@ -13,7 +13,7 @@ export default function Faq({ content }) {
                 // className="prose-lg prose-blue" TODO
                 components={{
                     a: ({ children, href }: any) => (
-                        <Link
+                        <Link prefetch={false}
                             href={href}
                             target={
                                 (href as string).startsWith("/")
@@ -35,7 +35,7 @@ export default function Faq({ content }) {
 export async function getStaticProps() {
     const markdownDir = join(process.cwd(), "content/faq.md");
 
-    const content = fs.readFileSync(markdownDir).toString();
+    const content = fs.readFileSync(markdownDir).toString(); // TODO
 
     return {
         props: {

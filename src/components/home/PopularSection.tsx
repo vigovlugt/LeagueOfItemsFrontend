@@ -14,7 +14,7 @@ export default function PopularSection({ pageViewDataset }) {
                 ))}
             </div>
 
-            <Link
+            <Link prefetch={false}
                 href="/items"
                 passHref
                 className="mt-4 mb-8 flex w-full items-center justify-center rounded bg-white p-2 text-lg shadow dark:bg-gray-900 dark:text-gray-50"
@@ -34,7 +34,7 @@ export default function PopularSection({ pageViewDataset }) {
                         ))}
                     </div>
 
-                    <Link
+                    <Link prefetch={false}
                         href="/runes"
                         passHref
                         className="mt-4 flex items-center justify-center rounded bg-white p-2 text-lg shadow dark:bg-gray-900 dark:text-gray-50"
@@ -54,7 +54,7 @@ export default function PopularSection({ pageViewDataset }) {
                         ))}
                     </div>
 
-                    <Link
+                    <Link prefetch={false}
                         href="/champions"
                         passHref
                         className="mt-4 flex items-center justify-center rounded bg-white p-2 text-lg shadow dark:bg-gray-900 dark:text-gray-50"

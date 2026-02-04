@@ -11,7 +11,7 @@ export default function CategoryPreviews() {
     return (
         <div className="mb-16">
             <div className="mb-4 flex w-full flex-col items-stretch sm:flex-row sm:space-x-4">
-                <Link
+                <Link prefetch={false}
                     href="/items"
                     passHref
                     className="group relative w-full overflow-hidden rounded-lg bg-white dark:bg-black"
@@ -32,7 +32,7 @@ export default function CategoryPreviews() {
                     </span>
                 </Link>
                 <div className="flex w-full flex-col space-y-4">
-                    <Link
+                    <Link prefetch={false}
                         href="/runes"
                         passHref
                         className="group relative mt-4 h-full min-h-[300px] overflow-hidden rounded-lg bg-white p-4 dark:bg-dark sm:mt-0 sm:min-h-0"
@@ -49,7 +49,7 @@ export default function CategoryPreviews() {
                             View all
                         </span>
                     </Link>
-                    <Link
+                    <Link prefetch={false}
                         href="/champions"
                         passHref
                         className="group relative mt-4 h-full min-h-[300px] overflow-hidden rounded-lg bg-white p-4 dark:bg-dark sm:mt-0 sm:min-h-0"

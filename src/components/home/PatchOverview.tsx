@@ -35,7 +35,7 @@ export default function PatchOverview({
             id="patch-overview"
             className="mt-24 rounded bg-white p-4 dark:bg-gray-900"
         >
-            <Link
+            <Link prefetch={false}
                 href={getPatchNotesUrl(patch)}
                 passHref
                 target="_blank"

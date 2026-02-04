@@ -21,7 +21,7 @@ export default function Card({
 
     return (
         <div>
-            <Link
+            <Link prefetch={false}
                 href={`/${type.toLowerCase()}s/${id}`}
                 passHref
                 className={`flex cursor-pointer flex-col items-center justify-center rounded bg-white px-3 py-3 text-center shadow ${

@@ -23,7 +23,7 @@ export default function PatchRundown({
             id="patch-rundown"
             className="mt-24 mb-8 rounded bg-white p-4 dark:bg-gray-900"
         >
-            <Link
+            <Link prefetch={false}
                 href={getPatchNotesUrl(patch)}
                 passHref
                 target="_blank"
@@ -60,7 +60,7 @@ export default function PatchRundown({
                 This overview only shows items, runes and champions from the
                 patch notes.
             </p>
-            <Link
+            <Link prefetch={false}
                 href={getPatchNotesUrl(patch)}
                 passHref
                 className="flex w-full items-center justify-center rounded bg-gray-50 p-2 text-lg shadow dark:bg-gray-800 dark:text-gray-50"

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function ChampionGridCell({ id, className = "", size = "md" }) {
     return (
-        <Link
+        <Link prefetch={false}
             href={`/champions/${id}`}
             passHref
             className={`block cursor-pointer ${className} group`}

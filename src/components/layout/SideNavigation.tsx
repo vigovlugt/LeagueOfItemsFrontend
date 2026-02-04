@@ -138,7 +138,7 @@ function MenuItem({
     const Icon = icon;
 
     return (
-        <Link
+        <Link prefetch={false}
             href={href}
             passHref
             target={target}
