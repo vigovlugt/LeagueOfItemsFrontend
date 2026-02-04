@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { XIcon } from "@heroicons/react/solid";
 
 export default function ItemModal({ setIsOpen, isOpen, item }) {
-    const cancelButtonRef = useRef();
+    const cancelButtonRef = useRef(undefined);
 
     return (
         <Dialog

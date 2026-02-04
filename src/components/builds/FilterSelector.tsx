@@ -15,7 +15,7 @@ export default function FilterSelector({ filter, setFilter, type }) {
     });
     const [hasFetchedDataset, setHasFetchedDataset] = useState(false);
 
-    const inputElement = useRef<HTMLInputElement>();
+    const inputElement = useRef<HTMLInputElement>(undefined);
 
     const fetchDataset = async () => {
         if (hasFetchedDataset) {

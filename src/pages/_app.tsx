@@ -16,7 +16,7 @@ if (typeof window !== "undefined")
     };
 
 export default function App({ Component, pageProps }) {
-    const pageContainer = useRef();
+    const pageContainer = useRef(undefined);
 
     const pageName =
         typeof Component.pageName === "function"

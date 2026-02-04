@@ -10,9 +10,9 @@ export default function Faq({ content }) {
             <NextSeo title="FAQ" />
 
             <ReactMarkdown
-                className="prose-lg prose-blue"
+                // className="prose-lg prose-blue" TODO
                 components={{
-                    a: ({ children, href }) => (
+                    a: ({ children, href }: any) => (
                         <Link
                             href={href}
                             target={

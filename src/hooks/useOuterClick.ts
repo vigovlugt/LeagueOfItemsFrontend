@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react";
 
 export default function useOuterClick(callback) {
-    const callbackRef = useRef<Function>(); // initialize mutable ref, which stores callback
-    const innerRef = useRef<HTMLElement>(); // returned to client, who marks "border" element
+    const callbackRef = useRef<Function>(undefined); // initialize mutable ref, which stores callback
+    const innerRef = useRef<HTMLElement>(undefined); // returned to client, who marks "border" element
 
     // update cb on each render, so second useEffect has access to current value
     useEffect(() => {
