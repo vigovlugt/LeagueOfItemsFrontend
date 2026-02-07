@@ -104,6 +104,3 @@ dist
 .tern-port
 .vercel
 out/
-
-.open-next
-.wrangler
