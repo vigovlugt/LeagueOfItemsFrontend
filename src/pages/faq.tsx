@@ -9,25 +9,28 @@ export default function Faq({ content }) {
         <>
             <NextSeo title="FAQ" />
 
-            <ReactMarkdown
-                // className="prose-lg prose-blue" TODO
-                components={{
-                    a: ({ children, href }: any) => (
-                        <Link prefetch={false}
-                            href={href}
-                            target={
-                                (href as string).startsWith("/")
-                                    ? null
-                                    : "_blank"
-                            }
-                        >
-                            {children}
-                        </Link>
-                    ),
-                }}
-            >
-                {content}
-            </ReactMarkdown>
+            <div className="prose-lg prose-blue">
+                <ReactMarkdown
+                    // className="prose-lg prose-blue" TODO
+                    components={{
+                        a: ({ children, href }: any) => (
+                            <Link
+                                prefetch={false}
+                                href={href}
+                                target={
+                                    (href as string).startsWith("/")
+                                        ? null
+                                        : "_blank"
+                                }
+                            >
+                                {children}
+                            </Link>
+                        ),
+                    }}
+                >
+                    {content}
+                </ReactMarkdown>
+            </div>
         </>
     );
 }
