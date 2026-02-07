@@ -29,6 +29,7 @@ export default {
 
     return config;
   },
+  output: "export"
 };
 
 initOpenNextCloudflareForDev();
