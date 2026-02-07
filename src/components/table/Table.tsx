@@ -13,7 +13,6 @@ const tdPaddingBySize = {
     md: "px-2 py-2 md:px-4 md:py-4",
 };
 
-/* eslint react/jsx-key: "off" */
 export default function Table({
     table,
     onClick = null,
@@ -42,29 +41,42 @@ export default function Table({
                 className={`min-w-full divide-y divide-gray-200 font-semibold dark:divide-gray-700`}
             >
                 <thead className="bg-gray-50 dark:bg-gray-800">
-                    {table.headerGroups.map((headerGroup) => (
-                        <tr {...headerGroup.getHeaderGroupProps()}>
-                            {headerGroup.headers.map((column) => (
-                                <th
-                                    {...column.getHeaderProps(
-                                        column.getSortByToggleProps?.()
-                                    )}
-                                    className={`${
-                                        thPaddingBySize[size]
-                                    } whitespace-nowrap text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400 ${
-                                        column.headerClass || ""
-                                    }`}
-                                >
-                                    {column.render("Header")}
-                                    {column.isSorted && (
-                                        <span>
-                                            {column.isSortedDesc ? " ▼" : " ▲"}
-                                        </span>
-                                    )}
-                                </th>
-                            ))}
-                        </tr>
-                    ))}
+                    {table.headerGroups.map((headerGroup) => {
+                        const { key: headerGroupKey, ...headerGroupProps } =
+                            headerGroup.getHeaderGroupProps();
+
+                        return (
+                            <tr key={headerGroupKey} {...headerGroupProps}>
+                                {headerGroup.headers.map((column) => {
+                                    const { key: columnKey, ...columnProps } =
+                                        column.getHeaderProps(
+                                            column.getSortByToggleProps?.()
+                                        );
+
+                                    return (
+                                        <th
+                                            key={columnKey}
+                                            {...columnProps}
+                                            className={`${
+                                                thPaddingBySize[size]
+                                            } whitespace-nowrap text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400 ${
+                                                column.headerClass || ""
+                                            }`}
+                                        >
+                                            {column.render("Header")}
+                                            {column.isSorted && (
+                                                <span>
+                                                    {column.isSortedDesc
+                                                        ? " ▼"
+                                                        : " ▲"}
+                                                </span>
+                                            )}
+                                        </th>
+                                    );
+                                })}
+                            </tr>
+                        );
+                    })}
                 </thead>
                 <tbody
                     {...table.getTableBodyProps()}
@@ -72,18 +84,25 @@ export default function Table({
                 >
                     {(table.page || table.rows).map((row) => {
                         table.prepareRow(row);
+                        const { key: rowKey, ...rowProps } = row.getRowProps();
+
                         return (
                             <tr
-                                {...row.getRowProps()}
+                                key={rowKey}
+                                {...rowProps}
                                 onClick={
                                     onClick ? () => onClick(row) : undefined
                                 }
                                 className={onClick ? "cursor-pointer" : ""}
                             >
                                 {row.cells.map((cell) => {
+                                    const { key: cellKey, ...cellProps } =
+                                        cell.getCellProps();
+
                                     return (
                                         <td
-                                            {...cell.getCellProps()}
+                                            key={cellKey}
+                                            {...cellProps}
                                             className={`${
                                                 href
                                                     ? null
@@ -93,7 +112,8 @@ export default function Table({
                                             }`}
                                         >
                                             {href ? (
-                                                <Link prefetch={false}
+                                                <Link
+                                                    prefetch={false}
                                                     href={href(row)}
                                                     passHref
                                                     className={
