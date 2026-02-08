@@ -3,7 +3,7 @@
 .categoryImageChampions {
     object-fit: cover;
     object-position: center;
-    transition: filter ease-out 400ms, transform ease-out 400ms;
+    transition: filter ease-out 250ms, transform ease-out 250ms;
 }
 
 .categoryImageItems {
