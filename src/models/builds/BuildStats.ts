@@ -56,7 +56,15 @@ export default class BuildStats implements IBuildStats {
     }
 
     public toJSON() {
-        return { ...this };
+        const json: any = { ...this };
+
+        for (const key of Object.keys(json)) {
+            if (json[key] === undefined) {
+                delete json[key];
+            }
+        }
+
+        return json;
     }
 
     public static fromChampionBuildPathStats(
