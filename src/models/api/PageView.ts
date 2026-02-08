@@ -1,6 +1,16 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { type Model, Schema } from "mongoose";
 
-const PageView = new Schema(
+export type PageViewType = "CHAMPION" | "ITEM" | "RUNE";
+
+export type PageViewDoc = {
+    type: PageViewType;
+    id: number;
+    user: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+};
+
+const PageViewSchema = new Schema(
     {
         type: {
             type: String,
@@ -17,4 +27,9 @@ const PageView = new Schema(
     },
     { timestamps: true }
 );
-export default mongoose.models.PageView || mongoose.model("PageView", PageView);
+
+const PageViewModel =
+    (mongoose.models.PageView as Model<PageViewDoc> | undefined) ||
+    mongoose.model<PageViewDoc>("PageView", PageViewSchema);
+
+export default PageViewModel;
