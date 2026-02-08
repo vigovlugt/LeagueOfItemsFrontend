@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { DefaultSeo } from "next-seo";
 import { ThemeProvider } from "next-themes";
@@ -16,7 +16,23 @@ if (typeof window !== "undefined")
     };
 
 export default function App({ Component, pageProps }) {
-    const pageContainer = useRef(undefined);
+    const router = useRouter();
+    const pageContainer = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+        const resetPageScroll = (url?: string) => {
+            // Allow in-page hash navigation without forcing back to top.
+            if (typeof url === "string" && url.includes("#")) return;
+            pageContainer.current?.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: "auto",
+            });
+        };
+
+        router.events.on("routeChangeComplete", resetPageScroll);
+        return () => router.events.off("routeChangeComplete", resetPageScroll);
+    }, [router.events]);
 
     const pageName =
         typeof Component.pageName === "function"
