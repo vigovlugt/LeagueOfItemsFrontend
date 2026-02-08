@@ -3,5 +3,11 @@
     "name": "league-of-items",
     "compatibility_date": "2026-02-08",
     "compatibility_flags": ["nodejs_compat"],
+    "analytics_engine_datasets": [
+        {
+            "binding": "PAGEVIEWS",
+            "dataset": "pageviews"
+        }
+    ],
     "pages_build_output_dir": "out"
 }

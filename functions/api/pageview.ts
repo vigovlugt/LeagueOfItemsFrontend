@@ -1,6 +1,10 @@
-import mongoose from "mongoose";
-
-import PageView from "../../src/models/api/PageView";
+type AnalyticsEngineDatasetLike = {
+    writeDataPoint: (dataPoint: {
+        blobs?: string[];
+        doubles?: number[];
+        indexes?: string[];
+    }) => void;
+};
 
 const corsHeaders: Record<string, string> = {
     "Access-Control-Allow-Credentials": "true",
@@ -21,36 +25,9 @@ const sha256Hex = async (data: string) => {
     return toHex(digest);
 };
 
-type MongooseCache = {
-    conn: typeof mongoose | null;
-    promise: Promise<typeof mongoose> | null;
-};
-
-const getMongooseCache = () => {
-    const globalForMongoose = globalThis as unknown as {
-        __leagueOfItemsMongoose?: MongooseCache;
-    };
-
-    if (!globalForMongoose.__leagueOfItemsMongoose) {
-        globalForMongoose.__leagueOfItemsMongoose = {
-            conn: null,
-            promise: null,
-        };
-    }
-
-    return globalForMongoose.__leagueOfItemsMongoose;
-};
-
-const connectMongo = async (mongoUrl: string) => {
-    const cache = getMongooseCache();
-    if (cache.conn) return cache.conn;
-
-    if (!cache.promise) {
-        cache.promise = mongoose.connect(mongoUrl);
-    }
-
-    cache.conn = await cache.promise;
-    return cache.conn;
+type Env = {
+    IP_HASH_SALT?: string;
+    PAGEVIEWS?: AnalyticsEngineDatasetLike;
 };
 
 const getIp = (request: Request) => {
@@ -62,10 +39,7 @@ const getIp = (request: Request) => {
     return xff.split(",")[0].trim() || "localhost";
 };
 
-export const onRequest = async (context: {
-    request: Request;
-    env: Record<string, string | undefined>;
-}) => {
+export const onRequest = async (context: { request: Request; env: Env }) => {
     const { request, env } = context;
 
     if (request.method === "OPTIONS") {
@@ -76,9 +50,10 @@ export const onRequest = async (context: {
         return new Response(null, { status: 405, headers: corsHeaders });
     }
 
-    const mongoUrl = env.MONGODB_URL;
     const ipHashSalt = env.IP_HASH_SALT;
-    if (!mongoUrl || !ipHashSalt) {
+    const dataset = env.PAGEVIEWS;
+
+    if (!ipHashSalt || !dataset) {
         return new Response(null, { status: 500, headers: corsHeaders });
     }
 
@@ -103,28 +78,15 @@ export const onRequest = async (context: {
         return new Response(null, { status: 400, headers: corsHeaders });
     }
 
-    await connectMongo(mongoUrl);
-
     const ip = getIp(request);
     const userAgent = request.headers.get("user-agent") ?? "";
     const user = await sha256Hex(ip + userAgent + ipHashSalt);
 
-    const fiveMinutesAgo = new Date(Date.now() - 5 * 60_000);
-
-    const existingPageView = await PageView.findOne({
-        type,
-        id: numericId,
-        user,
-        createdAt: { $gt: fiveMinutesAgo },
-    }).lean();
-
-    if (!existingPageView) {
-        await PageView.create({
-            type,
-            id: numericId,
-            user,
-        });
-    }
+    dataset.writeDataPoint({
+        blobs: [type, String(numericId)],
+        doubles: [1],
+        indexes: [user],
+    });
 
     return new Response(null, { status: 200, headers: corsHeaders });
 };
