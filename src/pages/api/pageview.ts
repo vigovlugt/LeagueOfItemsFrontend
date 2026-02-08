@@ -6,7 +6,8 @@ import crypto from "crypto";
 
 const IP_HASH_SALT = process.env.IP_HASH_SALT;
 
-const md5 = (data) => crypto.createHash("md5").update(data).digest("hex");
+const md5 = (data: string) =>
+    crypto.createHash("md5").update(data).digest("hex");
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     if (enableCors(req, res)) {
@@ -24,8 +25,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         return res.status(400).send(null);
     }
 
-    const ip = req.headers["x-forwarded-for"] || "localhost";
-    const userAgent = req.headers["user-agent"];
+    const ipHeader = req.headers["x-forwarded-for"];
+    const ip = Array.isArray(ipHeader) ? ipHeader[0] : ipHeader || "localhost";
+    const userAgent = req.headers["user-agent"] ?? "";
 
     const user = md5(ip + userAgent + IP_HASH_SALT);
 
