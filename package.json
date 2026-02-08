@@ -9,7 +9,7 @@
         "start": "next start",
         "lint": "eslint .",
         "typecheck": "tsc --noEmit",
-        "wrangler-dev": "bunx wrangler pages dev out --compatibility-flag=nodejs_compat --compatibility-date=2026-02-08",
+        "wrangler-dev": "wrangler pages dev",
         "update:dataset": "./update-dataset.sh && node src/scripts/generate-public-dataset.mjs",
         "download:champions": "node src/scripts/download-champions.mjs && npm run optimize:images",
         "download:items": "node src/scripts/download-items.mjs && npm run optimize:images",
@@ -52,6 +52,7 @@
         "tailwindcss": "^3.4.1",
         "ts-node": "^10.1.0",
         "typescript": "^5.9.3",
-        "waifu2x": "^0.9.3"
+        "waifu2x": "^0.9.3",
+        "wrangler": "^4.63.0"
     }
 }
