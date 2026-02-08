@@ -2,12 +2,18 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import connect from "../../utils/database";
 import PageView from "../../models/api/PageView";
 import enableCors from "../../utils/cors";
-import crypto from "crypto";
-
 const IP_HASH_SALT = process.env.IP_HASH_SALT;
 
-const md5 = (data: string) =>
-    crypto.createHash("md5").update(data).digest("hex");
+const toHex = (buf: ArrayBuffer) =>
+    Array.from(new Uint8Array(buf))
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join("");
+
+const sha256Hex = async (data: string) => {
+    const bytes = new TextEncoder().encode(data);
+    const digest = await globalThis.crypto.subtle.digest("SHA-256", bytes);
+    return toHex(digest);
+};
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     if (enableCors(req, res)) {
@@ -29,7 +35,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const ip = Array.isArray(ipHeader) ? ipHeader[0] : ipHeader || "localhost";
     const userAgent = req.headers["user-agent"] ?? "";
 
-    const user = md5(ip + userAgent + IP_HASH_SALT);
+    const user = await sha256Hex(ip + userAgent + IP_HASH_SALT);
 
     const fiveMinutesAgo = new Date(new Date().getTime() - 5 * 60000);
 

@@ -1,4 +1,3 @@
-import crypto from "crypto";
 import mongoose from "mongoose";
 
 import PageView from "../../src/models/api/PageView";
@@ -11,8 +10,16 @@ const corsHeaders: Record<string, string> = {
         "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
 };
 
-const md5 = (data: string) =>
-    crypto.createHash("md5").update(data).digest("hex");
+const toHex = (buf: ArrayBuffer) =>
+    Array.from(new Uint8Array(buf))
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join("");
+
+const sha256Hex = async (data: string) => {
+    const bytes = new TextEncoder().encode(data);
+    const digest = await globalThis.crypto.subtle.digest("SHA-256", bytes);
+    return toHex(digest);
+};
 
 type MongooseCache = {
     conn: typeof mongoose | null;
@@ -100,7 +107,7 @@ export const onRequest = async (context: {
 
     const ip = getIp(request);
     const userAgent = request.headers.get("user-agent") ?? "";
-    const user = md5(ip + userAgent + ipHashSalt);
+    const user = await sha256Hex(ip + userAgent + ipHashSalt);
 
     const fiveMinutesAgo = new Date(Date.now() - 5 * 60_000);
 
