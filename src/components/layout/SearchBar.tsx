@@ -49,7 +49,7 @@ export default function SearchBar({ onSubmit = null }) {
     };
 
     const fetchDataset = async () => {
-        const res = await fetch("/data/dataset.json");
+        const res = await fetch("/data/dataset-index.json");
         const dataset = await res.json();
         setDataset(dataset);
         setHasFetchedDataset(true);
@@ -110,7 +110,8 @@ export default function SearchBar({ onSubmit = null }) {
 
 function SearchResult({ name, id, type, onClick }) {
     return (
-        <Link prefetch={false}
+        <Link
+            prefetch={false}
             href={`/${type.toLowerCase()}s/${id}`}
             passHref
             className="flex cursor-pointer items-center justify-start px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800"

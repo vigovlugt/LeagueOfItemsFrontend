@@ -24,7 +24,7 @@ export default function FilterSelector({ filter, setFilter, type }) {
 
         setHasFetchedDataset(true);
 
-        const res = await fetch("/data/dataset.json");
+        const res = await fetch("/data/dataset-index.json");
         const dataset = await res.json();
         setDataset(dataset);
     };

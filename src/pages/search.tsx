@@ -18,7 +18,7 @@ export default function SearchPage() {
     }, []);
 
     async function onInit() {
-        const res = await fetch("/data/dataset.json");
+        const res = await fetch("/data/dataset-index.json");
         const dataset = await res.json();
 
         const results = getSearchResults(q, dataset);

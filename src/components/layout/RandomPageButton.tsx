@@ -12,7 +12,7 @@ export default function RandomPageButton() {
     const router = useRouter();
 
     const fetchDataset = async () => {
-        const res = await fetch("/data/dataset.json");
+        const res = await fetch("/data/dataset-index.json");
         const dataset = await res.json();
         setDataset(dataset);
         setHasFetchedDataset(true);

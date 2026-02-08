@@ -9,7 +9,7 @@ const projectRoot = path.resolve(__dirname, "../..");
 
 const inputPath = path.join(projectRoot, "data", "dataset.json");
 const outputDir = path.join(projectRoot, "public", "data");
-const outputPath = path.join(outputDir, "dataset.json");
+const outputPath = path.join(outputDir, "dataset-index.json");
 
 const pickNameIds = (list) => list.map(({ id, name }) => ({ id, name }));
 
@@ -26,7 +26,7 @@ try {
     await fs.mkdir(outputDir, { recursive: true });
     await fs.writeFile(outputPath, JSON.stringify(publicDataset));
 } catch (err) {
-    console.error("Failed generating public/data/dataset.json");
+    console.error("Failed generating public/data/dataset-index.json");
     console.error(err);
     process.exitCode = 1;
 }
