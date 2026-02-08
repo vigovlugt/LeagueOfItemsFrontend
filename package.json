@@ -8,6 +8,7 @@
         "build": "node src/scripts/generate-public-dataset.mjs && next build --turbopack",
         "start": "next start",
         "lint": "eslint .",
+        "wrangler-dev": "bunx wrangler pages dev out --compatibility-flag=nodejs_compat --compatibility-date=2026-02-08",
         "update:dataset": "./update-dataset.sh && node src/scripts/generate-public-dataset.mjs",
         "download:champions": "node src/scripts/download-champions.mjs && npm run optimize:images",
         "download:items": "node src/scripts/download-items.mjs && npm run optimize:images",
