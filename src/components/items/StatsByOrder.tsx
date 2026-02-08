@@ -51,6 +51,7 @@ export default function StatsByOrder({
             {
                 Header: "Winrate",
                 headerClass: "text-right",
+                sortDescFirst: true,
                 Cell: ({
                     row: {
                         original: {
@@ -86,6 +87,7 @@ export default function StatsByOrder({
                 Header: "Pickrate",
                 headerClass: "text-right",
                 cellClass: "text-right",
+                sortDescFirst: true,
                 accessor: "pickrate",
                 sortType: orderMatchesByChampion
                     ? (rowA, rowB) =>
