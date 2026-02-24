@@ -3,5 +3,5 @@ export function getPatchNotesUrl(patch: string) {
 
     const season = major + 10;
 
-    return `https://www.leagueoflegends.com/en-us/news/game-updates/patch-${season}-${minor}-notes/`;
+    return `https://www.leagueoflegends.com/en-us/news/game-updates/league-of-legends-patch-${season}-${minor}-notes/`;
 }
