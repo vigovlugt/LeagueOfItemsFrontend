@@ -91,6 +91,62 @@ export default function ChampionPage({
                 </div>
             </PageHeader>
 
+            {/* Highest pickrate runes */}
+            <h2 className="mb-1 font-header text-2xl font-medium">
+                Highest pickrate runes
+            </h2>
+            <div className="mb-4 flex flex-col lg:flex-row lg:space-x-8">
+                <div className="mb-4 lg:mb-0 lg:max-w-1/2">
+                    <div className="flex w-full space-x-2 overflow-x-auto pb-2">
+                        {champion.runeStats
+                            .filter(
+                                (stats) =>
+                                    runes.find(
+                                        (rune) => rune.id == stats.runeId
+                                    ).tier === 0
+                            )
+                            .sort((a, b) => b.matches - a.matches)
+                            .map((runeStats) => (
+                                <Card
+                                    key={runeStats.runeId}
+                                    type={"rune"}
+                                    {...runeStats}
+                                    totalMatches={champion.matches}
+                                    previousTotalMatches={
+                                        champion.previousMatches
+                                    }
+                                    id={runeStats.runeId}
+                                />
+                            ))}
+                    </div>
+                </div>
+
+                <div className="flex-1 overflow-auto">
+                    <div className="flex w-full space-x-2 overflow-x-auto pb-2">
+                        {champion.runeStats
+                            .filter(
+                                (stats) =>
+                                    runes.find(
+                                        (rune) => rune.id == stats.runeId
+                                    ).tier !== 0
+                            )
+                            .sort((a, b) => b.matches - a.matches)
+                            .map((runeStats) => (
+                                <Card
+                                    key={runeStats.runeId}
+                                    type={"rune"}
+                                    {...runeStats}
+                                    totalMatches={champion.matches}
+                                    previousTotalMatches={
+                                        champion.previousMatches
+                                    }
+                                    id={runeStats.runeId}
+                                />
+                            ))}
+                    </div>
+                </div>
+            </div>
+
             {/* Highest winrate runes */}
             <h2 className="mb-1 font-header text-2xl font-medium">
                 Highest winrate runes
@@ -137,62 +193,6 @@ export default function ChampionPage({
                                 (a, b) =>
                                     b.wins / b.matches - a.wins / a.matches
                             )
-                            .map((runeStats) => (
-                                <Card
-                                    key={runeStats.runeId}
-                                    type={"rune"}
-                                    {...runeStats}
-                                    totalMatches={champion.matches}
-                                    previousTotalMatches={
-                                        champion.previousMatches
-                                    }
-                                    id={runeStats.runeId}
-                                />
-                            ))}
-                    </div>
-                </div>
-            </div>
-
-            {/* Highest pickrate runes */}
-            <h2 className="mb-1 font-header text-2xl font-medium">
-                Highest pickrate runes
-            </h2>
-            <div className="mb-4 flex flex-col lg:flex-row lg:space-x-8">
-                <div className="mb-4 lg:mb-0 lg:max-w-1/2">
-                    <div className="flex w-full space-x-2 overflow-x-auto pb-2">
-                        {champion.runeStats
-                            .filter(
-                                (stats) =>
-                                    runes.find(
-                                        (rune) => rune.id == stats.runeId
-                                    ).tier === 0
-                            )
-                            .sort((a, b) => b.matches - a.matches)
-                            .map((runeStats) => (
-                                <Card
-                                    key={runeStats.runeId}
-                                    type={"rune"}
-                                    {...runeStats}
-                                    totalMatches={champion.matches}
-                                    previousTotalMatches={
-                                        champion.previousMatches
-                                    }
-                                    id={runeStats.runeId}
-                                />
-                            ))}
-                    </div>
-                </div>
-
-                <div className="flex-1 overflow-auto">
-                    <div className="flex w-full space-x-2 overflow-x-auto pb-2">
-                        {champion.runeStats
-                            .filter(
-                                (stats) =>
-                                    runes.find(
-                                        (rune) => rune.id == stats.runeId
-                                    ).tier !== 0
-                            )
-                            .sort((a, b) => b.matches - a.matches)
                             .map((runeStats) => (
                                 <Card
                                     key={runeStats.runeId}
