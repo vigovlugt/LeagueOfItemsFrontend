@@ -19,9 +19,13 @@ export default function PatchNotesGroup({
                 {patchNotesGroup.title}
             </h2>
             <div className="patch-notes-group-grid grid gap-16 sm:grid-cols-2 2xl:grid-cols-1 3xl:grid-cols-2">
-                {patchNotesGroup.changes.map((c) => (
+                {patchNotesGroup.changes.map((c, i) => (
                     <PatchNotesChange
-                        key={c.type + "-" + c.id}
+                        key={
+                            c.type && c.id != null
+                                ? c.type + "-" + c.id
+                                : patchNotesGroup.id + "-" + i
+                        }
                         patchNotesChange={c}
                         patchNotesStats={patchNotesStats}
                         championMatches={championMatches}

@@ -1,5 +1,4 @@
 import GridCell from "../GridCell";
-import PatchNotesChangeDetail from "./PatchNotesChangeDetail";
 import { percentage, winrate, winrateClass } from "../../utils/format";
 import { ArrowSmRightIcon, TrendingDownIcon } from "@heroicons/react/solid";
 import { TrendingUpIcon } from "@heroicons/react/outline";
@@ -17,10 +16,73 @@ import BottomIcon from "../icons/roles/BottomIcon";
 import SupportIcon from "../icons/roles/SupportIcon";
 import HelpHover from "../HelpHover";
 import { decode } from "html-entities";
-import { useMemo } from "react";
+import ReactMarkdown from "react-markdown";
+import { useCallback, useMemo } from "react";
 import { useTable } from "react-table";
 import Table from "../table/Table";
 import { getPickrateIncrease, getWinrateIncrease } from "../../utils/stats";
+import { PatchNotesChangeType } from "../../models/patchnotes/IPatchNotesChange";
+
+const patchNotesStatsKeys: Record<
+    PatchNotesChangeType,
+    "champions" | "runes" | "items"
+> = {
+    CHAMPION: "champions",
+    RUNE: "runes",
+    ITEM: "items",
+};
+
+const patchNotesMarkdownComponents = {
+    h2: ({ children }: any) => (
+        <h4 className="mb-2 mt-6 font-header text-xl">{children}</h4>
+    ),
+    h3: ({ children }: any) => (
+        <h4 className="mb-2 mt-6 font-header text-xl">{children}</h4>
+    ),
+    h4: ({ children }: any) => (
+        <h4 className="mb-2 mt-6 font-header text-xl">{children}</h4>
+    ),
+    p: ({ children }: any) => (
+        <p className="mb-4 max-w-[65ch] font-medium leading-relaxed">
+            {children}
+        </p>
+    ),
+    blockquote: ({ children }: any) => (
+        <blockquote className="mb-4 max-w-[65ch] border-l-4 border-gray-300 pl-4 font-medium italic text-gray-600 dark:border-gray-700 dark:text-gray-400">
+            {children}
+        </blockquote>
+    ),
+    ul: ({ children }: any) => (
+        <ul className="mb-4 ml-5 max-w-[65ch] list-disc space-y-1 font-medium">
+            {children}
+        </ul>
+    ),
+    li: ({ children }: any) => <li>{children}</li>,
+    strong: ({ children }: any) => (
+        <strong className="font-bold text-gray-900 dark:text-gray-100">
+            {children}
+        </strong>
+    ),
+    hr: () => <hr className="my-6 border-gray-300 dark:border-gray-700" />,
+    a: ({ children, href }: any) => (
+        <a
+            href={href}
+            target="_blank"
+            rel="noreferrer"
+            className="text-blue-600 hover:underline dark:text-blue-400"
+        >
+            {children}
+        </a>
+    ),
+    img: ({ src, alt }: any) => (
+        <img
+            src={src}
+            alt={alt || ""}
+            loading="lazy"
+            className="my-4 max-w-full rounded shadow"
+        />
+    ),
+};
 
 export default function PatchNotesChange({
     patchNotesChange,
@@ -33,13 +95,14 @@ export default function PatchNotesChange({
     championMatches: number;
     previousChampionMatches: number;
 }) {
-    const key = {
-        CHAMPION: "champions",
-        RUNE: "runes",
-        ITEM: "items",
-    }[patchNotesChange.type];
-    const entity: IPatchNotesBaseStats =
-        patchNotesStats[key][patchNotesChange.id];
+    const statsKey = patchNotesChange.type
+        ? patchNotesStatsKeys[patchNotesChange.type]
+        : undefined;
+    const hasEntityReference =
+        statsKey !== undefined && patchNotesChange.id != null;
+    const entity: IPatchNotesBaseStats | undefined = hasEntityReference
+        ? patchNotesStats[statsKey][patchNotesChange.id]
+        : undefined;
 
     const matches =
         patchNotesChange.type === "CHAMPION"
@@ -54,66 +117,54 @@ export default function PatchNotesChange({
     return (
         <div className="min-w-0 border-t-[2px] border-gray-300 pt-4 dark:border-gray-700">
             <div className="mb-2 flex">
-                <GridCell
-                    type={patchNotesChange.type}
-                    id={patchNotesChange.id}
-                />
-                <div className="ml-4">
+                {hasEntityReference && (
+                    <GridCell
+                        type={patchNotesChange.type}
+                        id={patchNotesChange.id}
+                    />
+                )}
+                <div className={hasEntityReference ? "ml-4" : ""}>
                     <h3 className="mb-2 font-header text-2xl">
                         {patchNotesChange.title}
                     </h3>
-                    {patchNotesChange.summary && (
-                        <p className="mb-2 max-w-[65ch] font-medium">
-                            {decode(patchNotesChange.summary)}
-                        </p>
-                    )}
-                    {/*{patchNotesChange.quote && (*/}
-                    {/*  <p className="hidden sm:block font-medium max-w-[65ch] mb-2 italic text-gray-400">*/}
-                    {/*    “{patchNotesChange.quote}”*/}
-                    {/*  </p>*/}
-                    {/*)}*/}
                 </div>
             </div>
-            {patchNotesChange.quote && (
-                <p className="mb-2 font-medium italic text-gray-600 dark:text-gray-400">
-                    “{decode(patchNotesChange.quote)}”
-                </p>
-            )}
-            <div>
-                {patchNotesChange.details.map((d, i) => (
-                    <PatchNotesChangeDetail key={i} {...d} />
-                ))}
-            </div>
+            <ReactMarkdown components={patchNotesMarkdownComponents}>
+                {decode(patchNotesChange.body)}
+            </ReactMarkdown>
 
-            <div className="mt-8 mb-4 flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4">
-                <DifferenceCard
-                    current={entity.wins / entity.matches}
-                    previous={entity.previousWins / entity.previousMatches}
-                    text="Winrate"
-                />
-                <DifferenceCard
-                    current={entity.matches / matches}
-                    previous={entity.previousMatches / previousMatches}
-                    text="Pickrate"
-                />
-                {patchNotesChange.type === "CHAMPION" && (
+            {entity && (
+                <div className="mt-8 mb-4 flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4">
                     <DifferenceCard
-                        current={
-                            ((entity as IPatchNotesChampionStats).bans /
-                                matches) *
-                            10
-                        }
-                        previous={
-                            ((entity as IPatchNotesChampionStats).previousBans /
-                                previousMatches) *
-                            10
-                        }
-                        text="Banrate"
+                        current={entity.wins / entity.matches}
+                        previous={entity.previousWins / entity.previousMatches}
+                        text="Winrate"
                     />
-                )}
-            </div>
+                    <DifferenceCard
+                        current={entity.matches / matches}
+                        previous={entity.previousMatches / previousMatches}
+                        text="Pickrate"
+                    />
+                    {patchNotesChange.type === "CHAMPION" && (
+                        <DifferenceCard
+                            current={
+                                ((entity as IPatchNotesChampionStats).bans /
+                                    matches) *
+                                10
+                            }
+                            previous={
+                                ((entity as IPatchNotesChampionStats)
+                                    .previousBans /
+                                    previousMatches) *
+                                10
+                            }
+                            text="Banrate"
+                        />
+                    )}
+                </div>
+            )}
 
-            {entity.buildStats.length > 0 && (
+            {entity && entity.buildStats.length > 0 && (
                 <div className="mb-4 max-w-[512px]">
                     <h4 className="mb-2 font-header text-xl">
                         Build pickrate{" "}
@@ -138,7 +189,7 @@ export default function PatchNotesChange({
                 </div>
             )}
 
-            {patchNotesChange.type === "CHAMPION" && (
+            {entity && patchNotesChange.type === "CHAMPION" && (
                 <ChampionStats
                     championStats={entity as IPatchNotesChampionStats}
                 />
@@ -157,83 +208,88 @@ function ChampionStats({
         [championStats.roleStats]
     );
 
-    const getColumns = (isWinrate) => [
-        {
-            Header: isWinrate ? "WR increase" : "PR increase",
-            headerClass: "text-right",
-            id: isWinrate ? "winrate" : "pickrate",
-            accessor: (row) =>
-                isWinrate
-                    ? getWinrateIncrease(row)
-                    : getPickrateIncrease(
-                          row,
-                          row.totalMatches,
-                          row.previousTotalMatches
-                      ),
-            Cell: ({ row }) => {
-                const increase = isWinrate
-                    ? getWinrateIncrease(row.original)
-                    : getPickrateIncrease(
-                          row.original,
-                          championStats.matches,
-                          championStats.previousMatches
-                      );
-
-                const TrendingIcon =
-                    increase > 0 ? TrendingUpIcon : TrendingDownIcon;
-
-                return (
-                    <div className="flex justify-end">
-                        <div
-                            className={`flex items-center ${winrateClass(
-                                0.5 + increase,
-                                undefined,
-                                true
-                            )}`}
-                        >
-                            <TrendingIcon className="mr-1 inline h-5 w-5" />
-                            {(Math.abs(increase) * 100).toFixed(2) + "%"}
-                        </div>
-                    </div>
-                );
-            },
-        },
-        {
-            Header: isWinrate ? "Winrate" : "Pickrate",
-            headerClass: "text-right",
-            accessor: (row) =>
-                isWinrate
-                    ? row.wins / row.matches
-                    : row.matches / row.totalMatches,
-            Cell: ({ row }) => {
-                const value = isWinrate
-                    ? winrate(row.original.wins, row.original.matches)
-                    : percentage(row.original.matches / championStats.matches);
-                const previousValue = isWinrate
-                    ? winrate(
-                          row.original.previousWins,
-                          row.original.previousMatches
-                      )
-                    : percentage(
-                          row.original.previousMatches /
+    const getColumns = useCallback(
+        (isWinrate) => [
+            {
+                Header: isWinrate ? "WR increase" : "PR increase",
+                headerClass: "text-right",
+                id: isWinrate ? "winrate" : "pickrate",
+                accessor: (row) =>
+                    isWinrate
+                        ? getWinrateIncrease(row)
+                        : getPickrateIncrease(
+                              row,
+                              row.totalMatches,
+                              row.previousTotalMatches
+                          ),
+                Cell: ({ row }) => {
+                    const increase = isWinrate
+                        ? getWinrateIncrease(row.original)
+                        : getPickrateIncrease(
+                              row.original,
+                              championStats.matches,
                               championStats.previousMatches
-                      );
+                          );
 
-                const title = isWinrate
-                    ? undefined
-                    : row.original.matches + " matches";
+                    const TrendingIcon =
+                        increase > 0 ? TrendingUpIcon : TrendingDownIcon;
 
-                return (
-                    <div className="flex flex-col items-end">
-                        <div title={title}>{value}</div>
-                        <div className="text-xs text-gray-600 dark:text-gray-400">
-                            {previousValue}
+                    return (
+                        <div className="flex justify-end">
+                            <div
+                                className={`flex items-center ${winrateClass(
+                                    0.5 + increase,
+                                    undefined,
+                                    true
+                                )}`}
+                            >
+                                <TrendingIcon className="mr-1 inline h-5 w-5" />
+                                {(Math.abs(increase) * 100).toFixed(2) + "%"}
+                            </div>
                         </div>
-                    </div>
-                );
+                    );
+                },
             },
-        },
-    ];
+            {
+                Header: isWinrate ? "Winrate" : "Pickrate",
+                headerClass: "text-right",
+                accessor: (row) =>
+                    isWinrate
+                        ? row.wins / row.matches
+                        : row.matches / row.totalMatches,
+                Cell: ({ row }) => {
+                    const value = isWinrate
+                        ? winrate(row.original.wins, row.original.matches)
+                        : percentage(
+                              row.original.matches / championStats.matches
+                          );
+                    const previousValue = isWinrate
+                        ? winrate(
+                              row.original.previousWins,
+                              row.original.previousMatches
+                          )
+                        : percentage(
+                              row.original.previousMatches /
+                                  championStats.previousMatches
+                          );
+
+                    const title = isWinrate
+                        ? undefined
+                        : row.original.matches + " matches";
+
+                    return (
+                        <div className="flex flex-col items-end">
+                            <div title={title}>{value}</div>
+                            <div className="text-xs text-gray-600 dark:text-gray-400">
+                                {previousValue}
+                            </div>
+                        </div>
+                    );
+                },
+            },
+        ],
+        [championStats.matches, championStats.previousMatches]
+    );
 
     const columns = useMemo(
         () => [
@@ -255,7 +311,7 @@ function ChampionStats({
             ...getColumns(true),
             ...getColumns(false),
         ],
-        []
+        [getColumns]
     );
 
     const table = useTable({

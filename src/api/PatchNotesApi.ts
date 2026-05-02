@@ -1,6 +1,8 @@
 import Api from "./DatasetApi";
 import IPatchNotesDataset from "../models/patchnotes/IPatchNotesDataset";
-import IPatchNotesChange from "../models/patchnotes/IPatchNotesChange";
+import IPatchNotesChange, {
+    PatchNotesChangeType,
+} from "../models/patchnotes/IPatchNotesChange";
 import IPatchNotesStats, {
     IPatchNotesChampionStats,
     IPatchNotesItemStats,
@@ -13,6 +15,15 @@ import BuildsApi from "./BuildsApi";
 import BuildStats, { IBuildStats } from "../models/builds/BuildStats";
 import RuneStats from "../models/runes/RuneStats";
 import { getPickrateIncrease, getWinrateIncrease } from "../utils/stats";
+
+const patchNotesStatsKeys: Record<
+    PatchNotesChangeType,
+    "champions" | "runes" | "items"
+> = {
+    CHAMPION: "champions",
+    RUNE: "runes",
+    ITEM: "items",
+};
 
 export default class PatchNotesApi {
     static getPatchNotes(): IPatchNotesDataset {
@@ -210,12 +221,11 @@ export default class PatchNotesApi {
             .reduce<IPatchNotesChange[]>((arr, g) => [...arr, ...g.changes], [])
             .reduce(
                 (obj, e) => {
-                    const key = {
-                        CHAMPION: "champions",
-                        RUNE: "runes",
-                        ITEM: "items",
-                    }[e.type];
+                    if (!e.type || e.id == null) {
+                        return obj;
+                    }
 
+                    const key = patchNotesStatsKeys[e.type];
                     obj[key].push(e.id);
 
                     return obj;

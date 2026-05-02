@@ -1,10 +1,8 @@
-import IPatchNotesChangeDetail from "./IPatchNotesChangeDetail";
+export type PatchNotesChangeType = "CHAMPION" | "RUNE" | "ITEM";
 
 export default interface IPatchNotesChange {
-    type: string;
-    id: number;
+    type: PatchNotesChangeType | null;
+    id: number | null;
     title: string;
-    summary: string;
-    quote: string;
-    details: IPatchNotesChangeDetail[];
+    body: string;
 }

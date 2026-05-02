@@ -56,10 +56,6 @@ export default function PatchRundown({
                 previousChampionMatches={previousChampionMatches}
             />
 
-            <p className="mb-2 text-center font-medium">
-                This overview only shows items, runes and champions from the
-                patch notes.
-            </p>
             <Link prefetch={false}
                 href={getPatchNotesUrl(patch)}
                 passHref
