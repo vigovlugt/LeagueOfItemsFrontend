@@ -30,7 +30,7 @@ type Env = {
     PAGEVIEWS?: AnalyticsEngineDatasetLike;
 };
 
-const getIp = (request: Request) => {
+function getIp(request: Request) {
     const cfIp = request.headers.get("cf-connecting-ip");
     if (cfIp) return cfIp;
 
@@ -39,7 +39,7 @@ const getIp = (request: Request) => {
     return xff.split(",")[0].trim() || "localhost";
 };
 
-export const onRequest = async (context: { request: Request; env: Env }) => {
+export async function onRequest(context: { request: Request; env: Env; }) {
     const { request, env } = context;
 
     if (request.method === "OPTIONS") {
@@ -89,4 +89,4 @@ export const onRequest = async (context: { request: Request; env: Env }) => {
     });
 
     return new Response(null, { status: 200, headers: corsHeaders });
-};
+}
