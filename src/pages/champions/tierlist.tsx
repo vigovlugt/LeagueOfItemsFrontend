@@ -244,7 +244,7 @@ export default function ChampionTierlist({
                 accessor: "matches",
             },
         ],
-        []
+        [previousTotalMatches, totalMatches]
     );
 
     const table = useTable(
@@ -295,6 +295,7 @@ export async function getStaticProps(context) {
             previousBans,
             roleStats,
             itemStats,
+            bootsStats,
             runeStats,
         }) => ({
             id,
@@ -306,7 +307,7 @@ export async function getStaticProps(context) {
             matches,
             previousMatches,
             roles: roleStats.length,
-            items: itemStats.length,
+            items: itemStats.length + bootsStats.length,
             runes: runeStats.length,
         })
     );

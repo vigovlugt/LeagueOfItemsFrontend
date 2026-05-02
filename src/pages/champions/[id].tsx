@@ -27,6 +27,11 @@ export default function ChampionPage({
     keystones,
 }) {
     champion = new ChampionStats(champion);
+    const itemOrderStats = champion.itemOrderStatsWithBoots;
+    const itemOrderStatsRows = [
+        itemOrderStats.slice(0, 3),
+        itemOrderStats.slice(3),
+    ];
 
     const [modalIsOpen, setModalOpen] = useState(false);
 
@@ -72,7 +77,7 @@ export default function ChampionPage({
 
                         <div className="flex items-center justify-center rounded bg-white p-4 text-lg font-bold text-gray-600 shadow dark:bg-gray-800 dark:text-gray-400">
                             <span className="mr-1 text-gray-900 dark:text-white">
-                                {champion.itemStats.length}
+                                {champion.itemAndBootsStats.length}
                             </span>{" "}
                             Items
                         </div>
@@ -230,18 +235,24 @@ export default function ChampionPage({
                     </label>
                 </div>
 
-                <div
-                    className="grid grid-flow-row grid-cols-1 gap-2 xl:grid-flow-col xl:grid-cols-5"
-                    style={{ gridTemplateRows: "auto auto" }}
-                >
-                    {champion.orderStats.map((stats) => (
-                        <StatsByOrder
-                            key={Math.random()}
-                            totalMatches={champion.matches}
-                            type={"item"}
-                            orderStats={stats}
-                            showPrevious={showPreviousOrderStats}
-                        />
+                <div className="space-y-4">
+                    {itemOrderStatsRows.map((row, index) => (
+                        <div
+                            key={index}
+                            className="grid grid-flow-row grid-cols-1 gap-2 xl:grid-flow-col xl:grid-cols-3"
+                            style={{ gridTemplateRows: "auto auto" }}
+                        >
+                            {row.map((stats) => (
+                                <StatsByOrder
+                                    key={stats.title ?? stats.order}
+                                    totalMatches={champion.matches}
+                                    type={"item"}
+                                    orderStats={stats}
+                                    showPrevious={showPreviousOrderStats}
+                                    title={stats.title}
+                                />
+                            ))}
+                        </div>
                     ))}
                 </div>
             </div>

@@ -13,6 +13,7 @@ export default function StatsByOrder({
     orderMatchesByChampion = null,
     previousOrderMatchesByChampion = null,
     showPrevious,
+    title = null,
 }) {
     const router = useRouter();
 
@@ -21,7 +22,7 @@ export default function StatsByOrder({
             type === "champion"
                 ? orderStats.championStats
                 : orderStats.itemStats,
-        []
+        [orderStats, type]
     );
 
     const columns = useMemo(
@@ -128,7 +129,14 @@ export default function StatsByOrder({
                 ),
             },
         ],
-        []
+        [
+            orderMatchesByChampion,
+            orderStats.matches,
+            orderStats.previousMatches,
+            previousOrderMatchesByChampion,
+            showPrevious,
+            type,
+        ]
     );
 
     const table = useTable(
@@ -157,7 +165,7 @@ export default function StatsByOrder({
             {/* General stats */}
             <div className="rounded bg-white px-3 py-3 text-center shadow dark:bg-gray-900">
                 <h3 className="mb-1 font-header text-xl font-medium">
-                    {nameByOrder[orderStats.order]} item
+                    {title ?? `${nameByOrder[orderStats.order]} item`}
                 </h3>
                 <div className="flex justify-around">
                     <span className="text-center">

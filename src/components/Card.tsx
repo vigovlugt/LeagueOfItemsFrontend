@@ -44,7 +44,7 @@ export default function Card({
                     }}
                     alt="Image"
                 />
-                <p className="text-center text-[0.65rem] font-medium uppercase tracking-wider mt-1 -mb-2 text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                <p className="text-center text-xs font-medium uppercase tracking-wider mt-1 -mb-2 text-gray-500 dark:text-gray-400 whitespace-nowrap">
                     Winrate
                 </p>
                 <p
@@ -55,7 +55,7 @@ export default function Card({
                 >
                     {winrate(wins, matches)}
                 </p>
-                <p className="text-center text-[0.65rem] font-medium uppercase tracking-wider -mb-2 text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                <p className="text-center text-xs font-medium uppercase tracking-wider -mb-2 text-gray-500 dark:text-gray-400 whitespace-nowrap">
                     Pickrate
                 </p>
                 <p

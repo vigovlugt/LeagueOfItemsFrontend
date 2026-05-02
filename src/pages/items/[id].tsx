@@ -85,36 +85,9 @@ export default function ItemPage({
                 </div>
             </PageHeader>
 
-            {/* Highest winrate champions */}
-            <div>
-                <h2 className="mb-1 font-header text-2xl font-medium">
-                    Highest winrate champions
-                </h2>
-                <div className="flex w-full space-x-2 overflow-x-auto pb-2">
-                    {item.championStats
-                        .sort((a, b) => b.wins / b.matches - a.wins / a.matches)
-                        .map((championStats) => (
-                            <Card
-                                key={championStats.championId}
-                                type={"champion"}
-                                {...championStats}
-                                totalMatches={
-                                    matchesByChampion[championStats.championId]
-                                }
-                                previousTotalMatches={
-                                    previousMatchesByChampion[
-                                        championStats.championId
-                                    ]
-                                }
-                                id={championStats.championId}
-                            />
-                        ))}
-                </div>
-            </div>
-
             {/* Highest pickrate champions */}
             <div>
-                <h2 className="mb-1 mt-4 font-header text-2xl font-medium">
+                <h2 className="mb-1 font-header text-2xl font-medium">
                     Highest pickrate champions
                 </h2>
                 <div className="flex w-full space-x-2 overflow-x-auto pb-2">
@@ -143,60 +116,88 @@ export default function ItemPage({
                 </div>
             </div>
 
-            {/* Winrate by order */}
-            <div className="mt-4">
-                <div className="flex items-center justify-between">
-                    <h2 className="mb-1 font-header text-2xl font-medium">
-                        Champion stats by order
-                    </h2>
-                    <label>
-                        <input
-                            type="checkbox"
-                            className="mr-1"
-                            checked={showPreviousOrderStats}
-                            onChange={() =>
-                                setShowPreviousOrderStats(
-                                    !showPreviousOrderStats
-                                )
-                            }
-                        />{" "}
-                        Show previous patch stats
-                    </label>
-                </div>
-                <div
-                    className="grid grid-flow-row grid-cols-1 gap-2 xl:grid-flow-col xl:grid-cols-5"
-                    style={{ gridTemplateRows: "auto auto" }}
-                >
-                    {item.orderStats.map((stats, i) => (
-                        <StatsByOrder
-                            key={Math.random()}
-                            totalMatches={item.matches}
-                            orderStats={stats}
-                            orderMatchesByChampion={Object.keys(
-                                orderMatchesByChampion
-                            ).reduce(
-                                (agg, key) => ({
-                                    ...agg,
-                                    [key]: orderMatchesByChampion[key][i],
-                                }),
-                                {}
-                            )}
-                            previousOrderMatchesByChampion={Object.keys(
-                                previousOrderMatchesByChampion
-                            ).reduce(
-                                (agg, key) => ({
-                                    ...agg,
-                                    [key]: previousOrderMatchesByChampion[key][
-                                        i
-                                    ],
-                                }),
-                                {}
-                            )}
-                            showPrevious={showPreviousOrderStats}
-                        />
-                    ))}
+            {/* Highest winrate champions */}
+            <div>
+                <h2 className="mb-1 mt-4 font-header text-2xl font-medium">
+                    Highest winrate champions
+                </h2>
+                <div className="flex w-full space-x-2 overflow-x-auto pb-2">
+                    {item.championStats
+                        .sort((a, b) => b.wins / b.matches - a.wins / a.matches)
+                        .map((championStats) => (
+                            <Card
+                                key={championStats.championId}
+                                type={"champion"}
+                                {...championStats}
+                                totalMatches={
+                                    matchesByChampion[championStats.championId]
+                                }
+                                previousTotalMatches={
+                                    previousMatchesByChampion[
+                                        championStats.championId
+                                    ]
+                                }
+                                id={championStats.championId}
+                            />
+                        ))}
                 </div>
             </div>
+
+            {item.orderStats.length > 0 && (
+                <div className="mt-4">
+                    <div className="flex items-center justify-between">
+                        <h2 className="mb-1 font-header text-2xl font-medium">
+                            Champion stats by order
+                        </h2>
+                        <label>
+                            <input
+                                type="checkbox"
+                                className="mr-1"
+                                checked={showPreviousOrderStats}
+                                onChange={() =>
+                                    setShowPreviousOrderStats(
+                                        !showPreviousOrderStats
+                                    )
+                                }
+                            />{" "}
+                            Show previous patch stats
+                        </label>
+                    </div>
+                    <div
+                        className="grid grid-flow-row grid-cols-1 gap-2 xl:grid-flow-col xl:grid-cols-5"
+                        style={{ gridTemplateRows: "auto auto" }}
+                    >
+                        {item.orderStats.map((stats, i) => (
+                            <StatsByOrder
+                                key={stats.order}
+                                totalMatches={item.matches}
+                                orderStats={stats}
+                                orderMatchesByChampion={Object.keys(
+                                    orderMatchesByChampion
+                                ).reduce(
+                                    (agg, key) => ({
+                                        ...agg,
+                                        [key]: orderMatchesByChampion[key][i],
+                                    }),
+                                    {}
+                                )}
+                                previousOrderMatchesByChampion={Object.keys(
+                                    previousOrderMatchesByChampion
+                                ).reduce(
+                                    (agg, key) => ({
+                                        ...agg,
+                                        [key]: previousOrderMatchesByChampion[
+                                            key
+                                        ][i],
+                                    }),
+                                    {}
+                                )}
+                                showPrevious={showPreviousOrderStats}
+                            />
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
