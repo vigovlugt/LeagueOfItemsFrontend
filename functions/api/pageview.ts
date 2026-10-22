@@ -69,13 +69,26 @@ export async function onRequest(context: { request: Request; env: Env; }) {
         id?: unknown;
     };
 
-    if (!type || !["CHAMPION", "ITEM", "RUNE"].includes(type) || id == null) {
+    if (
+        !type ||
+        !["CHAMPION", "ITEM", "RUNE", "AD_CLICK"].includes(type) ||
+        id == null
+    ) {
         return new Response(null, { status: 400, headers: corsHeaders });
     }
 
-    const numericId = typeof id === "number" ? id : Number(id);
-    if (!Number.isFinite(numericId)) {
-        return new Response(null, { status: 400, headers: corsHeaders });
+    let blobId: string;
+    if (type === "AD_CLICK") {
+        if (typeof id !== "string" || !/^[a-z0-9-]{1,32}$/.test(id)) {
+            return new Response(null, { status: 400, headers: corsHeaders });
+        }
+        blobId = id;
+    } else {
+        const numericId = typeof id === "number" ? id : Number(id);
+        if (!Number.isFinite(numericId)) {
+            return new Response(null, { status: 400, headers: corsHeaders });
+        }
+        blobId = String(numericId);
     }
 
     const ip = getIp(request);
@@ -83,7 +96,7 @@ export async function onRequest(context: { request: Request; env: Env; }) {
     const user = await sha256Hex(ip + userAgent + ipHashSalt);
 
     dataset.writeDataPoint({
-        blobs: [type, String(numericId)],
+        blobs: [type, blobId],
         doubles: [1],
         indexes: [user],
     });

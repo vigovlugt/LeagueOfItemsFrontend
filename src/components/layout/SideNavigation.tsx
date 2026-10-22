@@ -5,6 +5,7 @@ import RuneIcon from "../icons/RuneIcon";
 import SwordIcon from "../icons/SwordIcon";
 import SideNavFooter from "./SideNavFooter";
 import ChampionIcon from "../icons/ChampionIcon";
+import RiftShowdownIcon from "../icons/RiftShowdownIcon";
 import Logo from "../Logo";
 import {
     MailIcon,
@@ -16,6 +17,7 @@ import {
     GlobeAltIcon,
 } from "@heroicons/react/outline";
 import SearchBar from "./SearchBar";
+import { trackAdClick } from "../../lib/adTracking";
 
 const MENU_ITEMS = [
     {
@@ -59,12 +61,19 @@ const MENU_ITEMS = [
         icon: () => <BookOpenIcon className="w-7" />,
     },
     {
+        name: "RiftShowdown",
+        href: "https://riftshowdown.com/?utm_source=leagueofitems.com&utm_content=leagueofitems-nav&utm_term=leagueofitems.com",
+        target: "_blank",
+        icon: RiftShowdownIcon,
+        className: "mt-auto",
+        isNewUntil: new Date("2027-01-01"),
+        adId: "riftshowdown",
+    },
+    {
         name: "DraftGap",
         href: "https://draftgap.com?utm_source=league-of-items-sidebar&utm_medium=link&utm_campaign=launch",
         target: "_blank",
         icon: () => <GlobeAltIcon className="w-7" />,
-        className: "mt-auto",
-        isNewUntil: new Date("2023-03-01"),
     },
     {
         name: "FAQ",
@@ -133,15 +142,19 @@ function MenuItem({
     className = null,
     onClick,
     isNewUntil = null,
+    adId = null,
     target = null,
 }) {
     const Icon = icon;
+    const isNew = isNewUntil && isNewUntil > new Date();
+    const isAd = adId !== null;
 
     return (
         <Link prefetch={false}
             href={href}
             passHref
             target={target}
+            rel={isAd ? "sponsored noopener" : undefined}
             className={classNames(
                 "relative flex cursor-pointer items-center rounded-lg py-1.5 px-3 text-lg font-semibold",
                 className,
@@ -151,7 +164,10 @@ function MenuItem({
                     "text-gray-700 dark:text-gray-400": !active,
                 }
             )}
-            onClick={onClick}
+            onClick={() => {
+                if (isAd) trackAdClick(adId);
+                onClick();
+            }}
         >
             <span
                 className={classNames({
@@ -163,9 +179,18 @@ function MenuItem({
             </span>
             <span className="ml-3">{name}</span>
 
-            {isNewUntil && isNewUntil > new Date() && (
-                <span className="absolute top-0 right-0 inline-flex items-center rounded-md bg-red-700 px-2.5 py-0.5 text-sm font-medium text-white">
-                    NEW!
+            {(isAd || isNew) && (
+                <span className="ml-auto flex items-center gap-1.5 pl-2">
+                    {isAd && (
+                        <span className="inline-block rounded border border-gray-200 px-1 py-[3px] text-[10px] font-normal uppercase leading-none [text-box:trim-both_cap_alphabetic] text-gray-400 dark:border-gray-700 dark:text-gray-500">
+                            Ad
+                        </span>
+                    )}
+                    {isNew && (
+                        <span className="inline-block rounded-md bg-red-700 px-2 py-1.5 text-xs font-medium leading-none text-white [text-box:trim-both_cap_alphabetic]">
+                            NEW
+                        </span>
+                    )}
                 </span>
             )}
         </Link>

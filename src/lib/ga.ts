@@ -8,7 +8,9 @@ export const pageview = (url) => {
 };
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/events
-export const event = ({ action, category, label, value }) => {
+export const event = ({ action, category, label, value = undefined }) => {
+    // gtag is missing when GA is blocked by an ad blocker
+    if (typeof (window as any).gtag !== "function") return;
     (window as any).gtag("event", action, {
         event_category: category,
         event_label: label,
