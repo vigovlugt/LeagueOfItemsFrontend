@@ -61,7 +61,7 @@ const MENU_ITEMS = [
         icon: () => <BookOpenIcon className="w-7" />,
     },
     {
-        name: "RiftShowdown",
+        name: "Esports Manager",
         href: "https://riftshowdown.com/?utm_source=leagueofitems.com&utm_content=leagueofitems-nav&utm_term=leagueofitems.com",
         target: "_blank",
         icon: RiftShowdownIcon,
