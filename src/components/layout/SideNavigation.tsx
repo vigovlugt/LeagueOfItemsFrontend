@@ -5,7 +5,7 @@ import RuneIcon from "../icons/RuneIcon";
 import SwordIcon from "../icons/SwordIcon";
 import SideNavFooter from "./SideNavFooter";
 import ChampionIcon from "../icons/ChampionIcon";
-import RiftShowdownIcon from "../icons/RiftShowdownIcon";
+// import RiftShowdownIcon from "../icons/RiftShowdownIcon";
 import Logo from "../Logo";
 import {
     MailIcon,
@@ -60,20 +60,21 @@ const MENU_ITEMS = [
         href: "/builds",
         icon: () => <BookOpenIcon className="w-7" />,
     },
-    {
-        name: "Esports Manager",
-        href: "https://riftshowdown.com/?utm_source=leagueofitems.com&utm_content=leagueofitems-nav&utm_term=leagueofitems.com",
-        target: "_blank",
-        icon: RiftShowdownIcon,
-        className: "mt-auto",
-        isNewUntil: new Date("2027-01-01"),
-        adId: "riftshowdown",
-    },
+    // {
+    //     name: "Esports Manager",
+    //     href: "https://riftshowdown.com/?utm_source=leagueofitems.com&utm_content=leagueofitems-nav&utm_term=leagueofitems.com",
+    //     target: "_blank",
+    //     icon: RiftShowdownIcon,
+    //     className: "mt-auto",
+    //     isNewUntil: new Date("2027-01-01"),
+    //     adId: "riftshowdown",
+    // },
     {
         name: "DraftGap",
         href: "https://draftgap.com?utm_source=league-of-items-sidebar&utm_medium=link&utm_campaign=launch",
         target: "_blank",
         icon: () => <GlobeAltIcon className="w-7" />,
+        className: "mt-auto",
     },
     {
         name: "FAQ",
