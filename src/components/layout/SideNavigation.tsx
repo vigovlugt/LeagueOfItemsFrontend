@@ -5,7 +5,7 @@ import RuneIcon from "../icons/RuneIcon";
 import SwordIcon from "../icons/SwordIcon";
 import SideNavFooter from "./SideNavFooter";
 import ChampionIcon from "../icons/ChampionIcon";
-// import RiftShowdownIcon from "../icons/RiftShowdownIcon";
+import RiftShowdownIcon from "../icons/RiftShowdownIcon";
 import Logo from "../Logo";
 import {
     MailIcon,
@@ -60,21 +60,20 @@ const MENU_ITEMS = [
         href: "/builds",
         icon: () => <BookOpenIcon className="w-7" />,
     },
-    // {
-    //     name: "Esports Manager",
-    //     href: "https://riftshowdown.com/?utm_source=leagueofitems.com&utm_content=leagueofitems-nav&utm_term=leagueofitems.com",
-    //     target: "_blank",
-    //     icon: RiftShowdownIcon,
-    //     className: "mt-auto",
-    //     isNewUntil: new Date("2027-01-01"),
-    //     adId: "riftshowdown",
-    // },
+    {
+        name: "Esports Manager",
+        href: "https://riftshowdown.com/?utm_source=leagueofitems.com&utm_content=leagueofitems-nav&utm_term=leagueofitems.com",
+        target: "_blank",
+        icon: RiftShowdownIcon,
+        className: "mt-auto",
+        adId: "riftshowdown",
+        popover: "New! Claim your free starter pack",
+    },
     {
         name: "DraftGap",
         href: "https://draftgap.com?utm_source=league-of-items-sidebar&utm_medium=link&utm_campaign=launch",
         target: "_blank",
         icon: () => <GlobeAltIcon className="w-7" />,
-        className: "mt-auto",
     },
     {
         name: "FAQ",
@@ -145,6 +144,7 @@ function MenuItem({
     isNewUntil = null,
     adId = null,
     target = null,
+    popover = null,
 }) {
     const Icon = icon;
     const isNew = isNewUntil && isNewUntil > new Date();
@@ -179,6 +179,13 @@ function MenuItem({
                 {icon ? <Icon className="w-8" /> : <div className="w-8" />}
             </span>
             <span className="ml-3">{name}</span>
+
+            {popover && (
+                <span className="absolute bottom-full left-1/2 mb-2 -translate-x-1/2 whitespace-nowrap rounded-md bg-red-700 px-2 py-1 text-xs font-medium text-white shadow">
+                    {popover}
+                    <span className="absolute -bottom-1 left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 bg-red-700" />
+                </span>
+            )}
 
             {(isAd || isNew) && (
                 <span className="ml-auto flex items-center gap-1.5 pl-2">
